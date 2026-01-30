@@ -13,6 +13,8 @@
   <meta name="author" content="隣の高専生">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tonari-kosen.com/">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -98,6 +100,9 @@
         <h1 class="hero__title">
           <span class="hero__title-accent">高専生</span>がイノベーションの核になる社会を作る
         </h1>
+        <div class="hero__mobile-logo">
+          <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__mobile-logo-image">
+        </div>
         <p class="hero__description">
           全国5万人の高専生ネットワークが、御社の開発を加速させます。<br>
           実装力に特化したエンジニアチームが、<br>
@@ -331,40 +336,56 @@
   <section id="contact" class="contact">
     <div class="container contact__inner">
       <div class="contact__header">
-        <h2 class="contact__title">お問い合わせ</h2>
+        <h2 class="contact__title">まずは気軽に相談しましょう！</h2>
         <p class="contact__description">
-          まずはお気軽にご相談ください。御社の課題に最適なソリューションをご提案します。
+          「こんなアイデアがあるんだけど...」「ちょっと話を聞いてみたい」<br>
+          企業の方はもちろん、個人でアイデアをお持ちの方も大歓迎です！<br>
+          まだ形になっていなくても大丈夫。一緒に考えましょう。
         </p>
       </div>
 
-      <form class="contact-form" action="#" method="POST">
-        <div class="form-group">
-          <label class="form-label" for="company">会社名<span>*</span></label>
-          <input type="text" id="company" name="company" class="form-input" placeholder="株式会社○○" required>
-        </div>
+      <form class="contact-form" action="https://formsubmit.co/nakamotoryoke@gmail.com" method="POST">
+        <!-- FormSubmit設定 -->
+        <input type="hidden" name="_subject" value="【隣の高専生】新しいお問い合わせがありました">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none">
 
         <div class="form-group">
-          <label class="form-label" for="name">担当者名<span>*</span></label>
+          <label class="form-label" for="name">お名前<span>*</span></label>
           <input type="text" id="name" name="name" class="form-input" placeholder="山田 太郎" required>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="email">メールアドレス<span>*</span></label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="example@company.co.jp" required>
+          <label class="form-label" for="affiliation">ご所属（任意）</label>
+          <input type="text" id="affiliation" name="affiliation" class="form-input" placeholder="会社名・学校名・個人など、なんでもOK">
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="inquiry-type">相談内容<span>*</span></label>
+          <label class="form-label" for="email">メールアドレス<span>*</span></label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inquiry-type">ご相談の種類<span>*</span></label>
           <select id="inquiry-type" name="inquiry-type" class="form-select" required>
             <option value="" disabled selected>選択してください</option>
-            <option value="mvp">MVP開発</option>
-            <option value="internal-tool">社内ツール開発</option>
-            <option value="recruitment">人材採用</option>
+            <option value="idea">アイデアを形にしたい</option>
+            <option value="mvp">MVP・プロトタイプ開発</option>
+            <option value="internal-tool">社内ツール・業務システム開発</option>
+            <option value="consult">まずは話を聞いてみたい</option>
+            <option value="collaboration">高専生と一緒にプロジェクトをやりたい</option>
             <option value="other">その他</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn--primary btn--large">送信する</button>
+        <div class="form-group">
+          <label class="form-label" for="message">相談したいこと（任意）</label>
+          <textarea id="message" name="message" class="form-input form-textarea" rows="4"
+            placeholder="まだぼんやりしたアイデアでも大丈夫です！気軽に書いてください。"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--large">相談してみる</button>
       </form>
     </div>
   </section>

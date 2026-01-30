@@ -275,6 +275,11 @@ img {
   flex-wrap: wrap;
 }
 
+/* Mobile logo - hidden on desktop, shown on mobile */
+.hero__mobile-logo {
+  display: none;
+}
+
 .hero__visual {
   position: relative;
   display: flex;
@@ -1030,6 +1035,19 @@ img {
 
   .hero__visual {
     display: none;
+  }
+
+  .hero__mobile-logo {
+    display: block;
+    text-align: center;
+    margin: 24px 0;
+  }
+
+  .hero__mobile-logo-image {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
   }
 
   .section {
