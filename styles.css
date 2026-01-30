@@ -5,6 +5,10 @@
   --color-tech-blue-light: #2a6bc4;
   --color-akatsuki: #e67e22;
   --color-akatsuki-gold: #f39c12;
+  /* Local theme colors */
+  --color-local-green: #2d9a63;
+  --color-local-green-dark: #1e7a4a;
+  --color-local-green-light: #3db87a;
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -1071,4 +1075,205 @@ img {
     justify-content: center;
     gap: 16px 24px;
   }
+}
+
+/* ===== Landing Page ===== */
+.landing {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+  padding: 24px;
+}
+
+.landing__inner {
+  text-align: center;
+  max-width: 800px;
+}
+
+.landing__header {
+  margin-bottom: 48px;
+}
+
+.landing__logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+}
+
+.landing__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--color-tech-blue);
+  margin-bottom: 12px;
+}
+
+.landing__subtitle {
+  font-size: 1.125rem;
+  color: var(--color-gray-500);
+}
+
+.landing__question {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  margin-bottom: 32px;
+}
+
+.landing__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.landing__card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 40px 24px;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 3px solid transparent;
+}
+
+.landing__card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.landing__card--startup:hover {
+  border-color: var(--color-tech-blue);
+}
+
+.landing__card--local:hover {
+  border-color: var(--color-local-green);
+}
+
+.landing__card-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.landing__card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-gray-700);
+}
+
+.landing__card-subtitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.landing__card--startup .landing__card-subtitle {
+  color: var(--color-tech-blue);
+}
+
+.landing__card--local .landing__card-subtitle {
+  color: var(--color-local-green);
+}
+
+.landing__card-description {
+  font-size: 0.9375rem;
+  color: var(--color-gray-500);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.landing__card-cta {
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.landing__card--startup .landing__card-cta {
+  color: var(--color-tech-blue);
+}
+
+.landing__card--local .landing__card-cta {
+  color: var(--color-local-green);
+}
+
+@media (max-width: 600px) {
+  .landing__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .landing__card {
+    padding: 32px 20px;
+  }
+}
+
+/* ===== Mode Toggle ===== */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-gray-100);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  margin-right: 16px;
+}
+
+.mode-toggle:hover {
+  background: var(--color-gray-200);
+}
+
+.mode-toggle__arrow {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .mode-toggle {
+    display: none;
+  }
+}
+
+/* ===== Local Theme Overrides ===== */
+.hero__badge--local {
+  background-color: var(--color-local-green);
+}
+
+.btn--local {
+  background-color: var(--color-local-green);
+}
+
+.btn--local:hover {
+  background-color: var(--color-local-green-light);
+}
+
+.concept__title-en--local {
+  color: var(--color-local-green);
+}
+
+.concept__feature-icon--local {
+  background-color: var(--color-local-green);
+}
+
+.section__label--local {
+  color: var(--color-local-green);
+}
+
+.service-card__icon--local {
+  background-color: var(--color-local-green);
+}
+
+.service-card--local:nth-child(2) .service-card__icon--local {
+  background-color: var(--color-local-green-light);
+}
+
+.service-card--local:nth-child(3) .service-card__icon--local {
+  background-color: var(--color-local-green-dark);
 }

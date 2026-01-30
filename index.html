@@ -64,364 +64,505 @@
     rel="stylesheet">
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container header__inner">
-      <a href="#" class="header__logo">
-        <img src="assets/logo.png" alt="隣の高専生 ロゴ">
-        <span>隣の高専生</span>
-      </a>
+  <!-- Landing Page -->
+  <section id="landing" class="landing">
+    <div class="landing__inner">
+      <div class="landing__header">
+        <img src="assets/logo.png" alt="隣の高専生" class="landing__logo">
+        <h1 class="landing__title">隣の高専生</h1>
+        <p class="landing__subtitle">高専生がイノベーションの核になる社会を作る</p>
+      </div>
+      <div class="landing__cards">
+        <div id="select-startup" class="landing__card landing__card--startup">
+          <h2 class="landing__card-title">スタートアップ用</h2>
+          <p class="landing__card-subtitle">隣の高専生</p>
+        </div>
+        <div id="select-local" class="landing__card landing__card--local">
+          <h2 class="landing__card-title">地域用</h2>
+          <p class="landing__card-subtitle">隣の高専生</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <nav class="header__nav">
-        <ul class="header__nav-list">
-          <li><a href="#concept" class="header__nav-link">コンセプト</a></li>
-          <li><a href="#services" class="header__nav-link">サービス</a></li>
-          <li><a href="#members" class="header__nav-link">メンバー</a></li>
-          <li><a href="#contact" class="header__nav-link">お問い合わせ</a></li>
+  <!-- Main Content Wrapper -->
+  <div id="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="container header__inner">
+        <a href="#" class="header__logo">
+          <img src="assets/logo.png" alt="隣の高専生 ロゴ">
+          <span>隣の高専生</span>
+        </a>
+
+        <nav class="header__nav">
+          <button id="mode-toggle" class="mode-toggle" aria-label="モード切り替え">
+            <span id="mode-indicator">スタートアップ用</span>
+            <span class="mode-toggle__arrow">⇄</span>
+          </button>
+          <ul class="header__nav-list">
+            <li><a href="#concept" class="header__nav-link">コンセプト</a></li>
+            <li><a href="#services" class="header__nav-link">サービス</a></li>
+            <li><a href="#members" class="header__nav-link">メンバー</a></li>
+            <li><a href="#contact" class="header__nav-link">お問い合わせ</a></li>
+          </ul>
+          <a href="#contact" class="btn btn--primary header__cta">相談する（無料）</a>
+          <button class="header__menu-toggle" aria-label="メニューを開く">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section - Startup -->
+    <section class="hero" data-mode="startup">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <span class="hero__badge">全国58高専からエンジニアを組成</span>
+          <h1 class="hero__title">
+            <span class="hero__title-accent">高専生</span>がイノベーションの核になる社会を作る
+          </h1>
+          <div class="hero__mobile-logo">
+            <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__mobile-logo-image">
+          </div>
+          <p class="hero__description">
+            隣の高専生では、全国5万人の高専生ネットワークが、御社の開発を加速させます。<br>
+            実装力に特化したエンジニアチームが、<br>
+            MVP開発から社内ツールまでを高速納品。
+          </p>
+          <div class="hero__cta">
+            <a href="#contact" class="btn btn--primary btn--large">開発リソースの相談はこちら</a>
+            <a href="#concept" class="btn btn--outline btn--large">詳しく見る</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__logo-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero Section - Local -->
+    <section class="hero hero--local" data-mode="local">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <span class="hero__badge hero__badge--local">地域×高専生で新しい価値を創る</span>
+          <h1 class="hero__title">
+            <span class="hero__title-accent">高専生</span>と一緒に<br>地域の未来を切り拓く
+          </h1>
+          <div class="hero__mobile-logo">
+            <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__mobile-logo-image">
+          </div>
+          <p class="hero__description">
+            全国5万人の高専生が、あなたの地域の課題解決パートナーに。<br>
+            技術力と若い発想で、地域に新しい風を吹き込みます。<br>
+            一緒にプロジェクトを立ち上げませんか？
+          </p>
+          <div class="hero__cta">
+            <a href="#contact" class="btn btn--primary btn--large btn--local">地域課題を相談する</a>
+            <a href="#concept" class="btn btn--outline btn--large">詳しく見る</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__logo-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept Section - Startup -->
+    <section id="concept" class="concept" data-mode="startup">
+      <div class="container concept__inner">
+        <div class="concept__content">
+          <h2 class="concept__title">
+            <span class="concept__title-en">For Startups</span>
+            なぜ今、高専生なのか
+          </h2>
+          <p class="concept__description">
+            「やりたいことはあるのに、作る人がいない」<br>
+            そんな悩みは今日で終わりにしませんか？<br><br>
+            隣の高専生は、リソース不足のスタートアップに、まだ市場に出ていない<strong>「5万人の若きエンジニア集団」</strong>を接続します。</br>
+            <br>
+            全国58校71学科5万人以上の多彩な高専生エンジニアを、<br>
+            あなたの開発リソースとして提供します。
+          </p>
+          <div class="concept__features">
+            <div class="concept__feature">
+              <div class="concept__feature-icon">01</div>
+              <p class="concept__feature-text">チーム制で動くため、管理コストも突然のバックレもなし</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon">02</div>
+              <p class="concept__feature-text">開発から実行まで、ワンストップで任せられる</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon">03</div>
+              <p class="concept__feature-text">全国の高専生エンジニアを「最強のチーム」として提供</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept__visual">
+          <div class="device-mockup">
+            <div class="device-mockup__frame">
+              <img src="assets/app-screenshot.png" alt="隣の高専生アプリ" class="device-mockup__screen">
+            </div>
+            <p class="device-mockup__caption">
+              <a href="https://tonari.ac/" target="_blank" rel="noopener noreferrer">隣の高専生 toC向けアプリ →</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept Section - Local -->
+    <section id="concept-local" class="concept concept--local" data-mode="local">
+      <div class="container concept__inner">
+        <div class="concept__content">
+          <h2 class="concept__title">
+            <span class="concept__title-en concept__title-en--local">For Local</span>
+            地域と高専生をつなぐ理由
+          </h2>
+          <p class="concept__description">
+            「地域の課題を解決したいけど、人手も予算も足りない」<br>
+            そんな悩みを抱えていませんか？<br><br>
+            隣の高専生は、地域の課題と<strong>「若い技術力・行動力を持つ高専生」</strong>をマッチング。<br>
+            プロジェクトを通じて、地域に新しい価値を生み出します。
+          </p>
+          <div class="concept__features">
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--local">01</div>
+              <p class="concept__feature-text">高専生が地域に入り込み、現場で課題を発見・解決</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--local">02</div>
+              <p class="concept__feature-text">技術力×若い発想で、従来にないアプローチを実現</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--local">03</div>
+              <p class="concept__feature-text">全国58高専のネットワークで最適な人材をマッチング</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept__visual">
+          <div class="device-mockup">
+            <div class="device-mockup__frame">
+              <img src="assets/app-screenshot.png" alt="隣の高専生アプリ" class="device-mockup__screen">
+            </div>
+            <p class="device-mockup__caption">
+              <a href="https://tonari.ac/" target="_blank" rel="noopener noreferrer">隣の高専生 toC向けアプリ →</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section - Startup -->
+    <section id="services" class="services" data-mode="startup">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Services</span>
+          <h2 class="section__title">提供価値</h2>
+          <p class="section__description">
+            スタートアップの成長フェーズに合わせた、柔軟な開発支援を提供します。
+          </p>
+        </div>
+
+        <div class="services__grid">
+          <article class="service-card">
+            <div class="service-card__icon">01</div>
+            <h3 class="service-card__title">高速なMVP開発</h3>
+            <p class="service-card__description">
+              認証や決済などの共通機能をモジュール化し、開発工数を50%削減。素早く市場検証が可能です。
+            </p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-card__icon">02</div>
+            <h3 class="service-card__title">柔軟なスケーリング</h3>
+            <p class="service-card__description">
+              プロジェクトの規模や期間に応じて、最適な人数・スキルセットでチームを柔軟に編成します。
+            </p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-card__icon">03</div>
+            <h3 class="service-card__title">優秀な人材へのアクセス</h3>
+            <p class="service-card__description">
+              全国58校の高専ネットワークから、御社の課題に最適なスキルを持つ精鋭チームを組成します。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section - Local -->
+    <section id="services-local" class="services services--local" data-mode="local">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label section__label--local">What We Do</span>
+          <h2 class="section__title">私たちができること</h2>
+          <p class="section__description">
+            地域の課題に合わせて、高専生と一緒に解決策を作り上げます。
+          </p>
+        </div>
+
+        <div class="services__grid">
+          <article class="service-card service-card--local">
+            <div class="service-card__icon service-card__icon--local">01</div>
+            <h3 class="service-card__title">地域課題の発見・調査</h3>
+            <p class="service-card__description">
+              高専生が実際に地域に入り込み、現場の声を聞きながら本当の課題を見つけ出します。
+            </p>
+          </article>
+
+          <article class="service-card service-card--local">
+            <div class="service-card__icon service-card__icon--local">02</div>
+            <h3 class="service-card__title">プロトタイプ開発</h3>
+            <p class="service-card__description">
+              アイデアを素早く形にして、地域の方々と一緒に検証。改善を繰り返しながら最適解を見つけます。
+            </p>
+          </article>
+
+          <article class="service-card service-card--local">
+            <div class="service-card__icon service-card__icon--local">03</div>
+            <h3 class="service-card__title">継続的なサポート</h3>
+            <p class="service-card__description">
+              プロジェクト終了後も、地域との関係を継続。長期的な視点で地域の発展をサポートします。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pitch Deck Section -->
+    <section id="pitch-deck" class="pitch-deck">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Pitch Deck</span>
+          <h2 class="section__title">発表資料</h2>
+          <p class="section__description">
+            隣の高専生の最新の事業紹介資料をご覧いただけます。
+          </p>
+        </div>
+
+        <div class="pitch-deck__viewer">
+          <embed src="assets/pitch-deck.pdf" type="application/pdf" class="pitch-deck__embed">
+          <p class="pitch-deck__fallback">
+            PDFが表示されない場合は<a href="assets/pitch-deck.pdf" target="_blank"
+              rel="noopener noreferrer">こちらからダウンロード</a>してください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="founder" class="founder">
+      <div class="container founder__inner">
+        <img src="assets/representative.jpg" alt="中本怜祐" class="founder__image">
+        <div class="founder__content">
+          <span class="founder__label">Founder</span>
+          <h2 class="founder__name">中本 怜祐</h2>
+          <p class="founder__school">香川高等専門学校 詫間キャンパス 電子システム工学科1年</p>
+          <p class="founder__description">
+            「隣の高専生」代表。岡山県出身の15歳。<br>
+            ミライノピッチ3部門受賞、なんチャレ2025最優秀賞、Akatsukiプロジェクト採択など、
+            高専生として積極的に事業開発・技術開発に取り組む。<br>
+            地域課題解決や次世代エンジニア育成にも注力し、全国の高専生をつなぐネットワークを構築中。
+          </p>
+          <a href="https://ryo.nakamoto.ac/" target="_blank" rel="noopener noreferrer" class="founder__link">
+            ポートフォリオサイトを見る
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Members Section -->
+    <section id="members" class="members">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Participating Members</span>
+          <h2 class="section__title">全国から集まる精鋭メンバー</h2>
+          <p class="section__description">
+            各高専から選りすぐりのエンジニアが、御社のプロジェクトをサポートします。
+          </p>
+        </div>
+
+        <div class="members__grid">
+          <article class="member-card">
+            <div class="member-card__avatar">神</div>
+            <div class="member-card__info">
+              <p class="member-card__school">神山まるごと高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">詫</div>
+            <div class="member-card__info">
+              <p class="member-card__school">香川高専 詫間キャンパス</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">高</div>
+            <div class="member-card__info">
+              <p class="member-card__school">香川高専 高松キャンパス</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">長</div>
+            <div class="member-card__info">
+              <p class="member-card__school">長岡高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">鳥</div>
+            <div class="member-card__info">
+              <p class="member-card__school">鳥羽商船高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">大</div>
+            <div class="member-card__info">
+              <p class="member-card__school">大島商船高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">呉</div>
+            <div class="member-card__info">
+              <p class="member-card__school">呉高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">知</div>
+            <div class="member-card__info">
+              <p class="member-card__school">高知高専</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-card__avatar">弓</div>
+            <div class="member-card__info">
+              <p class="member-card__school">弓削商船高専 (SECOND)</p>
+              <p class="member-card__name">メンバー</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="container contact__inner">
+        <div class="contact__header">
+          <h2 class="contact__title">まずは気軽に相談しましょう！</h2>
+          <p class="contact__description">
+            「こんなアイデアがあるんだけど...」「ちょっと話を聞いてみたい」<br>
+            企業の方はもちろん、個人でアイデアをお持ちの方も大歓迎です！<br>
+            まだ形になっていなくても大丈夫。一緒に考えましょう。
+          </p>
+        </div>
+
+        <form class="contact-form" action="https://formsubmit.co/nakamotoryoke@gmail.com" method="POST">
+          <!-- FormSubmit設定 -->
+          <input type="hidden" name="_subject" value="【隣の高専生】新しいお問い合わせがありました">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" style="display:none">
+
+          <div class="form-group">
+            <label class="form-label" for="name">お名前<span>*</span></label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="山田 太郎" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="affiliation">ご所属（任意）</label>
+            <input type="text" id="affiliation" name="affiliation" class="form-input" placeholder="会社名・学校名・個人など、なんでもOK">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">メールアドレス<span>*</span></label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inquiry-type">ご相談の種類<span>*</span></label>
+            <select id="inquiry-type" name="inquiry-type" class="form-select" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="idea">アイデアを形にしたい</option>
+              <option value="mvp">MVP・プロトタイプ開発</option>
+              <option value="internal-tool">社内ツール・業務システム開発</option>
+              <option value="consult">まずは話を聞いてみたい</option>
+              <option value="collaboration">高専生と一緒にプロジェクトをやりたい</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">相談したいこと（任意）</label>
+            <textarea id="message" name="message" class="form-input form-textarea" rows="4"
+              placeholder="まだぼんやりしたアイデアでも大丈夫です！気軽に書いてください。"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--large">相談してみる</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a href="#" class="footer__logo">
+          <img src="assets/logo.png" alt="隣の高専生 ロゴ">
+          <span>隣の高専生</span>
+        </a>
+
+        <ul class="footer__links">
+          <li><a href="#concept" class="footer__link">コンセプト</a></li>
+          <li><a href="#services" class="footer__link">サービス</a></li>
+          <li><a href="#members" class="footer__link">メンバー</a></li>
+          <li><a href="#contact" class="footer__link">お問い合わせ</a></li>
+          <li><a href="#" class="footer__link">プライバシーポリシー</a></li>
         </ul>
-        <a href="#contact" class="btn btn--primary header__cta">開発の相談をする（無料）</a>
-        <button class="header__menu-toggle" aria-label="メニューを開く">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero__inner">
-      <div class="hero__content">
-        <span class="hero__badge">全国58高専からエンジニアを組成</span>
-        <h1 class="hero__title">
-          <span class="hero__title-accent">高専生</span>がイノベーションの核になる社会を作る
-        </h1>
-        <div class="hero__mobile-logo">
-          <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__mobile-logo-image">
-        </div>
-        <p class="hero__description">
-          全国5万人の高専生ネットワークが、御社の開発を加速させます。<br>
-          実装力に特化したエンジニアチームが、<br>
-          MVP開発から社内ツールまでを高速納品。
-        </p>
-        <div class="hero__cta">
-          <a href="#contact" class="btn btn--primary btn--large">開発リソースの相談はこちら</a>
-          <a href="#concept" class="btn btn--outline btn--large">詳しく見る</a>
-        </div>
-      </div>
-
-      <div class="hero__visual">
-        <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__logo-image">
-      </div>
-    </div>
-  </section>
-
-  <!-- Concept Section -->
-  <section id="concept" class="concept">
-    <div class="container concept__inner">
-      <div class="concept__content">
-        <h2 class="concept__title">
-          <span class="concept__title-en">For Startups</span>
-          なぜ今、高専生なのか
-        </h2>
-        <p class="concept__description">
-          「やりたいことはあるのに、作る人がいない」<br>
-          そんな悩みは今日で終わりにしませんか？<br><br>
-          隣の高専生は、リソース不足のスタートアップに、まだ市場に出ていない<strong>「5万人の若きエンジニア集団」</strong>を接続します。</br>
-          <br>
-          全国58校71学科5万人以上の多彩な高専生エンジニアを、<br>
-          あなたの開発リソースとして提供します。
-        </p>
-        <div class="concept__features">
-          <div class="concept__feature">
-            <div class="concept__feature-icon">01</div>
-            <p class="concept__feature-text">チーム制で動くため、管理コストも突然のバックレもなし</p>
-          </div>
-          <div class="concept__feature">
-            <div class="concept__feature-icon">02</div>
-            <p class="concept__feature-text">開発から実行まで、ワンストップで任せられる</p>
-          </div>
-          <div class="concept__feature">
-            <div class="concept__feature-icon">03</div>
-            <p class="concept__feature-text">全国の高専生エンジニアを「最強のチーム」として提供</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="concept__visual">
-        <div class="device-mockup">
-          <div class="device-mockup__frame">
-            <img src="assets/app-screenshot.png" alt="隣の高専生アプリ" class="device-mockup__screen">
-          </div>
-          <p class="device-mockup__caption">
-            <a href="https://tonari.ac/" target="_blank" rel="noopener noreferrer">隣の高専生 toC向けアプリ →</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section id="services" class="services">
-    <div class="container">
-      <div class="section__header">
-        <span class="section__label">Services</span>
-        <h2 class="section__title">提供価値</h2>
-        <p class="section__description">
-          スタートアップの成長フェーズに合わせた、柔軟な開発支援を提供します。
-        </p>
-      </div>
-
-      <div class="services__grid">
-        <article class="service-card">
-          <div class="service-card__icon">01</div>
-          <h3 class="service-card__title">高速なMVP開発</h3>
-          <p class="service-card__description">
-            認証や決済などの共通機能をモジュール化し、開発工数を50%削減。素早く市場検証が可能です。
-          </p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">02</div>
-          <h3 class="service-card__title">柔軟なスケーリング</h3>
-          <p class="service-card__description">
-            プロジェクトの規模や期間に応じて、最適な人数・スキルセットでチームを柔軟に編成します。
-          </p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-card__icon">03</div>
-          <h3 class="service-card__title">優秀な人材へのアクセス</h3>
-          <p class="service-card__description">
-            全国58校の高専ネットワークから、御社の課題に最適なスキルを持つ精鋭チームを組成します。
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pitch Deck Section -->
-  <section id="pitch-deck" class="pitch-deck">
-    <div class="container">
-      <div class="section__header">
-        <span class="section__label">Pitch Deck</span>
-        <h2 class="section__title">発表資料</h2>
-        <p class="section__description">
-          隣の高専生の最新の事業紹介資料をご覧いただけます。
-        </p>
-      </div>
-
-      <div class="pitch-deck__viewer">
-        <embed src="assets/pitch-deck.pdf" type="application/pdf" class="pitch-deck__embed">
-        <p class="pitch-deck__fallback">
-          PDFが表示されない場合は<a href="assets/pitch-deck.pdf" target="_blank" rel="noopener noreferrer">こちらからダウンロード</a>してください。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Founder Section -->
-  <section id="founder" class="founder">
-    <div class="container founder__inner">
-      <img src="assets/representative.jpg" alt="中本怜祐" class="founder__image">
-      <div class="founder__content">
-        <span class="founder__label">Founder</span>
-        <h2 class="founder__name">中本 怜祐</h2>
-        <p class="founder__school">香川高等専門学校 詫間キャンパス 電子システム工学科1年</p>
-        <p class="founder__description">
-          「隣の高専生」代表。岡山県出身の15歳。<br>
-          ミライノピッチ3部門受賞、なんチャレ2025最優秀賞、Akatsukiプロジェクト採択など、
-          高専生として積極的に事業開発・技術開発に取り組む。<br>
-          地域課題解決や次世代エンジニア育成にも注力し、全国の高専生をつなぐネットワークを構築中。
-        </p>
-        <a href="https://ryo.nakamoto.ac/" target="_blank" rel="noopener noreferrer" class="founder__link">
-          ポートフォリオサイトを見る
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Members Section -->
-  <section id="members" class="members">
-    <div class="container">
-      <div class="section__header">
-        <span class="section__label">Participating Members</span>
-        <h2 class="section__title">全国から集まる精鋭メンバー</h2>
-        <p class="section__description">
-          各高専から選りすぐりのエンジニアが、御社のプロジェクトをサポートします。
-        </p>
-      </div>
-
-      <div class="members__grid">
-        <article class="member-card">
-          <div class="member-card__avatar">神</div>
-          <div class="member-card__info">
-            <p class="member-card__school">神山まるごと高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">詫</div>
-          <div class="member-card__info">
-            <p class="member-card__school">香川高専 詫間キャンパス</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">高</div>
-          <div class="member-card__info">
-            <p class="member-card__school">香川高専 高松キャンパス</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">長</div>
-          <div class="member-card__info">
-            <p class="member-card__school">長岡高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">鳥</div>
-          <div class="member-card__info">
-            <p class="member-card__school">鳥羽商船高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">大</div>
-          <div class="member-card__info">
-            <p class="member-card__school">大島商船高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">呉</div>
-          <div class="member-card__info">
-            <p class="member-card__school">呉高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">知</div>
-          <div class="member-card__info">
-            <p class="member-card__school">高知高専</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-
-        <article class="member-card">
-          <div class="member-card__avatar">弓</div>
-          <div class="member-card__info">
-            <p class="member-card__school">弓削商船高専 (SECOND)</p>
-            <p class="member-card__name">メンバー</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <div class="container contact__inner">
-      <div class="contact__header">
-        <h2 class="contact__title">まずは気軽に相談しましょう！</h2>
-        <p class="contact__description">
-          「こんなアイデアがあるんだけど...」「ちょっと話を聞いてみたい」<br>
-          企業の方はもちろん、個人でアイデアをお持ちの方も大歓迎です！<br>
-          まだ形になっていなくても大丈夫。一緒に考えましょう。
-        </p>
-      </div>
-
-      <form class="contact-form" action="https://formsubmit.co/nakamotoryoke@gmail.com" method="POST">
-        <!-- FormSubmit設定 -->
-        <input type="hidden" name="_subject" value="【隣の高専生】新しいお問い合わせがありました">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" style="display:none">
-
-        <div class="form-group">
-          <label class="form-label" for="name">お名前<span>*</span></label>
-          <input type="text" id="name" name="name" class="form-input" placeholder="山田 太郎" required>
+        <div class="footer__social">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
+            aria-label="X (Twitter)">
+            𝕏
+          </a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
+            aria-label="GitHub">
+            ⌨
+          </a>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="affiliation">ご所属（任意）</label>
-          <input type="text" id="affiliation" name="affiliation" class="form-input" placeholder="会社名・学校名・個人など、なんでもOK">
-        </div>
+        <div class="footer__divider"></div>
 
-        <div class="form-group">
-          <label class="form-label" for="email">メールアドレス<span>*</span></label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.com" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inquiry-type">ご相談の種類<span>*</span></label>
-          <select id="inquiry-type" name="inquiry-type" class="form-select" required>
-            <option value="" disabled selected>選択してください</option>
-            <option value="idea">アイデアを形にしたい</option>
-            <option value="mvp">MVP・プロトタイプ開発</option>
-            <option value="internal-tool">社内ツール・業務システム開発</option>
-            <option value="consult">まずは話を聞いてみたい</option>
-            <option value="collaboration">高専生と一緒にプロジェクトをやりたい</option>
-            <option value="other">その他</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="message">相談したいこと（任意）</label>
-          <textarea id="message" name="message" class="form-input form-textarea" rows="4"
-            placeholder="まだぼんやりしたアイデアでも大丈夫です！気軽に書いてください。"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn--primary btn--large">相談してみる</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <a href="#" class="footer__logo">
-        <img src="assets/logo.png" alt="隣の高専生 ロゴ">
-        <span>隣の高専生</span>
-      </a>
-
-      <ul class="footer__links">
-        <li><a href="#concept" class="footer__link">コンセプト</a></li>
-        <li><a href="#services" class="footer__link">サービス</a></li>
-        <li><a href="#members" class="footer__link">メンバー</a></li>
-        <li><a href="#contact" class="footer__link">お問い合わせ</a></li>
-        <li><a href="#" class="footer__link">プライバシーポリシー</a></li>
-      </ul>
-
-      <div class="footer__social">
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
-          aria-label="X (Twitter)">
-          𝕏
-        </a>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
-          aria-label="GitHub">
-          ⌨
-        </a>
+        <p class="footer__copyright">© 2026 隣の高専生. All rights reserved.</p>
       </div>
-
-      <div class="footer__divider"></div>
-
-      <p class="footer__copyright">© 2026 隣の高専生. All rights reserved.</p>
-    </div>
-  </footer>
+    </footer>
+  </div> <!-- /#main-content -->
 </body>
 
 </html>
