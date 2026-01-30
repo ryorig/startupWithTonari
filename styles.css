@@ -1242,6 +1242,11 @@ img {
 }
 
 /* ===== Local Theme Overrides ===== */
+/* Hero Section - Local */
+.hero--local .hero__title-accent {
+  color: var(--color-local-green);
+}
+
 .hero__badge--local {
   background-color: var(--color-local-green);
 }
@@ -1254,12 +1259,22 @@ img {
   background-color: var(--color-local-green-light);
 }
 
+/* Concept Section - Local */
+.concept--local .concept__title {
+  color: var(--color-local-green-dark);
+}
+
 .concept__title-en--local {
   color: var(--color-local-green);
 }
 
 .concept__feature-icon--local {
   background-color: var(--color-local-green);
+}
+
+/* Services Section - Local */
+.services--local .section__title {
+  color: var(--color-gray-900);
 }
 
 .section__label--local {
@@ -1276,4 +1291,15 @@ img {
 
 .service-card--local:nth-child(3) .service-card__icon--local {
   background-color: var(--color-local-green-dark);
+}
+
+/* Outline button in local mode */
+.hero--local .btn--outline {
+  border-color: var(--color-local-green);
+  color: var(--color-local-green);
+}
+
+.hero--local .btn--outline:hover {
+  background-color: var(--color-local-green);
+  color: var(--color-white);
 }
