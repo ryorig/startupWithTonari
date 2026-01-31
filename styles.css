@@ -1113,6 +1113,10 @@ img {
     margin-top: 24px;
   }
 
+  .header__nav--open .mobile-page-nav {
+    display: flex;
+  }
+
   /* Hamburger animation */
   .header__menu-toggle--active span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
