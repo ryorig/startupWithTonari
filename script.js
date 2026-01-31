@@ -1,6 +1,6 @@
 // ===== Mode Management =====
 const STORAGE_KEY = 'tonari-kosen-mode';
-const DEFAULT_MODE = 'startup';
+const DEFAULT_MODE = 'student';
 const VALID_MODES = ['startup', 'local', 'student'];
 
 // Get current mode from localStorage (default to startup)
