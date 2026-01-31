@@ -9,6 +9,10 @@
   --color-local-green: #2d9a63;
   --color-local-green-dark: #1e7a4a;
   --color-local-green-light: #3db87a;
+  /* Student theme colors */
+  --color-student-orange: #e67e22;
+  --color-student-orange-dark: #c96b1b;
+  --color-student-orange-light: #f39c12;
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -1301,5 +1305,116 @@ img {
 
 .hero--local .btn--outline:hover {
   background-color: var(--color-local-green);
+  color: var(--color-white);
+}
+
+/* ===== Page Navigation ===== */
+.page-nav {
+  display: flex;
+  gap: 4px;
+  background: var(--color-gray-100);
+  border-radius: 8px;
+  padding: 4px;
+  margin-right: 16px;
+}
+
+.page-nav__btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.page-nav__btn:hover {
+  color: var(--color-gray-700);
+  background: var(--color-gray-200);
+}
+
+.page-nav__btn--active {
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-nav__btn--startup.page-nav__btn--active {
+  color: var(--color-tech-blue);
+}
+
+.page-nav__btn--local.page-nav__btn--active {
+  color: var(--color-local-green);
+}
+
+.page-nav__btn--student.page-nav__btn--active {
+  color: var(--color-student-orange);
+}
+
+@media (max-width: 992px) {
+  .page-nav {
+    display: none;
+  }
+}
+
+/* ===== Student Theme Overrides ===== */
+/* Hero Section - Student */
+.hero--student .hero__title-accent {
+  color: var(--color-student-orange);
+}
+
+.hero__badge--student {
+  background-color: var(--color-student-orange);
+}
+
+.btn--student {
+  background-color: var(--color-student-orange);
+}
+
+.btn--student:hover {
+  background-color: var(--color-student-orange-light);
+}
+
+/* Concept Section - Student */
+.concept--student .concept__title {
+  color: var(--color-gray-900);
+}
+
+.concept__title-en--student {
+  color: var(--color-student-orange);
+}
+
+.concept__feature-icon--student {
+  background-color: var(--color-student-orange);
+}
+
+/* Services Section - Student */
+.section__label--student {
+  color: var(--color-student-orange);
+}
+
+.service-card__icon--student {
+  background-color: var(--color-student-orange);
+}
+
+.service-card--student:nth-child(2) .service-card__icon--student {
+  background-color: var(--color-student-orange-light);
+}
+
+.service-card--student:nth-child(3) .service-card__icon--student {
+  background-color: var(--color-student-orange-dark);
+}
+
+/* Outline button in student mode */
+.hero--student .btn--outline {
+  border-color: var(--color-student-orange);
+  color: var(--color-student-orange);
+}
+
+.hero--student .btn--outline:hover {
+  background-color: var(--color-student-orange);
   color: var(--color-white);
 }

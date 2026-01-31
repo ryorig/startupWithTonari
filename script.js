@@ -1,14 +1,17 @@
 // ===== Mode Management =====
 const STORAGE_KEY = 'tonari-kosen-mode';
 const DEFAULT_MODE = 'startup';
+const VALID_MODES = ['startup', 'local', 'student'];
 
 // Get current mode from localStorage (default to startup)
 function getMode() {
-    return localStorage.getItem(STORAGE_KEY) || DEFAULT_MODE;
+    const savedMode = localStorage.getItem(STORAGE_KEY);
+    return VALID_MODES.includes(savedMode) ? savedMode : DEFAULT_MODE;
 }
 
 // Set mode and update display
 function setMode(mode) {
+    if (!VALID_MODES.includes(mode)) return;
     localStorage.setItem(STORAGE_KEY, mode);
     updateDisplay(mode);
 }
@@ -17,51 +20,41 @@ function setMode(mode) {
 function updateDisplay(mode) {
     const landing = document.getElementById('landing');
     const mainContent = document.getElementById('main-content');
-    const startupElements = document.querySelectorAll('[data-mode="startup"]');
-    const localElements = document.querySelectorAll('[data-mode="local"]');
-    const modeIndicator = document.getElementById('mode-indicator');
-    const modeToggle = document.getElementById('mode-toggle');
 
     // Always hide landing, show main content
     if (landing) landing.style.display = 'none';
     if (mainContent) mainContent.style.display = 'block';
 
-    // Update mode indicator text
-    if (modeIndicator) {
-        modeIndicator.textContent = mode === 'startup' ? 'スタートアップ用' : '地域用';
-    }
-
-    // Update toggle button state
-    if (modeToggle) {
-        modeToggle.setAttribute('data-current-mode', mode);
-    }
+    // Update navigation buttons
+    const navButtons = document.querySelectorAll('.page-nav__btn');
+    navButtons.forEach(btn => {
+        btn.classList.remove('page-nav__btn--active');
+        if (btn.dataset.page === mode) {
+            btn.classList.add('page-nav__btn--active');
+        }
+    });
 
     // Show/hide elements based on mode
-    if (mode === 'startup') {
-        startupElements.forEach(el => el.style.display = '');
-        localElements.forEach(el => el.style.display = 'none');
-    } else {
-        startupElements.forEach(el => el.style.display = 'none');
-        localElements.forEach(el => el.style.display = '');
-    }
-}
-
-// Toggle between modes
-function toggleMode() {
-    const currentMode = getMode();
-    const newMode = currentMode === 'startup' ? 'local' : 'startup';
-    setMode(newMode);
+    VALID_MODES.forEach(m => {
+        const elements = document.querySelectorAll(`[data-mode="${m}"]`);
+        elements.forEach(el => {
+            el.style.display = m === mode ? '' : 'none';
+        });
+    });
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function () {
-    // Always start with the current mode (defaults to startup)
+    // Start with the current mode (defaults to startup)
     const currentMode = getMode();
     updateDisplay(currentMode);
 
-    // Set up mode toggle handler
-    const modeToggle = document.getElementById('mode-toggle');
-    if (modeToggle) {
-        modeToggle.addEventListener('click', toggleMode);
-    }
+    // Set up navigation button handlers
+    const navButtons = document.querySelectorAll('.page-nav__btn');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const page = btn.dataset.page;
+            if (page) setMode(page);
+        });
+    });
 });

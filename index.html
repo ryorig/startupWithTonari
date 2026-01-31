@@ -101,10 +101,17 @@
         </a>
 
         <nav class="header__nav">
-          <button id="mode-toggle" class="mode-toggle" aria-label="モード切り替え">
-            <span id="mode-indicator">スタートアップ用</span>
-            <span class="mode-toggle__arrow">⇄</span>
-          </button>
+          <div class="page-nav">
+            <button class="page-nav__btn page-nav__btn--startup page-nav__btn--active" data-page="startup">
+              スタートアップ用
+            </button>
+            <button class="page-nav__btn page-nav__btn--local" data-page="local">
+              地域用
+            </button>
+            <button class="page-nav__btn page-nav__btn--student" data-page="student">
+              高専生用
+            </button>
+          </div>
           <ul class="header__nav-list">
             <li><a href="#concept" class="header__nav-link">コンセプト</a></li>
             <li><a href="#services" class="header__nav-link">サービス</a></li>
@@ -167,6 +174,34 @@
           </p>
           <div class="hero__cta">
             <a href="#contact" class="btn btn--primary btn--large btn--local">地域課題を相談する</a>
+            <a href="#concept" class="btn btn--outline btn--large">詳しく見る</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__logo-image">
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero Section - Student -->
+    <section class="hero hero--student" data-mode="student">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <span class="hero__badge hero__badge--student">全国の高専生が活躍中</span>
+          <h1 class="hero__title">
+            <span class="hero__title-accent">実践経験</span>を積んで<br>成長しよう
+          </h1>
+          <div class="hero__mobile-logo">
+            <img src="assets/hero-logo.png" alt="隣の高専生" class="hero__mobile-logo-image">
+          </div>
+          <p class="hero__description">
+            スタートアップや地域のプロジェクトに参加して、<br>
+            実際の開発経験を積みませんか？<br>
+            報酬を得ながらスキルアップできる環境がここにあります。
+          </p>
+          <div class="hero__cta">
+            <a href="#contact" class="btn btn--primary btn--large btn--student">参加申し込み</a>
             <a href="#concept" class="btn btn--outline btn--large">詳しく見る</a>
           </div>
         </div>
@@ -338,6 +373,89 @@
             <h3 class="service-card__title">継続的なサポート</h3>
             <p class="service-card__description">
               プロジェクト終了後も、地域との関係を継続。長期的な視点で地域の発展をサポートします。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept Section - Student -->
+    <section id="concept-student" class="concept concept--student" data-mode="student">
+      <div class="container concept__inner">
+        <div class="concept__content">
+          <h2 class="concept__title">
+            <span class="concept__title-en concept__title-en--student">For Students</span>
+            参加するメリット
+          </h2>
+          <p class="concept__description">
+            「技術を学んでいるけど、実践の場がない」<br>
+            そんな高専生のために、リアルなプロジェクト経験を提供します。<br><br>
+            スタートアップや地域プロジェクトに参加して、<br>
+            <strong>実践スキル・報酬・ポートフォリオ</strong>を同時に手に入れよう。
+          </p>
+          <div class="concept__features">
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--student">01</div>
+              <p class="concept__feature-text">実際のプロジェクトで実践経験が積める</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--student">02</div>
+              <p class="concept__feature-text">報酬を得ながらスキルアップできる</p>
+            </div>
+            <div class="concept__feature">
+              <div class="concept__feature-icon concept__feature-icon--student">03</div>
+              <p class="concept__feature-text">ポートフォリオやガクチカに使える実績</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept__visual">
+          <div class="device-mockup">
+            <div class="device-mockup__frame">
+              <img src="assets/app-screenshot.png" alt="隣の高専生アプリ" class="device-mockup__screen">
+            </div>
+            <p class="device-mockup__caption">
+              <a href="https://tonari-no-kosensei.vercel.app" target="_blank" rel="noopener noreferrer">隣の高専生 toC向けアプリ
+                →</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section - Student -->
+    <section id="services-student" class="services services--student" data-mode="student">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label section__label--student">How to Join</span>
+          <h2 class="section__title">参加の流れ</h2>
+          <p class="section__description">
+            3ステップで簡単に参加できます。
+          </p>
+        </div>
+
+        <div class="services__grid">
+          <article class="service-card service-card--student">
+            <div class="service-card__icon service-card__icon--student">01</div>
+            <h3 class="service-card__title">応募・登録</h3>
+            <p class="service-card__description">
+              フォームから応募するだけ。スキルや興味分野を教えてください。マッチするプロジェクトをご紹介します。
+            </p>
+          </article>
+
+          <article class="service-card service-card--student">
+            <div class="service-card__icon service-card__icon--student">02</div>
+            <h3 class="service-card__title">プロジェクト参加</h3>
+            <p class="service-card__description">
+              チームに加わり、実際の開発に参加。先輩メンバーがサポートするので初心者でも安心です。
+            </p>
+          </article>
+
+          <article class="service-card service-card--student">
+            <div class="service-card__icon service-card__icon--student">03</div>
+            <h3 class="service-card__title">報酬・実績獲得</h3>
+            <p class="service-card__description">
+              プロジェクト完了後に報酬をお支払い。成果物はポートフォリオとして活用できます。
             </p>
           </article>
         </div>
