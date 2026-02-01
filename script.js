@@ -108,4 +108,65 @@ document.addEventListener('DOMContentLoaded', function () {
     if (ctaButton) {
         ctaButton.addEventListener('click', closeMobileMenu);
     }
+
+    // ===== Scroll Animation =====
+    initScrollAnimations();
 });
+
+// ===== Scroll Animation Functions =====
+function initScrollAnimations() {
+    // Add animation classes to sections
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(el => {
+        el.classList.add('scroll-animate');
+    });
+
+    // Add animation classes to other elements
+    const animatedElements = document.querySelectorAll(
+        '.concept__feature, .service-card, .member-card, ' +
+        '.contact-form, .hero__content, .hero__visual, .concept__content, ' +
+        '.concept__visual, .device-mockup'
+    );
+
+    animatedElements.forEach((el, index) => {
+        el.classList.add('scroll-animate');
+        // Add stagger delay for grid items
+        if (el.classList.contains('service-card') || el.classList.contains('member-card') || el.classList.contains('concept__feature')) {
+            el.style.transitionDelay = `${(index % 4) * 0.1}s`;
+        }
+    });
+
+    // Create Intersection Observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-animate--visible');
+                // Optional: unobserve after animation
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all animated elements
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+
+    // Observe sections
+    sections.forEach(el => {
+        observer.observe(el);
+    });
+
+    // Animate hero immediately
+    setTimeout(() => {
+        document.querySelectorAll('.hero__content, .hero__visual').forEach(el => {
+            el.classList.add('scroll-animate--visible');
+        });
+    }, 100);
+}
