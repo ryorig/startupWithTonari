@@ -1058,9 +1058,9 @@ img {
   }
 
   .hero {
-    padding-top: 100px;
+    padding-top: 80px;
     min-height: auto;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
   }
 
   .hero__visual {
@@ -1070,14 +1070,40 @@ img {
   .hero__mobile-logo {
     display: block;
     text-align: center;
-    margin: 24px 0;
+    margin: 16px 0;
   }
 
   .hero__mobile-logo-image {
-    max-width: 200px;
+    max-width: 120px;
     width: 100%;
     height: auto;
     margin: 0 auto;
+  }
+
+  .hero__title {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .hero__description {
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .hero__cta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero__cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__cta .btn--pulse {
+    font-size: 1rem;
+    padding: 14px 24px;
   }
 
   .section {
