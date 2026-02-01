@@ -9,10 +9,10 @@
   --color-local-green: #2d9a63;
   --color-local-green-dark: #1e7a4a;
   --color-local-green-light: #3db87a;
-  /* Student theme colors */
-  --color-student-orange: #e67e22;
-  --color-student-orange-dark: #c96b1b;
-  --color-student-orange-light: #f39c12;
+  /* Student theme colors - Vibrant */
+  --color-student-orange: #ff6b00;
+  --color-student-orange-dark: #e55a00;
+  --color-student-orange-light: #ff8c33;
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
@@ -1517,60 +1517,78 @@ img {
 }
 
 /* ===== Student Theme Overrides ===== */
-/* Hero Section - Student */
+/* Hero Section - Student - White Background */
+.hero--student {
+  background: #ffffff !important;
+}
+
+.hero--student .hero__title {
+  color: #111827;
+}
+
 .hero--student .hero__title-accent {
-  color: var(--color-student-orange);
+  color: #ff6b00;
+}
+
+.hero--student .hero__description {
+  color: #374151;
 }
 
 .hero__badge--student {
-  background-color: var(--color-student-orange);
+  background-color: #ff6b00;
+  color: #ffffff;
 }
 
 .btn--student {
-  background-color: var(--color-student-orange);
+  background-color: #ff6b00;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .btn--student:hover {
-  background-color: var(--color-student-orange-light);
+  background-color: #ff8c33;
 }
 
 /* Concept Section - Student */
 .concept--student .concept__title {
-  color: var(--color-gray-900);
+  color: #111827;
 }
 
 .concept__title-en--student {
-  color: var(--color-student-orange);
+  color: #ff6b00;
 }
 
 .concept__feature-icon--student {
-  background-color: var(--color-student-orange);
+  background-color: #ff6b00;
 }
 
 /* Services Section - Student */
 .section__label--student {
-  color: var(--color-student-orange);
+  color: #ff6b00;
 }
 
 .service-card__icon--student {
-  background-color: var(--color-student-orange);
+  background-color: #ff6b00;
 }
 
 .service-card--student:nth-child(2) .service-card__icon--student {
-  background-color: var(--color-student-orange-light);
+  background-color: #ff8c33;
 }
 
 .service-card--student:nth-child(3) .service-card__icon--student {
-  background-color: var(--color-student-orange-dark);
+  background-color: #e55a00;
 }
 
 /* Outline button in student mode */
 .hero--student .btn--outline {
-  border-color: var(--color-student-orange);
-  color: var(--color-student-orange);
+  border-color: #ff6b00;
+  border-width: 2px;
+  color: #ff6b00;
+  font-weight: 600;
+  background-color: #ffffff;
 }
 
 .hero--student .btn--outline:hover {
-  background-color: var(--color-student-orange);
-  color: var(--color-white);
+  background-color: #ff6b00;
+  color: #ffffff;
 }
