@@ -1639,9 +1639,9 @@ img {
   background: #e8f4fc !important;
 }
 
-/* Local theme - light green */
+/* Local theme - same as startup (light blue) */
 .hero--local.hero--new-layout {
-  background: #e8fcf0 !important;
+  background: #e8f4fc !important;
 }
 
 .hero--new-layout::before {
