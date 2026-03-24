@@ -2371,3 +2371,367 @@ img {
     font-size: 1.25rem;
   }
 }
+
+/* ===================================================================
+   Our Product Section (Canva再現)
+   =================================================================== */
+.our-product {
+  background:
+    linear-gradient(180deg, rgba(120, 224, 252, .15) 0%, rgba(120, 224, 252, 0) 120px),
+    repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(200, 180, 170, .25) 29px, rgba(200, 180, 170, .25) 30px),
+    repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(200, 180, 170, .25) 29px, rgba(200, 180, 170, .25) 30px),
+    #fff;
+  padding: 60px 24px 48px;
+}
+
+.our-product__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.our-product__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-style: normal;
+  color: #ff751f;
+  margin-bottom: 32px;
+}
+
+/* Diagram: 3カラム + コネクタ */
+.our-product__diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 40px;
+}
+
+.our-product__card {
+  background: #fff;
+  border: 3.5px solid #1a2e50;
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  flex: 0 0 240px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.our-product__card--center {
+  flex: 0 0 360px;
+  padding: 24px 28px;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.our-product__card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a2e50;
+  margin-bottom: 16px;
+}
+
+.our-product__card-icon {
+  width: 120px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.our-product__card-icon img,
+.our-product__card-icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 中央ロゴ行 */
+.our-product__logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.our-product__logo-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.our-product__logo-text {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a2e50;
+  letter-spacing: .02em;
+}
+
+.our-product__office-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a2e50;
+  margin-bottom: 8px;
+}
+
+.our-product__office-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.our-product__office-list li {
+  font-size: .95rem;
+  color: #333;
+  padding: 3px 0;
+  line-height: 1.6;
+}
+
+.our-product__office-list li::before {
+  content: "・";
+  color: #1a2e50;
+  font-weight: 700;
+}
+
+/* コネクタ（ドット） */
+.our-product__connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 8px;
+}
+
+.our-product__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid #1a2e50;
+  background: #fff;
+  display: block;
+}
+
+/* キャッチコピー */
+.our-product__catchphrase {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ff751f;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.our-product__catchphrase span {
+  color: #1a2e50;
+}
+
+.sp-only {
+  display: none;
+}
+
+/* ===================================================================
+   Problem Section
+   =================================================================== */
+.problem {
+  background: #0a0a0a;
+  overflow: hidden;
+  position: relative;
+}
+
+.problem__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 48px 0;
+}
+
+.problem__header {
+  margin-bottom: 40px;
+}
+
+.problem__label {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: #e67e22;
+  margin-bottom: 12px;
+}
+
+.problem__title {
+  font-size: 2.75rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.problem__content {
+  position: relative;
+}
+
+/* テキストリスト */
+.problem__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 -20px;
+  position: relative;
+  z-index: 2;
+}
+
+.problem__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  background: rgba(255,255,255,.95);
+  margin-bottom: 6px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: 10%;
+  backdrop-filter: blur(4px);
+}
+
+.problem__x {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.problem__item p {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #111;
+  margin: 0;
+}
+
+.problem__item p strong {
+  color: #c0392b;
+  font-weight: 900;
+}
+
+/* イラスト */
+.problem__illust-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: -40px;
+}
+
+.problem__image {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ===== Responsive: Our Product & Problem ===== */
+@media (max-width: 1024px) {
+  .our-product__diagram {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .our-product__card {
+    flex: 0 0 200px;
+    min-height: 220px;
+    padding: 20px 16px;
+  }
+
+  .our-product__card--center {
+    flex: 0 0 280px;
+  }
+
+  .our-product__connector {
+    flex-direction: row;
+    padding: 8px 0;
+  }
+
+  .our-product__catchphrase {
+    font-size: 2.2rem;
+  }
+
+  .problem__inner {
+    padding: 48px 32px 0;
+  }
+
+  .problem__title {
+    font-size: 2.2rem;
+  }
+
+  .problem__item {
+    max-width: 100%;
+    margin-right: 0;
+    padding: 12px 20px;
+  }
+
+  .problem__item p {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .our-product {
+    padding: 40px 16px 32px;
+  }
+
+  .our-product__diagram {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .our-product__card,
+  .our-product__card--center {
+    flex: none;
+    width: 100%;
+    max-width: 340px;
+    min-height: auto;
+  }
+
+  .our-product__connector {
+    flex-direction: row;
+    gap: 12px;
+    padding: 4px 0;
+  }
+
+  .our-product__catchphrase {
+    font-size: 1.5rem;
+  }
+
+  .problem__inner {
+    padding: 40px 20px 0;
+  }
+
+  .problem__title {
+    font-size: 1.75rem;
+  }
+
+  .problem__item {
+    max-width: 100%;
+    margin-right: 0;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+
+  .problem__x {
+    font-size: 1.2rem;
+  }
+
+  .problem__item p {
+    font-size: .95rem;
+  }
+
+  .problem__illust-wrap {
+    margin-top: -20px;
+  }
+
+  .sp-only {
+    display: inline;
+  }
+
+}

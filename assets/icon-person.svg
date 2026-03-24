@@ -1,0 +1,7 @@
+<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 頭（円） -->
+  <circle cx="100" cy="65" r="50" stroke="#1a1a1a" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 体（ひょうたん型） -->
+  <path d="M55 130 C30 165, 25 215, 100 225 C175 215, 170 165, 145 130 C135 115, 120 110, 100 110 C80 110, 65 115, 55 130Z"
+        stroke="#1a1a1a" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
