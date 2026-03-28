@@ -675,7 +675,7 @@ img {
 }
 
 .svc-overview__card--link:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
   transform: translateY(-2px);
 }
 
@@ -2538,6 +2538,59 @@ img {
   }
 }
 
+/* ===== Hero CTA Group (Student Registration) ===== */
+.hero__cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 32px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero__register-btn--outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--color-student-orange);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 16px 48px;
+  border: 3px solid var(--color-student-orange);
+  border-radius: 8px;
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hero__register-btn--outline:hover {
+  background: var(--color-student-orange);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+}
+
+.hero__register-btn--inline {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-width: 2px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .hero__cta-group {
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .hero__register-btn--outline {
+    font-size: 1.25rem;
+    padding: 14px 36px;
+  }
+}
+
 /* ===== Scroll Down Circle ===== */
 .scroll-down-circle {
   position: relative;
@@ -2822,7 +2875,7 @@ img {
   align-items: center;
   gap: 14px;
   padding: 14px 24px;
-  background: rgba(255,255,255,.95);
+  background: rgba(255, 255, 255, .95);
   margin-bottom: 6px;
   max-width: 680px;
   margin-left: auto;
