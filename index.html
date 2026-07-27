@@ -65,9 +65,9 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=registration-flow-2">
   <!-- Scripts -->
-  <script src="script.js" defer></script>
+  <script src="script.js?v=registration-flow-2" defer></script>
 </head>
 
 <body>
@@ -80,10 +80,11 @@
         <p class="landing__subtitle">高専生がイノベーションの核になる社会を作る</p>
       </div>
       <div class="landing__cards">
-        <div id="select-startup" class="landing__card landing__card--startup">
-          <h2 class="landing__card-title">企業用</h2>
-          <p class="landing__card-subtitle">隣の高専生</p>
-        </div>
+        <a id="select-startup" class="landing__card landing__card--startup" href="https://app.tonari.ac"
+          target="_blank" rel="noopener noreferrer">
+          <h2 class="landing__card-title">法人企業向け</h2>
+          <p class="landing__card-subtitle">ソフトウェアへ</p>
+        </a>
         <div id="select-local" class="landing__card landing__card--local">
           <h2 class="landing__card-title">地域用</h2>
           <p class="landing__card-subtitle">隣の高専生</p>
@@ -123,9 +124,10 @@
 
         <nav class="header__nav">
           <div class="page-nav">
-            <button class="page-nav__btn page-nav__btn--startup page-nav__btn--active" data-page="startup">
-              企業用
-            </button>
+            <a class="page-nav__corporate-link" href="https://app.tonari.ac" target="_blank"
+              rel="noopener noreferrer">
+              法人企業向けソフトウェア
+            </a>
             <button class="page-nav__btn page-nav__btn--local" data-page="local">
               地域用
             </button>
@@ -134,10 +136,10 @@
             </button>
           </div>
           <div class="mobile-page-nav">
-            <button class="mobile-page-nav__btn mobile-page-nav__btn--startup mobile-page-nav__btn--active"
-              data-page="startup">
-              企業用
-            </button>
+            <a class="mobile-page-nav__link" href="https://app.tonari.ac" target="_blank"
+              rel="noopener noreferrer">
+              法人企業向けソフトウェア
+            </a>
             <button class="mobile-page-nav__btn mobile-page-nav__btn--local" data-page="local">
               地域用
             </button>
@@ -229,10 +231,10 @@
           </h1>
           <div class="hero__description-row">
             <div class="hero__cta-group hero__cta-group--student">
-              <a href="https://app.tonari.ac" target="_blank" rel="noopener noreferrer"
-                class="hero__register-btn hero__register-btn--outline">
+              <button type="button" class="hero__register-btn hero__register-btn--outline"
+                data-open-student-registration aria-haspopup="dialog">
                 新規登録
-              </a>
+              </button>
             </div>
             <a href="#concept-student" class="scroll-down-circle">
               <svg class="scroll-down-circle__text" viewBox="0 0 200 200">
@@ -253,62 +255,11 @@
       </div>
     </section>
 
-    <!-- ===== Our Product Section (Canva再現) ===== -->
+    <!-- ===== Our Product Section ===== -->
     <section class="our-product">
       <div class="our-product__inner">
-        <p class="our-product__label">Our Product</p>
-
-        <div class="our-product__diagram">
-          <!-- 高専生カード -->
-          <div class="our-product__card">
-            <h3 class="our-product__card-title">高専生</h3>
-            <div class="our-product__card-icon">
-              <img src="assets/icon-person.png" alt="高専生">
-            </div>
-          </div>
-
-          <!-- 接続ドット左 -->
-          <div class="our-product__connector">
-            <span class="our-product__dot"></span>
-            <span class="our-product__dot"></span>
-          </div>
-
-          <!-- 中央：運営事務局 -->
-          <div class="our-product__card our-product__card--center">
-            <div class="our-product__logo-row">
-              <img src="assets/logo.png" alt="隣の高専生ロゴ" class="our-product__logo-img">
-              <span class="our-product__logo-text">隣の高専生</span>
-            </div>
-            <div class="our-product__office">
-              <h4 class="our-product__office-title">運営事務局</h4>
-              <ul class="our-product__office-list">
-                <li>案件獲得営業 / マーケティング</li>
-                <li>PMO（進行管理サポート）、AIBPO</li>
-                <li>契約・法務事務</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- 接続ドット右 -->
-          <div class="our-product__connector">
-            <span class="our-product__dot"></span>
-            <span class="our-product__dot"></span>
-          </div>
-
-          <!-- 企業カード -->
-          <div class="our-product__card">
-            <h3 class="our-product__card-title">企業</h3>
-            <div class="our-product__card-icon">
-              <img src="assets/icon-building.png" alt="企業">
-            </div>
-          </div>
-        </div>
-
-        <h2 class="our-product__catchphrase">
-          「開発リソースが足りない」<br>
-          「優秀な若手と出会えない」<br class="sp-only">
-          <span>を高専生が解決する</span>
-        </h2>
+        <img src="assets/our-product-overview.png" alt="隣の高専生のアプリ・コミュニティ・法人向け採用機能と運営事務局の関係図"
+          class="our-product__replacement-image">
       </div>
     </section>
 
@@ -528,8 +479,8 @@
               <img src="assets/app-screenshot.png" alt="隣の高専生アプリ" class="device-mockup__screen">
             </div>
             <p class="device-mockup__caption">
-              <a href="https://app.tonari.ac" target="_blank" rel="noopener noreferrer">隣の高専生 toC向けアプリ
-                →</a>
+              <button type="button" class="registration-inline-link" data-open-student-registration
+                aria-haspopup="dialog">隣の高専生 toC向けアプリ →</button>
             </p>
           </div>
         </div>
@@ -552,10 +503,10 @@
             <div class="service-card__icon service-card__icon--student">01</div>
             <h3 class="service-card__title">応募・登録</h3>
             <p class="service-card__description">
-              <a href="https://app.tonari.ac" target="_blank" rel="noopener noreferrer"
-                class="hero__register-btn hero__register-btn--outline hero__register-btn--inline">
+              <button type="button" class="hero__register-btn hero__register-btn--outline hero__register-btn--inline"
+                data-open-student-registration aria-haspopup="dialog">
                 隣の高専生 toC向けアプリ
-              </a><br>
+              </button><br>
               から応募するだけ。スキルや興味分野を教えてください。マッチするプロジェクトをご紹介します。
             </p>
           </article>
@@ -809,6 +760,121 @@
       </div>
     </footer>
   </div> <!-- /#main-content -->
+
+  <!-- Student Registration Wizard -->
+  <div id="student-registration-modal" class="registration-modal" role="dialog" aria-modal="true"
+    aria-labelledby="registration-modal-title" aria-hidden="true" hidden>
+    <div class="registration-modal__backdrop" data-registration-close></div>
+    <section class="registration-modal__dialog">
+      <button type="button" class="registration-modal__close" data-registration-close aria-label="登録画面を閉じる">×</button>
+
+      <div class="registration-modal__header">
+        <span class="registration-modal__eyebrow">STUDENT REGISTRATION</span>
+        <h2 id="registration-modal-title">高専生として参加登録</h2>
+        <p>いくつかの質問に1問ずつ答えて、登録を完了しましょう。</p>
+        <div class="registration-modal__progress-wrap" aria-live="polite">
+          <div class="registration-modal__progress-track">
+            <span id="registration-progress-bar" class="registration-modal__progress-bar"></span>
+          </div>
+          <span id="registration-step-number" class="registration-modal__step-number">1 / 6</span>
+        </div>
+      </div>
+
+      <form id="student-registration-form" class="registration-form" novalidate>
+        <div class="registration-step is-active" data-registration-step="0">
+          <label class="registration-step__question" for="registration-name">お名前を教えてください</label>
+          <p class="registration-step__hint">プロジェクト参加時に表示する名前です。</p>
+          <input id="registration-name" name="name" type="text" autocomplete="name" placeholder="例：山田 太郎"
+            required>
+          <p class="registration-field__error" data-error-for="name" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="1">
+          <label class="registration-step__question" for="registration-email">メールアドレスを教えてください</label>
+          <p class="registration-step__hint">登録確認やプロジェクトの連絡に使用します。</p>
+          <input id="registration-email" name="email" type="email" autocomplete="email"
+            placeholder="例：hello@example.com" required>
+          <p class="registration-field__error" data-error-for="email" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="2">
+          <label class="registration-step__question" for="registration-school">在籍している高専を教えてください</label>
+          <p class="registration-step__hint">学校名を入力してください。</p>
+          <input id="registration-school" name="school" type="text" autocomplete="organization"
+            placeholder="例：香川高等専門学校" required>
+          <p class="registration-field__error" data-error-for="school" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="3">
+          <label class="registration-step__question" for="registration-course">学科・コースを教えてください</label>
+          <p class="registration-step__hint">学んでいる分野を教えてください。</p>
+          <input id="registration-course" name="course" type="text" autocomplete="off"
+            placeholder="例：情報工学科 / 電子システムコース" required>
+          <p class="registration-field__error" data-error-for="course" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="4">
+          <label class="registration-step__question" for="registration-grade">何年生ですか？</label>
+          <p class="registration-step__hint">現在の学年を選択してください。</p>
+          <select id="registration-grade" name="grade" required>
+            <option value="">学年を選択</option>
+            <option value="1年">1年</option>
+            <option value="2年">2年</option>
+            <option value="3年">3年</option>
+            <option value="4年">4年</option>
+            <option value="5年">5年</option>
+            <option value="専攻科">専攻科</option>
+            <option value="その他">その他</option>
+          </select>
+          <p class="registration-field__error" data-error-for="grade" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="5">
+          <fieldset>
+            <legend class="registration-step__question">興味のある分野を教えてください</legend>
+            <p class="registration-step__hint">複数選択できます。</p>
+            <div class="registration-interest-list">
+              <label><input type="checkbox" name="interests" value="Web・アプリ開発">Web・アプリ開発</label>
+              <label><input type="checkbox" name="interests" value="AI・データ">AI・データ</label>
+              <label><input type="checkbox" name="interests" value="IoT・ロボティクス">IoT・ロボティクス</label>
+              <label><input type="checkbox" name="interests" value="デザイン・企画">デザイン・企画</label>
+              <label><input type="checkbox" name="interests" value="その他">その他</label>
+            </div>
+            <p class="registration-field__error" data-error-for="interests" role="alert"></p>
+          </fieldset>
+        </div>
+
+        <div class="registration-step registration-step--confirm" data-registration-step="6">
+          <p class="registration-step__question">入力内容を確認してください</p>
+          <p class="registration-step__hint">内容に問題がなければ登録を完了します。</p>
+          <dl id="registration-summary" class="registration-summary"></dl>
+          <label class="registration-consent">
+            <input id="registration-consent" name="consent" type="checkbox" value="同意済み" required>
+            <span>入力内容をこのブラウザに保存することに同意します。</span>
+          </label>
+          <p class="registration-field__error" data-error-for="consent" role="alert"></p>
+        </div>
+
+        <div id="registration-success" class="registration-success" hidden>
+          <div class="registration-success__icon">✓</div>
+          <h3>登録情報を保存しました</h3>
+          <p>入力内容をこのブラウザに保存しました。ありがとうございました。</p>
+          <button type="button" class="hero__register-btn hero__register-btn--outline registration-success__close"
+            data-registration-close>閉じる</button>
+        </div>
+
+        <div class="registration-form__actions">
+          <button type="button" class="registration-form__back" data-registration-prev hidden>戻る</button>
+          <button type="button" class="hero__register-btn hero__register-btn--outline" data-registration-next>
+            次へ
+          </button>
+          <button type="submit" class="hero__register-btn hero__register-btn--outline" data-registration-submit hidden>
+            登録を完了する
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
 </body>
 
 </html>
