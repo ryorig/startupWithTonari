@@ -3412,49 +3412,49 @@ body.registration-modal-open {
 /* ===== Student LP visual direction =====
    Reference: translucent rounded navigation, editorial hero layout and gradient CTA. */
 .header {
-  top: 28px;
-  left: 24px;
-  right: 24px;
+  top: 18px;
+  left: 20px;
+  right: 20px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 0 6px 18px rgba(25, 35, 50, 0.1);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
 
 .header__inner {
-  height: 66px;
-  padding: 0 18px 0 24px;
+  height: 58px;
+  padding: 0 16px 0 20px;
 }
 
 .header__logo {
   flex-shrink: 0;
   gap: 10px;
   color: #171717;
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   letter-spacing: -0.04em;
 }
 
 .header__logo img {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #173b8e;
   object-fit: cover;
 }
 
 .header__nav {
-  gap: 18px;
+  gap: 14px;
 }
 
 .header__nav-list {
-  gap: 18px;
+  gap: 14px;
 }
 
 .header__nav-link {
   color: #262626;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -3464,7 +3464,7 @@ body.registration-modal-open {
 }
 
 .page-nav {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0;
   padding: 0;
@@ -3493,11 +3493,11 @@ body.registration-modal-open {
 
 .header__cta {
   flex-shrink: 0;
-  padding: 12px 16px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
   background: #202020;
   color: #fff;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -3516,13 +3516,16 @@ body.registration-modal-open {
 
 .hero--student.hero--new-layout::before {
   display: block;
-  top: -28%;
+  top: -5%;
   right: auto;
-  left: 28%;
-  width: 86px;
-  height: 160%;
-  transform: rotate(42deg);
-  background: #173b8e;
+  left: -34%;
+  width: 68%;
+  height: 190%;
+  transform: none;
+  border: 62px solid #173b8e;
+  border-radius: 50%;
+  background: transparent;
+  box-sizing: border-box;
   opacity: 1;
   z-index: 0;
 }
@@ -3530,10 +3533,10 @@ body.registration-modal-open {
 .hero--student.hero--new-layout::after {
   content: '';
   position: absolute;
-  top: -22%;
-  left: 50%;
-  width: 60px;
-  height: 150%;
+  top: -31%;
+  left: 32%;
+  width: 70px;
+  height: 165%;
   transform: rotate(44deg);
   background: rgba(167, 239, 225, 0.68);
   pointer-events: none;
@@ -3543,7 +3546,7 @@ body.registration-modal-open {
 .hero--student .hero__main {
   min-height: 100svh;
   align-items: center;
-  padding: 152px 5vw 70px 5.8vw;
+  padding: 170px 5vw 70px 5.8vw;
   position: relative;
 }
 
@@ -3562,10 +3565,10 @@ body.registration-modal-open {
 .hero--student .hero__title-large span {
   display: inline-block;
   margin-bottom: 14px;
-  padding: 16px 24px;
+  padding: 13px 20px;
   background: rgba(255, 255, 255, 0.94);
   color: #111827;
-  font-size: clamp(2.35rem, 3.6vw, 3.8rem);
+  font-size: clamp(2.15rem, 3.1vw, 3.35rem);
   font-weight: 800;
   line-height: 1.18;
   letter-spacing: -0.04em;
@@ -3585,15 +3588,15 @@ body.registration-modal-open {
 }
 
 .hero--student .hero__register-btn--outline {
-  width: min(100%, 500px);
+  width: min(100%, 440px);
   min-width: 0;
-  min-height: 76px;
-  padding: 18px 34px;
+  min-height: 66px;
+  padding: 15px 28px;
   border: 0 !important;
   border-radius: 999px;
   background: linear-gradient(100deg, #ed008c 0%, #f4384f 48%, #ffb800 100%) !important;
   color: #fff !important;
-  font-size: clamp(1.25rem, 1.85vw, 1.85rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -3677,6 +3680,20 @@ body.registration-modal-open {
     min-height: 100svh;
   }
 
+  .hero--student.hero--new-layout::before {
+    top: 4%;
+    left: -92%;
+    width: 150%;
+    height: 150%;
+    border-width: 36px;
+  }
+
+  .hero--student.hero--new-layout::after {
+    top: -25%;
+    left: 34%;
+    width: 48px;
+  }
+
   .hero--student .hero__main {
     min-height: 100svh;
     padding: 132px 24px 70px;
@@ -3690,16 +3707,16 @@ body.registration-modal-open {
   }
 
   .hero--student .hero__title-large span {
-    padding: 13px 17px;
-    font-size: clamp(1.85rem, 6vw, 3rem);
+    padding: 11px 15px;
+    font-size: clamp(1.7rem, 5.5vw, 2.6rem);
   }
 
   .hero--student .hero__register-btn--outline {
     min-width: 0;
-    width: min(100%, 520px);
-    min-height: 68px;
-    padding: 16px 22px;
-    font-size: clamp(1.15rem, 3.5vw, 1.6rem);
+    width: min(100%, 400px);
+    min-height: 60px;
+    padding: 14px 20px;
+    font-size: clamp(1rem, 3vw, 1.35rem);
   }
 
   .hero--student .hero__right-image {
@@ -3724,13 +3741,17 @@ body.registration-modal-open {
 
 @media (max-width: 640px) {
   .hero--student.hero--new-layout::before {
-    left: 54%;
-    width: 54px;
+    top: 5%;
+    left: -112%;
+    width: 175%;
+    height: 145%;
+    border-width: 30px;
   }
 
   .hero--student.hero--new-layout::after {
-    left: 72%;
-    width: 46px;
+    top: -22%;
+    left: 38%;
+    width: 38px;
   }
 
   .hero--student .hero__main {
@@ -3740,7 +3761,7 @@ body.registration-modal-open {
   .hero--student .hero__title-large span {
     margin-bottom: 10px;
     padding: 11px 13px;
-    font-size: clamp(1.7rem, 8vw, 2.4rem);
+    font-size: clamp(1.5rem, 7vw, 2.1rem);
   }
 
   .hero--student .hero__cta-group {
@@ -3749,9 +3770,9 @@ body.registration-modal-open {
 
   .hero--student .hero__register-btn--outline {
     width: 100%;
-    min-height: 62px;
-    padding: 14px 16px;
-    font-size: 1rem;
+    min-height: 56px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
   }
 
   .hero--student .hero__right-image {
