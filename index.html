@@ -65,9 +65,9 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css?v=lp-reference-3">
+  <link rel="stylesheet" href="styles.css?v=lp-reference-13">
   <!-- Scripts -->
-  <script src="script.js?v=lp-reference-3" defer></script>
+  <script src="script.js?v=registration-methods-2" defer></script>
 </head>
 
 <body>
@@ -82,7 +82,7 @@
       <div class="landing__cards">
         <a id="select-startup" class="landing__card landing__card--startup" href="https://app.tonari.ac"
           target="_blank" rel="noopener noreferrer">
-          <h2 class="landing__card-title">法人企業向け</h2>
+          <h2 class="landing__card-title">法人企業様向け</h2>
           <p class="landing__card-subtitle">ソフトウェアへ</p>
         </a>
         <div id="select-local" class="landing__card landing__card--local">
@@ -112,8 +112,7 @@
     <header class="header">
       <div class="container header__inner">
         <a href="#" class="header__logo">
-          <img src="assets/logo.png" alt="隣の高専生 ロゴ">
-          <span>隣の高専生</span>
+          <img src="assets/header-logo.png" alt="隣の高専生">
         </a>
 
         <button class="header__menu-toggle" aria-label="メニューを開く">
@@ -126,7 +125,7 @@
           <div class="page-nav">
             <a class="page-nav__corporate-link" href="https://app.tonari.ac" target="_blank"
               rel="noopener noreferrer">
-              法人企業向けソフトウェア
+              法人企業様向けソフトウェア
             </a>
             <button class="page-nav__btn page-nav__btn--local" data-page="local">
               地域用
@@ -138,7 +137,7 @@
           <div class="mobile-page-nav">
             <a class="mobile-page-nav__link" href="https://app.tonari.ac" target="_blank"
               rel="noopener noreferrer">
-              法人企業向けソフトウェア
+              法人企業様向けソフトウェア
             </a>
             <button class="mobile-page-nav__btn mobile-page-nav__btn--local" data-page="local">
               地域用
@@ -155,7 +154,7 @@
             <li><a href="#contact" class="header__nav-link">お問い合わせ ＋</a></li>
           </ul>
           <a href="https://app.tonari.ac" target="_blank" rel="noopener noreferrer" class="btn header__cta">
-            法人企業向け
+            法人企業様向け
           </a>
         </nav>
       </div>
@@ -226,6 +225,10 @@
 
     <!-- Hero Section - Student -->
     <section class="hero hero--student hero--new-layout" data-mode="student">
+      <div class="hero__decor-lines" aria-hidden="true">
+        <span class="hero__decor-blue"></span>
+        <span class="hero__decor-gradient"></span>
+      </div>
       <div class="hero__main">
         <div class="hero__text">
           <h1 class="hero__title-large">
@@ -236,22 +239,22 @@
             <div class="hero__cta-group hero__cta-group--student">
               <button type="button" class="hero__register-btn hero__register-btn--outline"
                 data-open-student-registration aria-haspopup="dialog">
-                今すぐ会員登録 (無料)
+                今すぐ新規登録（無料）
               </button>
             </div>
-            <a href="#concept-student" class="scroll-down-circle">
-              <svg class="scroll-down-circle__text" viewBox="0 0 200 200">
-                <defs>
-                  <path id="circlePath-student" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
-                </defs>
-                <text>
-                  <textPath href="#circlePath-student" textLength="470">SCROLL DOWN · SCROLL DOWN · </textPath>
-                </text>
-              </svg>
-              <span class="scroll-down-circle__arrow">↓</span>
-            </a>
           </div>
         </div>
+        <a href="#concept-student" class="scroll-down-circle">
+          <svg class="scroll-down-circle__text" viewBox="0 0 200 200">
+            <defs>
+              <path id="circlePath-student" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+            </defs>
+            <text>
+              <textPath href="#circlePath-student" textLength="470">SCROLL DOWN · SCROLL DOWN · </textPath>
+            </text>
+          </svg>
+          <span class="scroll-down-circle__arrow">↓</span>
+        </a>
         <div class="hero__right-image">
           <img src="assets/hero-startup-visual.jpg" alt="高専生が活躍する様子" class="hero__right-img">
         </div>
@@ -771,10 +774,76 @@
     <section class="registration-modal__dialog">
       <button type="button" class="registration-modal__close" data-registration-close aria-label="登録画面を閉じる">×</button>
 
-      <div class="registration-modal__header">
+      <div class="registration-method" data-registration-method-screen>
+        <div class="registration-method__brand">
+          <img src="assets/logo.png" alt="">
+          <span>隣の高専生</span>
+        </div>
+        <h2 id="registration-modal-title">新規会員登録</h2>
+        <p class="registration-method__lead">登録方法を選択してください</p>
+
+        <div class="registration-method__list">
+          <button type="button" class="registration-method__button" data-registration-method="Facebook">
+            <span class="registration-method__icon registration-method__icon--facebook" aria-hidden="true">f</span>
+            <span>Facebookで登録</span>
+          </button>
+          <button type="button" class="registration-method__button" data-registration-method="LINE">
+            <span class="registration-method__icon registration-method__icon--line" aria-hidden="true">LINE</span>
+            <span>LINEで登録</span>
+          </button>
+          <button type="button" class="registration-method__button" data-registration-method="Google">
+            <span class="registration-method__icon registration-method__icon--google" aria-hidden="true">G</span>
+            <span>Googleで登録</span>
+          </button>
+          <button type="button" class="registration-method__button" data-registration-method="メール">
+            <span class="registration-method__icon registration-method__icon--mail" aria-hidden="true">✉</span>
+            <span>メールで登録</span>
+          </button>
+        </div>
+
+        <div class="registration-method__links">
+          <button type="button" data-registration-method="招待コード">招待コードをお持ちの方はこちら</button>
+          <button type="button" data-registration-close>ログインはこちら</button>
+        </div>
+
+        <div class="registration-method__legal">
+          <span>利用規約</span>
+          <span>プライバシーポリシー</span>
+          <span>情報の取り扱い</span>
+        </div>
+        <p class="registration-method__copyright">© 2026 隣の高専生</p>
+      </div>
+
+      <div class="registration-auth" data-registration-auth-screen hidden>
+        <span class="registration-auth__badge">ACCOUNT AUTHENTICATION</span>
+        <div class="registration-auth__mark" aria-hidden="true">✓</div>
+        <h2 id="registration-auth-title" data-registration-auth-title>アカウント認証</h2>
+        <p class="registration-auth__description">
+          選択した方法でアカウントを確認した後、学生確認情報を入力します。
+        </p>
+        <div class="registration-auth__requirements">
+          <p>学生確認に必要なもの</p>
+          <ul>
+            <li>学校発行の <strong>ac.jp</strong> メールアドレス</li>
+            <li>在籍高専・学科・学年</li>
+            <li>ポートフォリオの公開URL</li>
+          </ul>
+        </div>
+        <p class="registration-auth__notice">
+          このデモでは外部OAuth接続の代わりに、次の画面で確認情報を登録します。
+        </p>
+        <button type="button" class="registration-auth__continue" data-registration-auth-continue>
+          認証を続ける
+        </button>
+        <button type="button" class="registration-auth__back" data-registration-auth-back>
+          登録方法を選び直す
+        </button>
+      </div>
+
+      <div class="registration-modal__header" hidden>
         <span class="registration-modal__eyebrow">STUDENT REGISTRATION</span>
-        <h2 id="registration-modal-title">高専生として参加登録</h2>
-        <p>いくつかの質問に1問ずつ答えて、登録を完了しましょう。</p>
+        <h2 id="registration-wizard-title">学生確認情報の登録</h2>
+        <p>確認に必要な情報へ1問ずつ答えて、登録を完了しましょう。</p>
         <div class="registration-modal__progress-wrap" aria-live="polite">
           <div class="registration-modal__progress-track">
             <span id="registration-progress-bar" class="registration-modal__progress-bar"></span>
@@ -783,7 +852,8 @@
         </div>
       </div>
 
-      <form id="student-registration-form" class="registration-form" novalidate>
+      <form id="student-registration-form" class="registration-form" novalidate hidden>
+        <input id="registration-method" name="registrationMethod" type="hidden">
         <div class="registration-step is-active" data-registration-step="0">
           <label class="registration-step__question" for="registration-name">お名前を教えてください</label>
           <p class="registration-step__hint">プロジェクト参加時に表示する名前です。</p>
@@ -794,9 +864,10 @@
 
         <div class="registration-step" data-registration-step="1">
           <label class="registration-step__question" for="registration-email">メールアドレスを教えてください</label>
-          <p class="registration-step__hint">登録確認やプロジェクトの連絡に使用します。</p>
+          <p class="registration-step__hint">学生確認のため、学校発行の「ac.jp」で終わるメールアドレスを入力してください。</p>
           <input id="registration-email" name="email" type="email" autocomplete="email"
-            placeholder="例：hello@example.com" required>
+            placeholder="例：student@kosen.ac.jp" pattern="^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)*\.[aA][cC]\.[jJ][pP]$"
+            title="ac.jpで終わる学校発行のメールアドレスを入力してください" required>
           <p class="registration-field__error" data-error-for="email" role="alert"></p>
         </div>
 
@@ -833,6 +904,17 @@
         </div>
 
         <div class="registration-step" data-registration-step="5">
+          <label class="registration-step__question" for="registration-portfolio">ポートフォリオを提出してください</label>
+          <p class="registration-step__hint">
+            GitHub、作品サイト、閲覧可能な共有資料などの公開URLを入力してください。
+          </p>
+          <input id="registration-portfolio" name="portfolio" type="url" autocomplete="url"
+            placeholder="例：https://github.com/your-name" pattern="https://.+"
+            title="https://から始まる閲覧可能なURLを入力してください" required>
+          <p class="registration-field__error" data-error-for="portfolio" role="alert"></p>
+        </div>
+
+        <div class="registration-step" data-registration-step="6">
           <fieldset>
             <legend class="registration-step__question">興味のある分野を教えてください</legend>
             <p class="registration-step__hint">複数選択できます。</p>
@@ -847,7 +929,7 @@
           </fieldset>
         </div>
 
-        <div class="registration-step registration-step--confirm" data-registration-step="6">
+        <div class="registration-step registration-step--confirm" data-registration-step="7">
           <p class="registration-step__question">入力内容を確認してください</p>
           <p class="registration-step__hint">内容に問題がなければ登録を完了します。</p>
           <dl id="registration-summary" class="registration-summary"></dl>
@@ -860,7 +942,7 @@
 
         <div id="registration-success" class="registration-success" hidden>
           <div class="registration-success__icon">✓</div>
-          <h3>登録情報を保存しました</h3>
+          <h3 id="registration-success-title">登録が完了しました</h3>
           <p>入力内容をこのブラウザに保存しました。ありがとうございました。</p>
           <button type="button" class="hero__register-btn hero__register-btn--outline registration-success__close"
             data-registration-close>閉じる</button>

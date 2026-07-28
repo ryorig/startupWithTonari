@@ -78,10 +78,17 @@ function closeMobileMenu() {
 function setupStudentRegistration() {
     const modal = document.getElementById('student-registration-modal');
     const form = document.getElementById('student-registration-form');
-    if (!modal || !form) return;
+    const methodScreen = modal?.querySelector('[data-registration-method-screen]');
+    const authScreen = modal?.querySelector('[data-registration-auth-screen]');
+    if (!modal || !form || !methodScreen || !authScreen) return;
 
     const steps = Array.from(form.querySelectorAll('[data-registration-step]'));
     const questionStepCount = steps.length - 1;
+    const methodInput = form.querySelector('#registration-method');
+    const methodButtons = Array.from(methodScreen.querySelectorAll('[data-registration-method]'));
+    const authTitle = authScreen.querySelector('[data-registration-auth-title]');
+    const authContinueButton = authScreen.querySelector('[data-registration-auth-continue]');
+    const authBackButton = authScreen.querySelector('[data-registration-auth-back]');
     const progressBar = document.getElementById('registration-progress-bar');
     const stepNumber = document.getElementById('registration-step-number');
     const nextButton = form.querySelector('[data-registration-next]');
@@ -91,6 +98,8 @@ function setupStudentRegistration() {
     const success = document.getElementById('registration-success');
     const header = modal.querySelector('.registration-modal__header');
     const actions = form.querySelector('.registration-form__actions');
+    const academicEmailPattern = /^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)*\.ac\.jp$/i;
+    const portfolioUrlPattern = /^https:\/\/\S+$/i;
     let currentStep = 0;
 
     function setError(step, fieldName, message) {
@@ -118,15 +127,37 @@ function setupStudentRegistration() {
         let valid = true;
 
         fields.forEach(field => {
+            if (field.name === 'email' && field.value &&
+                !academicEmailPattern.test(field.value.trim())) {
+                valid = false;
+                setError(step, field.name,
+                    '学校発行の「ac.jp」で終わるメールアドレスを入力してください。');
+                return;
+            }
+            if (field.name === 'portfolio' && field.value &&
+                !portfolioUrlPattern.test(field.value.trim())) {
+                valid = false;
+                setError(step, field.name,
+                    'https://から始まる閲覧可能なURLを入力してください。');
+                return;
+            }
             if (field.checkValidity()) return;
             valid = false;
-            const message = field.validity.valueMissing
+            let message = field.validity.valueMissing
                 ? '入力してください。'
                 : '正しい形式で入力してください。';
+
+            if (field.name === 'email' && !field.validity.valueMissing) {
+                message = '学校発行の「ac.jp」で終わるメールアドレスを入力してください。';
+            }
+            if (field.name === 'portfolio' && !field.validity.valueMissing) {
+                message = 'https://から始まる閲覧可能なURLを入力してください。';
+            }
             setError(step, field.name, message);
         });
 
-        if (currentStep === 5) {
+        const interestInputs = step.querySelectorAll('input[name="interests"]');
+        if (interestInputs.length > 0) {
             const checkedInterests = step.querySelectorAll('input[name="interests"]:checked');
             if (checkedInterests.length === 0) {
                 valid = false;
@@ -145,6 +176,8 @@ function setupStudentRegistration() {
     function getRegistrationData() {
         const data = Object.fromEntries(new FormData(form).entries());
         delete data.consent;
+        if (data.email) data.email = data.email.trim().toLowerCase();
+        if (data.portfolio) data.portfolio = data.portfolio.trim();
         data.interests = Array.from(form.querySelectorAll('input[name="interests"]:checked'))
             .map(input => input.value);
         return data;
@@ -164,11 +197,13 @@ function setupStudentRegistration() {
     function renderSummary() {
         const data = getRegistrationData();
         const rows = [
+            ['登録方法', data.registrationMethod],
             ['お名前', data.name],
             ['メールアドレス', data.email],
             ['在籍高専', data.school],
             ['学科・コース', data.course],
             ['学年', data.grade],
+            ['ポートフォリオ', data.portfolio],
             ['興味分野', data.interests.join('、')]
         ];
 
@@ -182,7 +217,7 @@ function setupStudentRegistration() {
         });
     }
 
-    function showStep(stepIndex) {
+    function showStep(stepIndex, shouldFocus = true) {
         currentStep = Math.max(0, Math.min(stepIndex, steps.length - 1));
         steps.forEach((step, index) => {
             step.classList.toggle('is-active', index === currentStep);
@@ -192,22 +227,59 @@ function setupStudentRegistration() {
         if (isConfirmation) renderSummary();
         progressBar.style.width = `${Math.min(currentStep + 1, questionStepCount) / questionStepCount * 100}%`;
         stepNumber.textContent = isConfirmation ? '確認' : `${currentStep + 1} / ${questionStepCount}`;
-        prevButton.hidden = currentStep === 0;
+        prevButton.hidden = false;
         nextButton.hidden = isConfirmation;
         submitButton.hidden = !isConfirmation;
 
-        const focusTarget = steps[currentStep].querySelector('input, select, textarea, button');
-        if (focusTarget) focusTarget.focus();
+        if (shouldFocus) {
+            const focusTarget = steps[currentStep].querySelector('input, select, textarea, button');
+            if (focusTarget) focusTarget.focus();
+        }
+    }
+
+    function showMethodSelection(shouldFocus = true) {
+        methodScreen.hidden = false;
+        authScreen.hidden = true;
+        header.hidden = true;
+        form.hidden = true;
+        modal.setAttribute('aria-labelledby', 'registration-modal-title');
+
+        if (shouldFocus && methodButtons[0]) methodButtons[0].focus();
+    }
+
+    function showAuthentication(method, shouldFocus = true) {
+        methodInput.value = method;
+        methodScreen.hidden = true;
+        authScreen.hidden = false;
+        header.hidden = true;
+        form.hidden = true;
+        authTitle.textContent = `${method}認証`;
+        authContinueButton.textContent = `${method}認証を続ける`;
+        modal.setAttribute('aria-labelledby', 'registration-auth-title');
+
+        if (shouldFocus) authContinueButton.focus();
+    }
+
+    function startRegistration(method) {
+        methodInput.value = method;
+        methodScreen.hidden = true;
+        authScreen.hidden = true;
+        form.hidden = false;
+        success.hidden = true;
+        header.hidden = false;
+        actions.hidden = false;
+        modal.setAttribute('aria-labelledby', 'registration-wizard-title');
+        showStep(0);
     }
 
     function resetRegistration() {
         form.reset();
         clearErrors();
-        form.hidden = false;
+        authScreen.hidden = true;
         success.hidden = true;
-        header.hidden = false;
         actions.hidden = false;
-        showStep(0);
+        showStep(0, false);
+        showMethodSelection(false);
     }
 
     function openRegistration() {
@@ -215,6 +287,7 @@ function setupStudentRegistration() {
         modal.hidden = false;
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('registration-modal-open');
+        if (methodButtons[0]) methodButtons[0].focus();
     }
 
     function closeRegistration() {
@@ -231,11 +304,24 @@ function setupStudentRegistration() {
         closeButton.addEventListener('click', closeRegistration);
     });
 
+    methodButtons.forEach(button => {
+        button.addEventListener('click', () => showAuthentication(button.dataset.registrationMethod));
+    });
+
+    authContinueButton.addEventListener('click', () => startRegistration(methodInput.value));
+    authBackButton.addEventListener('click', () => showMethodSelection());
+
     nextButton.addEventListener('click', () => {
         if (validateStep()) showStep(currentStep + 1);
     });
 
-    prevButton.addEventListener('click', () => showStep(currentStep - 1));
+    prevButton.addEventListener('click', () => {
+        if (currentStep === 0) {
+            showMethodSelection();
+            return;
+        }
+        showStep(currentStep - 1);
+    });
 
     form.addEventListener('submit', event => {
         event.preventDefault();
@@ -251,13 +337,14 @@ function setupStudentRegistration() {
         actions.hidden = true;
         success.hidden = false;
         header.hidden = true;
+        modal.setAttribute('aria-labelledby', 'registration-success-title');
     });
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && !modal.hidden) closeRegistration();
     });
 
-    showStep(0);
+    resetRegistration();
 }
 
 // Initialize on page load
