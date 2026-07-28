@@ -47,14 +47,10 @@
     "areaServed": "JP",
     "serviceType": ["MVP開発", "システム開発", "社内ツール開発"],
     "sameAs": [
-      "https://twitter.com/tonari_kosen",
-      "https://github.com/tonari-kosen"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "お問い合わせ",
-      "availableLanguage": "Japanese"
-    }
+      "https://www.instagram.com/ryor_i28/",
+      "https://www.facebook.com/profile.php?id=61581137337541",
+      "https://x.com/ryo_nakamoto_ac"
+    ]
   }
   </script>
 
@@ -150,7 +146,7 @@
             <li><a href="#concept-student" class="header__nav-link">参加するメリット ＋</a></li>
             <li><a href="#services-student" class="header__nav-link">参加の流れ ＋</a></li>
             <li><a href="#members" class="header__nav-link">メンバー ＋</a></li>
-            <li><a href="#contact" class="header__nav-link">お問い合わせ ＋</a></li>
+            <li><a href="#social-links" class="header__nav-link">SNS ＋</a></li>
           </ul>
           <a href="#problem" class="btn header__cta">
             法人企業様向け
@@ -674,61 +670,46 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-      <div class="container contact__inner">
-        <div class="contact__header">
-          <h2 class="contact__title">まずは気軽に相談しましょう！</h2>
-          <p class="contact__description">
-            「こんなアイデアがあるんだけど...」「ちょっと話を聞いてみたい」<br>
-            企業の方はもちろん、個人でアイデアをお持ちの方も大歓迎です！<br>
-            まだ形になっていなくても大丈夫。一緒に考えましょう。
+    <!-- Social Links Section -->
+    <section id="social-links" class="social-links-section">
+      <div class="container social-links-section__inner">
+        <div class="social-links-section__header">
+          <span class="social-links-section__label">FOLLOW</span>
+          <h2 class="social-links-section__title">SNSでつながる</h2>
+          <p class="social-links-section__description">
+            隣の高専生の活動や最新情報をSNSで発信しています。
           </p>
         </div>
 
-        <form class="contact-form" action="https://formsubmit.co/nakamotoryoke@gmail.com" method="POST">
-          <!-- FormSubmit設定 -->
-          <input type="hidden" name="_subject" value="【隣の高専生】新しいお問い合わせがありました">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="table">
-          <input type="text" name="_honey" style="display:none">
-
-          <div class="form-group">
-            <label class="form-label" for="name">お名前<span>*</span></label>
-            <input type="text" id="name" name="name" class="form-input" placeholder="山田 太郎" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="affiliation">ご所属（任意）</label>
-            <input type="text" id="affiliation" name="affiliation" class="form-input" placeholder="会社名・学校名・個人など、なんでもOK">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="email">メールアドレス<span>*</span></label>
-            <input type="email" id="email" name="email" class="form-input" placeholder="example@mail.com" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="inquiry-type">ご相談の種類<span>*</span></label>
-            <select id="inquiry-type" name="inquiry-type" class="form-select" required>
-              <option value="" disabled selected>選択してください</option>
-              <option value="idea">アイデアを形にしたい</option>
-              <option value="mvp">MVP・プロトタイプ開発</option>
-              <option value="internal-tool">社内ツール・業務システム開発</option>
-              <option value="consult">まずは話を聞いてみたい</option>
-              <option value="collaboration">高専生と一緒にプロジェクトをやりたい</option>
-              <option value="other">その他</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="message">相談したいこと（任意）</label>
-            <textarea id="message" name="message" class="form-input form-textarea" rows="4"
-              placeholder="まだぼんやりしたアイデアでも大丈夫です！気軽に書いてください。"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn--primary btn--large">相談してみる</button>
-        </form>
+        <div class="social-links-grid">
+          <a class="social-link-button social-link-button--instagram" href="https://www.instagram.com/ryor_i28/"
+            target="_blank" rel="noopener noreferrer">
+            <span class="social-link-button__icon" aria-hidden="true">◎</span>
+            <span class="social-link-button__body">
+              <strong>Instagram</strong>
+              <small>@ryor_i28</small>
+            </span>
+            <span class="social-link-button__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="social-link-button social-link-button--facebook"
+            href="https://www.facebook.com/profile.php?id=61581137337541" target="_blank" rel="noopener noreferrer">
+            <span class="social-link-button__icon" aria-hidden="true">f</span>
+            <span class="social-link-button__body">
+              <strong>Facebook</strong>
+              <small>隣の高専生</small>
+            </span>
+            <span class="social-link-button__arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="social-link-button social-link-button--x" href="https://x.com/ryo_nakamoto_ac" target="_blank"
+            rel="noopener noreferrer">
+            <span class="social-link-button__icon" aria-hidden="true">𝕏</span>
+            <span class="social-link-button__body">
+              <strong>X</strong>
+              <small>@ryo_nakamoto_ac</small>
+            </span>
+            <span class="social-link-button__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -744,18 +725,22 @@
           <li><a href="#concept" class="footer__link">コンセプト</a></li>
           <li><a href="#services" class="footer__link">サービス</a></li>
           <li><a href="#members" class="footer__link">メンバー</a></li>
-          <li><a href="#contact" class="footer__link">お問い合わせ</a></li>
+          <li><a href="#social-links" class="footer__link">SNS</a></li>
           <li><a href="#" class="footer__link">プライバシーポリシー</a></li>
         </ul>
 
         <div class="footer__social">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
-            aria-label="X (Twitter)">
-            𝕏
+          <a href="https://www.instagram.com/ryor_i28/" target="_blank" rel="noopener noreferrer" class="footer__social-link"
+            aria-label="Instagram">
+            ◎
           </a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer__social-link"
-            aria-label="GitHub">
-            ⌨
+          <a href="https://www.facebook.com/profile.php?id=61581137337541" target="_blank"
+            rel="noopener noreferrer" class="footer__social-link" aria-label="Facebook">
+            f
+          </a>
+          <a href="https://x.com/ryo_nakamoto_ac" target="_blank" rel="noopener noreferrer" class="footer__social-link"
+            aria-label="X">
+            𝕏
           </a>
         </div>
 
