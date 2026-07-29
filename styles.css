@@ -2724,19 +2724,41 @@ img {
    Our Product Section (Canva再現)
    =================================================================== */
 .our-product {
-  background: #fff;
-  padding: 0;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  background: #213a89;
+  padding: 48px 24px;
 }
 
 .our-product__inner {
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100svh - 96px);
+  align-items: center;
+  justify-content: center;
 }
 
-.our-product__replacement-image {
-  width: 100%;
-  height: auto;
-  display: block;
+.our-product__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-mincho);
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.our-product__description {
+  max-width: 720px;
+  margin: 24px auto 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  text-align: center;
 }
 
 .our-product__label {
