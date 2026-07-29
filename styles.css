@@ -2740,15 +2740,12 @@ img {
   justify-content: center;
 }
 
-.our-product__title {
-  margin: 0;
-  color: #fff;
-  font-family: var(--font-mincho);
-  font-size: clamp(3rem, 9vw, 8rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  line-height: 1.2;
-  text-align: center;
+.our-product__title-image {
+  display: block;
+  width: min(78vw, 770px);
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
 .our-product__description {
@@ -2759,6 +2756,66 @@ img {
   letter-spacing: 0.08em;
   line-height: 1.9;
   text-align: center;
+}
+
+.stakeholder-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: min(100%, 1080px);
+  margin: 52px auto 0;
+}
+
+.stakeholder-node {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 112px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 18px;
+  background: #fff;
+  color: #213a89;
+  text-align: center;
+}
+
+.stakeholder-node--center {
+  border-color: #fff;
+  background: transparent;
+  color: #fff;
+}
+
+.stakeholder-node strong {
+  font-family: var(--font-mincho);
+  font-size: clamp(1.35rem, 2.3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.stakeholder-node small {
+  color: inherit;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.stakeholder-connector {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.stakeholder-connector__arrow {
+  font-size: 1.7rem;
+  line-height: 1;
 }
 
 .our-product__label {
@@ -3051,6 +3108,27 @@ img {
 @media (max-width: 768px) {
   .our-product {
     padding: 40px 16px 32px;
+  }
+
+  .stakeholder-diagram {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 38px;
+  }
+
+  .stakeholder-node {
+    flex: 0 0 auto;
+    width: min(100%, 320px);
+    min-height: 88px;
+  }
+
+  .stakeholder-connector {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .stakeholder-connector__arrow {
+    transform: rotate(90deg);
   }
 
   .our-product__diagram {

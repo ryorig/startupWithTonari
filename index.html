@@ -61,7 +61,7 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css?v=lp-reference-14">
+  <link rel="stylesheet" href="styles.css?v=lp-reference-15">
   <!-- Scripts -->
   <script src="script.js?v=registration-methods-2" defer></script>
 </head>
@@ -259,10 +259,32 @@
     <!-- ===== Our Product Section ===== -->
     <section class="our-product">
       <div class="our-product__inner">
-        <h2 class="our-product__title">隣の高専生</h2>
+        <img src="assets/product-title-logo-white.png" alt="隣の高専生" class="our-product__title-image">
         <p class="our-product__description">
           高専生と企業をつなぎ、実践の場と新しい価値を生み出すプラットフォーム
         </p>
+        <div class="stakeholder-diagram" aria-label="高専生、隣の高専生、企業の関係図">
+          <div class="stakeholder-node">
+            <strong>高専生</strong>
+            <small>学び・開発・実績</small>
+          </div>
+          <div class="stakeholder-connector" aria-hidden="true">
+            <span>参加・開発</span>
+            <span class="stakeholder-connector__arrow">→</span>
+          </div>
+          <div class="stakeholder-node stakeholder-node--center">
+            <strong>隣の高専生</strong>
+            <small>マッチング・進行・支援</small>
+          </div>
+          <div class="stakeholder-connector" aria-hidden="true">
+            <span>案件・採用</span>
+            <span class="stakeholder-connector__arrow">→</span>
+          </div>
+          <div class="stakeholder-node">
+            <strong>企業</strong>
+            <small>課題・案件・採用</small>
+          </div>
+        </div>
       </div>
     </section>
 
