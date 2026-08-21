@@ -3372,7 +3372,8 @@ img {
   margin-top: 24px;
 }
 
-.registration-method__links button {
+.registration-method__links button,
+.registration-method__links a {
   border: 0;
   background: transparent;
   color: #1e9aa2;
@@ -3382,7 +3383,8 @@ img {
   cursor: pointer;
 }
 
-.registration-method__links button:hover {
+.registration-method__links button:hover,
+.registration-method__links a:hover {
   color: #126e75;
   text-decoration: underline;
 }
