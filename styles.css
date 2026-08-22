@@ -4040,6 +4040,10 @@ body.registration-modal-open {
 }
 
 .hero--student .hero__register-btn--outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: min(100%, 440px);
   min-width: 0;
   min-height: 66px;
