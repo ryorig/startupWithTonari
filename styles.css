@@ -1570,17 +1570,9 @@ img {
   }
 }
 
-/* Hide mobile page nav on desktop */
+/* The page-switcher buttons are not shown in the compact/mobile navigation. */
 .mobile-page-nav {
-  display: none;
-}
-
-/* The page-switcher buttons are intentionally omitted on smartphone screens. */
-@media (max-width: 768px) {
-  .mobile-page-nav,
-  .header__nav--open .mobile-page-nav {
-    display: none !important;
-  }
+  display: none !important;
 }
 
 /* ===== Landing Page ===== */
@@ -4048,10 +4040,10 @@ body.registration-modal-open {
 }
 
 .hero--student .hero__register-btn--outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
   width: min(100%, 440px);
   min-width: 0;
   min-height: 66px;
