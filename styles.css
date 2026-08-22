@@ -1210,6 +1210,11 @@ img {
   font-size: 2rem;
 }
 
+.social-link-button--email .social-link-button__icon {
+  background: #1e9aa2;
+  font-size: 1.55rem;
+}
+
 .social-link-button--x .social-link-button__icon {
   background: #111;
 }
