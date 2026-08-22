@@ -1575,6 +1575,14 @@ img {
   display: none;
 }
 
+/* The page-switcher buttons are intentionally omitted on smartphone screens. */
+@media (max-width: 768px) {
+  .mobile-page-nav,
+  .header__nav--open .mobile-page-nav {
+    display: none !important;
+  }
+}
+
 /* ===== Landing Page ===== */
 .landing {
   display: none;
