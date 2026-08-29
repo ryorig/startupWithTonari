@@ -2886,6 +2886,90 @@ img {
   margin-bottom: 32px;
 }
 
+/* ===================================================================
+   Recognition Section
+   =================================================================== */
+.recognition {
+  padding: 72px 24px 80px;
+  background: #fff;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.recognition__inner {
+  width: min(100%, 1400px);
+  margin: 0 auto;
+}
+
+.recognition__eyebrow {
+  margin: 0;
+  color: #a2acba;
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 1.1vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-align: center;
+}
+
+.recognition__title {
+  margin: 10px 0 0;
+  color: var(--color-tech-blue-dark);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 800;
+  text-align: center;
+}
+
+.recognition__logos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 36px;
+}
+
+.recognition__logo-card {
+  position: relative;
+  display: flex;
+  min-height: 142px;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 24px 18px;
+  border: 1px solid #edf0f4;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.recognition__logo-card--akatsuki {
+  background: #101010;
+  border-color: #101010;
+}
+
+.recognition__tag {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  color: #9aa4b2;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.recognition__logo-card--akatsuki .recognition__tag {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.recognition__logo {
+  display: block;
+  width: min(100%, 220px);
+  height: 72px;
+  object-fit: contain;
+}
+
+.recognition__logo--wide {
+  width: 100%;
+  object-fit: cover;
+  object-position: center 51%;
+}
+
 /* Diagram: 3カラム + コネクタ */
 .our-product__diagram {
   display: flex;
@@ -3165,6 +3249,29 @@ img {
 }
 
 @media (max-width: 768px) {
+  .recognition {
+    padding: 56px 16px 64px;
+  }
+
+  .recognition__eyebrow {
+    letter-spacing: 0.18em;
+  }
+
+  .recognition__logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .recognition__logo-card {
+    min-height: 112px;
+    padding: 24px 12px 12px;
+  }
+
+  .recognition__logo {
+    height: 54px;
+  }
+
   .our-product {
     padding: 40px 16px 32px;
   }
