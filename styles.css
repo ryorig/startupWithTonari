@@ -2890,7 +2890,7 @@ img {
    Recognition Section
    =================================================================== */
 .recognition {
-  padding: 72px 24px 80px;
+  padding: 88px 24px 96px;
   background: #fff;
   border-bottom: 1px solid var(--color-gray-200);
 }
@@ -2911,7 +2911,7 @@ img {
 }
 
 .recognition__title {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   color: var(--color-tech-blue-dark);
   font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 800;
@@ -2921,26 +2921,24 @@ img {
 .recognition__logos {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 24px;
+  gap: 28px;
   align-items: stretch;
-  margin-top: 36px;
+  margin-top: 52px;
 }
 
 .recognition__logo-card {
-  position: relative;
   display: flex;
-  min-height: 142px;
+  min-height: 108px;
   align-items: center;
   justify-content: center;
-  padding: 28px 24px 18px;
-  border: 1px solid #edf0f4;
-  border-radius: 16px;
-  background: #fff;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .recognition__logo-card--akatsuki {
-  background: #101010;
-  border-color: #101010;
+  background: transparent;
 }
 
 .recognition__logo-card--accelerator .recognition__logo {
@@ -2948,17 +2946,7 @@ img {
 }
 
 .recognition__tag {
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  color: #9aa4b2;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.recognition__logo-card--akatsuki .recognition__tag {
-  color: rgba(255, 255, 255, 0.64);
+  display: none;
 }
 
 .recognition__logo {
@@ -3254,7 +3242,7 @@ img {
 
 @media (max-width: 768px) {
   .recognition {
-    padding: 56px 16px 64px;
+    padding: 64px 16px 72px;
   }
 
   .recognition__eyebrow {
@@ -3264,12 +3252,12 @@ img {
   .recognition__logos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    margin-top: 28px;
+    margin-top: 36px;
   }
 
   .recognition__logo-card {
-    min-height: 112px;
-    padding: 24px 12px 12px;
+    min-height: 86px;
+    padding: 10px 4px;
   }
 
   .recognition__logo {
