@@ -2920,7 +2920,7 @@ img {
 
 .recognition__logos {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 24px;
   align-items: stretch;
   margin-top: 36px;
@@ -3202,6 +3202,12 @@ img {
 }
 
 /* ===== Responsive: Our Product & Problem ===== */
+@media (max-width: 1200px) {
+  .recognition__logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 1024px) {
   .our-product__diagram {
     flex-wrap: wrap;
