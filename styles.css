@@ -2910,14 +2910,6 @@ img {
   text-align: center;
 }
 
-.recognition__title {
-  margin: 12px 0 0;
-  color: var(--color-tech-blue-dark);
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  font-weight: 800;
-  text-align: center;
-}
-
 .recognition__logos {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
