@@ -2920,7 +2920,7 @@ img {
 
 .recognition__logos {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 24px;
   align-items: stretch;
   margin-top: 36px;
@@ -2943,6 +2943,10 @@ img {
   border-color: #101010;
 }
 
+.recognition__logo-card--accelerator .recognition__logo {
+  filter: brightness(0) saturate(100%);
+}
+
 .recognition__tag {
   position: absolute;
   top: 10px;
@@ -2962,12 +2966,6 @@ img {
   width: min(100%, 220px);
   height: 72px;
   object-fit: contain;
-}
-
-.recognition__logo--wide {
-  width: 100%;
-  object-fit: cover;
-  object-position: center 51%;
 }
 
 /* Diagram: 3カラム + コネクタ */
