@@ -2949,9 +2949,10 @@ img {
 
 .recognition__logos {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(2, minmax(0, 360px));
+  gap: 64px;
   align-items: stretch;
+  justify-content: center;
   margin-top: 52px;
 }
 
@@ -2968,10 +2969,6 @@ img {
 
 .recognition__logo-card--akatsuki {
   background: transparent;
-}
-
-.recognition__logo-card--accelerator .recognition__logo {
-  filter: brightness(0) saturate(100%);
 }
 
 .recognition__tag {
@@ -3221,7 +3218,7 @@ img {
 /* ===== Responsive: Our Product & Problem ===== */
 @media (max-width: 1200px) {
   .recognition__logos {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 320px));
   }
 }
 
@@ -3279,7 +3276,7 @@ img {
   }
 
   .recognition__logos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 12px;
     margin-top: 36px;
   }
