@@ -1144,6 +1144,11 @@ img {
   box-shadow: 0 12px 24px rgba(13, 45, 84, 0.08);
 }
 
+.member-card--linked:hover .member-card__school {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .member-card--linked:focus-visible {
   outline: 3px solid rgba(30, 154, 162, 0.4);
   outline-offset: 3px;
