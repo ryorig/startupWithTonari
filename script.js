@@ -2,7 +2,6 @@
 const STORAGE_KEY = 'tonari-kosen-mode';
 const DEFAULT_MODE = 'student';
 const VALID_MODES = ['startup', 'local', 'student'];
-const STUDENT_REGISTRATION_STORAGE_KEY = 'tonari-student-registration';
 
 // Get current mode from localStorage (default to startup)
 function getMode() {
@@ -326,11 +325,6 @@ function setupStudentRegistration() {
     form.addEventListener('submit', event => {
         event.preventDefault();
         if (!validateConfirmation()) return;
-        const registration = {
-            ...getRegistrationData(),
-            registeredAt: new Date().toISOString()
-        };
-        localStorage.setItem(STUDENT_REGISTRATION_STORAGE_KEY, JSON.stringify(registration));
         form.querySelectorAll('.registration-step').forEach(step => {
             step.classList.remove('is-active');
         });
