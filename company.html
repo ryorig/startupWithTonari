@@ -11,14 +11,14 @@
   <link rel="apple-touch-icon" sizes="242x242" href="assets/favicon.png?v=icon-1">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1a4382">
-  <link rel="stylesheet" href="styles.css?v=lp-reference-33">
+  <link rel="stylesheet" href="styles.css?v=lp-reference-34">
 </head>
 
 <body class="company-page">
   <header class="company-page__header">
     <a class="company-page__brand" href="index.html"><img src="assets/logo.png" alt="隣の高専生"></a>
     <nav class="company-page__nav" aria-label="法人向けページ内ナビゲーション">
-      <a href="#case-studies">開発事例</a><a href="#scope">対応範囲</a><a href="#process">体制と進め方</a><a href="#pricing">費用・期間</a><a href="#faq">よくある質問</a>
+      <a href="#case-studies">開発事例</a><a href="#scope">対応範囲</a><a href="#process">体制と進め方</a><a href="#pricing">料金</a><a href="#services">サービス</a><a href="#faq">よくある質問</a>
     </nav>
     <a class="company-page__back-link" href="index.html">トップページへ戻る</a>
   </header>
@@ -92,15 +92,58 @@
       </div>
     </section>
 
-    <!-- 5. Cost and period -->
+    <!-- 5. Subscription, project pricing and revenue model -->
     <section id="pricing" class="business-section business-section--muted">
       <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">COST &amp; SCHEDULE</p><h2>費用と期間</h2><p>要件・成果物・期間・対応範囲を確認したうえで、案件ごとに見積もりをご案内します。</p></div>
-        <div class="business-pricing">
-          <div class="business-pricing__panel"><h3>見積もりに含めて整理するもの</h3><ul><li>要件整理・仕様確認</li><li>開発・実装</li><li>動作確認・修正</li><li>納品・導入時の確認</li></ul></div>
-          <div class="business-pricing__panel"><h3>別途相談するもの</h3><ul><li>追加機能や大幅な仕様変更</li><li>外部サービス・サーバー等の利用料</li><li>運用開始後の継続保守</li><li>短納期など特別な体制</li></ul></div>
-          <p class="business-pricing__note">小規模な検証・プロトタイプから相談できます。具体的な費用と期間は、相談後に条件をそろえて提示します。</p>
+        <div class="business-section__heading"><p class="business-section__eyebrow">COST &amp; SCHEDULE</p><h2>費用と期間</h2><p>継続的な課題整理から、必要なときの開発発注まで。サブスクと案件受託を分け、要件・成果物・期間・対応範囲を確認したうえでご案内します。</p></div>
+
+        <div id="subscription" class="business-pricing-block">
+          <div class="business-subheading"><p class="business-section__eyebrow">SUBSCRIPTION</p><h3>法人向けサブスク</h3><p>「開発し放題」ではなく、開発課題を継続的に整理し、必要なときに高専生チームへ発注できる状態をつくるサービスです。</p></div>
+          <div class="business-plan-grid">
+            <article class="business-plan-card"><p class="business-plan-card__label">PARTNER</p><h4>パートナー</h4><p class="business-plan-card__price">月額 <strong>3万円</strong></p><p class="business-plan-card__target">まず相談先が欲しい企業</p><ul><li>月1回の課題整理</li><li>AI要件整理</li><li>月2時間の軽微な支援</li><li>優先マッチング</li></ul></article>
+            <article class="business-plan-card business-plan-card--featured"><p class="business-plan-card__label">GROWTH</p><h4>グロース</h4><p class="business-plan-card__price">月額 <strong>8万円</strong></p><p class="business-plan-card__target">継続的に改善したい企業</p><ul><li>月2回の相談</li><li>月6時間の支援</li><li>開発計画・月次レポート</li><li>優先チーム編成</li></ul></article>
+            <article class="business-plan-card"><p class="business-plan-card__label">DEVELOPMENT PARTNER</p><h4>開発伴走</h4><p class="business-plan-card__price">月額 <strong>15万円〜</strong></p><p class="business-plan-card__target">新規事業・開発部門向け</p><ul><li>週次相談</li><li>月12時間のPM・AIBPO</li><li>品質レビュー</li><li>PoC企画</li></ul></article>
+          </div>
+          <div class="business-pricing__details-grid">
+            <div class="business-pricing__panel"><h4>パートナープランに含まれるもの</h4><ul><li>月1回、30〜60分の課題整理ミーティング</li><li>業務改善・新規開発テーマの優先順位付け</li><li>AIを使った要件定義、議事録、仕様書、タスク整理</li><li>月2時間までの調査・改善案作成・簡易自動化</li><li>開発案件発生時の優先的なチーム提案</li><li>案件化した場合の見積・スケジュール作成</li><li>月1回の進捗・課題レポート</li><li>高専生との技術交流会への参加</li><li>本人同意を前提とした協業・採用候補者との接点</li></ul></div>
+            <div class="business-pricing__panel business-pricing__panel--caution"><h4>サブスクに含まれないもの</h4><ul><li>無制限の開発作業・24時間対応</li><li>本番環境の監視</li><li>重大な個人情報・金融情報を扱うシステムの無審査対応</li><li>必ず学生を確保できること、採用成功の保証</li><li>大規模な保守・運用</li></ul></div>
+          </div>
+          <p class="business-pricing__note">実際のアプリ開発や長時間の実装は、サブスク料金とは別に案件として見積もります。サブスクでは、毎月少しずつ課題が整理され、必要なときに開発へ移れる状態をつくります。</p>
         </div>
+
+        <div class="business-pricing-block business-pricing-block--projects">
+          <div class="business-subheading"><p class="business-section__eyebrow">PROJECT PRICING</p><h3>案件受託の価格帯</h3><p>以下は代表的な目安です。高専生に適しているのは、最初は30〜100万円程度の小〜中規模案件です。</p></div>
+          <div class="business-table-wrap"><table class="business-table"><thead><tr><th scope="col">案件種別</th><th scope="col">価格帯</th><th scope="col">期間目安</th></tr></thead><tbody><tr><th scope="row">要件整理・技術調査</th><td>10〜30万円</td><td>1〜2週間</td></tr><tr><th scope="row">業務自動化・簡易ツール</th><td>30〜80万円</td><td>2〜6週間</td></tr><tr><th scope="row">社内Webアプリ</th><td>60〜150万円</td><td>1〜2か月</td></tr><tr><th scope="row">MVP・プロトタイプ</th><td>80〜300万円</td><td>1〜3か月</td></tr><tr><th scope="row">AI・技術PoC</th><td>50〜200万円</td><td>1〜2か月</td></tr><tr><th scope="row">継続改善・保守</th><td>月5〜30万円</td><td>継続</td></tr></tbody></table></div>
+          <p class="business-pricing__note">300万円を超える案件や、医療・金融・基幹業務などの高リスク案件は、専門会社と組むか、要件整理・試作部分を中心に担当します。</p>
+        </div>
+
+        <div class="business-pricing-block">
+          <div class="business-subheading"><p class="business-section__eyebrow">HOW WE PRICE</p><h3>価格の決め方</h3><p>「学生だから安くする」のではなく、作業・進行・品質・運用に必要な要素を合計して決めます。</p></div>
+          <div class="business-pricing__formula"><span>案件価格</span><b>＝</b><span>学生チームの作業費</span><b>＋</b><span>PM・要件整理費</span><b>＋</b><span>品質レビュー費</span><b>＋</b><span>ツール・サーバー費</span><b>＋</b><span>予備費・Yuuthの管理手数料</span></div>
+          <div class="business-rate-grid"><div><h4>作業費の目安</h4><ul><li>初級メンバー：1時間2,000〜2,500円</li><li>実績のあるメンバー：1時間3,000〜4,000円</li><li>リーダー・専門人材：1時間4,000〜6,000円</li><li>PM・品質レビュー：1時間4,000〜8,000円</li></ul></div><div><h4>管理手数料の目安</h4><ul><li>30万円未満：最低手数料10万円</li><li>30〜100万円：20〜30％</li><li>100万円以上：15〜25％</li><li>継続案件：個別に料率調整</li></ul></div></div>
+          <div class="business-pricing__example"><h4>例：60万円の社内ツール案件</h4><div class="business-table-wrap"><table class="business-table"><tbody><tr><th scope="row">学生チーム報酬</th><td>42万円</td></tr><tr><th scope="row">PM・要件整理</th><td>6.4万円</td></tr><tr><th scope="row">品質レビュー</th><td>4万円</td></tr><tr><th scope="row">ツール・決済費</th><td>0.6万円</td></tr><tr><th scope="row">バックアップ・修正予備費</th><td>1.2万円</td></tr><tr><th scope="row">Yuuthの管理・運営手数料</th><td>5.8万円</td></tr><tr class="business-table__total"><th scope="row">合計</th><td>約60万円</td></tr></tbody></table></div></div>
+        </div>
+
+        <div class="business-pricing-block">
+          <div class="business-subheading"><p class="business-section__eyebrow">PROJECT RANK</p><h3>案件ランクによる価格決定</h3></div>
+          <div class="business-rank-grid"><article><span>S</span><h4>短期・低リスク</h4><p>要件明確、低リスク、短期</p><strong>30〜60万円</strong></article><article><span>M</span><h4>複数人開発</h4><p>要件整理が必要、複数人開発</p><strong>60〜150万円</strong></article><article><span>L</span><h4>MVP・外部連携</h4><p>MVP、AI、外部連携あり</p><strong>150〜300万円</strong></article><article><span>Partner</span><h4>専門会社と連携</h4><p>高リスク、大規模、専門性が必要</p><strong>300万円〜・外部連携</strong></article></div>
+          <div class="business-checklist"><h4>価格確認時に確認する項目</h4><ul><li>納期の厳しさ・必要な学生人数・開発時間</li><li>要件の不確実性、個人情報・機密情報の有無</li><li>品質レビューの必要量、外部API・サーバー費</li><li>学生の試験・長期休暇との重複</li><li>納品後の保守責任・失敗時の代替要員確保</li></ul><p>納期が短い案件、要件が曖昧な案件、機密性が高い案件は、通常価格の1.2〜1.5倍を目安に個別相談します。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional services -->
+    <section id="services" class="business-section business-section--white">
+      <div class="business-section__inner">
+        <div class="business-section__heading"><p class="business-section__eyebrow">ADDITIONAL SERVICES</p><h2>追加で展開するサービス</h2><p>まずは案件と継続接点をつくり、実績と体制に合わせて支援領域を広げます。</p></div>
+        <div class="business-services__grid">
+          <article><span>01</span><h3>継続保守・改善</h3><p>月額5〜30万円で、納品後の改善やバグ修正を行います。</p><ul><li>月次改善・バグ修正</li><li>操作ログ分析・ドキュメント更新</li><li>小規模な機能追加・学生チーム再編成</li></ul></article>
+          <article><span>02</span><h3>AIBPO業務支援</h3><p>月額5〜20万円程度で、担当者の報告・整理・引き継ぎの時間を減らします。</p><ul><li>会議・要件・タスク・進捗の整理</li><li>問い合わせ分類・マニュアル作成</li><li>社内ナレッジ・引き継ぎ資料作成</li></ul></article>
+          <article><span>03</span><h3>有償技術チャレンジ</h3><p>企業が出した課題に、高専生が有償で提案・試作します。</p><ul><li>企画・課題設定費：10〜30万円</li><li>試作・検証費：30〜100万円</li><li>優秀チームへの追加開発：別見積</li></ul></article>
+          <article><span>04</span><h3>高専生向け企業ブランディング</h3><p>協賛を通じて、高専生との仕事を起点にした相互理解の機会をつくります。</p><ul><li>技術勉強会・会社説明会</li><li>ハッカソン・社員交流会</li><li>技術課題の提供・インターン候補者との接点</li></ul></article>
+          <article><span>05</span><h3>卒業生レビューネットワーク</h3><p>卒業した高専生や経験者を、品質レビュー・PM・技術メンターとして活用します。</p><ul><li>納品前コードレビュー</li><li>顧客との技術説明・高難度案件支援</li><li>学生チームの相談役・新メンバー教育</li></ul></article>
+        </div>
+        <div class="business-revenue-flow"><p class="business-section__eyebrow">REVENUE FLOW</p><h3>事業の収益導線</h3><div class="business-revenue-flow__steps"><span>無料相談</span><b>→</b><span>月額サブスク</span><b>→</b><span>小規模案件</span><b>→</b><span>継続開発・保守</span><b>→</b><span>PoC・新規事業支援</span><b>→</b><span>採用・協業・卒業生ネットワーク</span></div><p>当面は「月額3万円のパートナープラン」「30〜150万円の開発案件」「月額5〜30万円の保守・改善契約」に絞り、企業との継続接点と収益基盤をつくります。</p></div>
       </div>
     </section>
 

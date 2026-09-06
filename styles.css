@@ -4631,6 +4631,365 @@ body.registration-modal-open {
   line-height: 1.8;
 }
 
+.business-pricing-block {
+  margin-top: 72px;
+}
+
+.business-pricing-block:first-of-type {
+  margin-top: 0;
+}
+
+.business-pricing-block--projects {
+  padding-top: 72px;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.business-subheading {
+  max-width: 800px;
+  margin-bottom: 26px;
+}
+
+.business-subheading h3 {
+  margin: 0 0 12px;
+  color: var(--color-tech-blue-dark);
+  font-size: clamp(1.55rem, 2.8vw, 2.25rem);
+  line-height: 1.3;
+}
+
+.business-subheading > p:last-child {
+  margin: 0;
+  color: var(--color-gray-600);
+  line-height: 1.85;
+}
+
+.business-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.business-plan-card {
+  position: relative;
+  min-height: 360px;
+  padding: 28px 24px;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-plan-card--featured {
+  border: 2px solid var(--color-tech-blue-dark);
+  box-shadow: 0 12px 28px rgba(13, 45, 84, 0.1);
+}
+
+.business-plan-card__label {
+  margin: 0 0 18px;
+  color: var(--color-akatsuki);
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.business-plan-card h4 {
+  margin: 0 0 10px;
+  color: var(--color-tech-blue-dark);
+  font-size: 1.35rem;
+}
+
+.business-plan-card__price {
+  margin: 0;
+  color: var(--color-gray-600);
+}
+
+.business-plan-card__price strong {
+  color: var(--color-tech-blue-dark);
+  font-size: 1.65rem;
+}
+
+.business-plan-card__target {
+  min-height: 46px;
+  margin: 10px 0 22px;
+  color: var(--color-gray-500);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.business-plan-card ul,
+.business-rate-grid ul,
+.business-checklist ul,
+.business-services__grid ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.business-plan-card li,
+.business-rate-grid li,
+.business-checklist li,
+.business-services__grid li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--color-gray-600);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.business-plan-card li::before,
+.business-rate-grid li::before,
+.business-checklist li::before,
+.business-services__grid li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--color-akatsuki);
+  content: '✓';
+  font-weight: 800;
+}
+
+.business-pricing__details-grid,
+.business-rate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.business-pricing__panel--caution {
+  background: #fffaf6;
+}
+
+.business-pricing__panel h4,
+.business-rate-grid h4,
+.business-pricing__example h4,
+.business-checklist h4 {
+  margin: 0 0 16px;
+  color: var(--color-tech-blue-dark);
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.business-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  color: var(--color-gray-600);
+  font-size: 0.94rem;
+}
+
+.business-table th,
+.business-table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--color-gray-200);
+  text-align: left;
+  line-height: 1.55;
+}
+
+.business-table thead th {
+  background: #eef4fa;
+  color: var(--color-tech-blue-dark);
+  font-weight: 800;
+}
+
+.business-table tbody th {
+  color: var(--color-tech-blue-dark);
+  font-weight: 700;
+}
+
+.business-table tbody tr:last-child th,
+.business-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.business-table__total th,
+.business-table__total td {
+  background: #fff5ec;
+  color: var(--color-tech-blue-dark);
+  font-weight: 800;
+}
+
+.business-pricing__formula {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 20px 22px;
+  border-left: 4px solid var(--color-akatsuki);
+  background: #fff;
+  color: var(--color-tech-blue-dark);
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.business-pricing__formula b {
+  color: var(--color-akatsuki);
+}
+
+.business-rate-grid > div,
+.business-pricing__example,
+.business-checklist {
+  padding: 26px 24px;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-pricing__example {
+  margin-top: 18px;
+}
+
+.business-checklist {
+  margin-top: 18px;
+}
+
+.business-checklist p {
+  margin: 18px 0 0;
+  color: var(--color-gray-600);
+  line-height: 1.8;
+}
+
+.business-rank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.business-rank-grid article {
+  min-height: 190px;
+  padding: 22px 18px;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-rank-grid article > span {
+  display: inline-flex;
+  min-width: 34px;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  padding: 3px 8px;
+  background: var(--color-tech-blue-dark);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.business-rank-grid h4 {
+  margin: 0 0 8px;
+  color: var(--color-tech-blue-dark);
+  font-size: 1rem;
+}
+
+.business-rank-grid p {
+  min-height: 43px;
+  margin: 0 0 10px;
+  color: var(--color-gray-600);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.business-rank-grid strong {
+  color: var(--color-akatsuki);
+  font-size: 0.9rem;
+}
+
+.business-services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.business-services__grid article {
+  min-height: 260px;
+  padding: 26px 22px;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-services__grid article:nth-child(n + 4) {
+  background: #f8fafc;
+}
+
+.business-services__grid article > span {
+  display: block;
+  margin-bottom: 24px;
+  color: var(--color-akatsuki);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.business-services__grid h3 {
+  margin: 0 0 11px;
+  color: var(--color-tech-blue-dark);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+.business-services__grid p {
+  min-height: 52px;
+  margin: 0 0 18px;
+  color: var(--color-gray-600);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.business-services__grid li {
+  font-size: 0.84rem;
+}
+
+.business-revenue-flow {
+  margin-top: 56px;
+  padding: 30px;
+  background: var(--color-tech-blue-dark);
+  color: #fff;
+}
+
+.business-revenue-flow .business-section__eyebrow {
+  color: #ffb06d;
+}
+
+.business-revenue-flow h3 {
+  margin: 0 0 22px;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.business-revenue-flow__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.business-revenue-flow__steps span {
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.business-revenue-flow__steps b {
+  color: #ffb06d;
+}
+
+.business-revenue-flow > p:last-child {
+  margin: 22px 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+}
+
 .business-faq__list {
   display: grid;
   gap: 10px;
@@ -4721,7 +5080,12 @@ body.registration-modal-open {
   .business-proof__grid,
   .business-scope__grid,
   .business-process__grid,
-  .business-pricing {
+  .business-pricing,
+  .business-plan-grid,
+  .business-pricing__details-grid,
+  .business-rate-grid,
+  .business-rank-grid,
+  .business-services__grid {
     grid-template-columns: 1fr;
   }
 
@@ -4732,6 +5096,50 @@ body.registration-modal-open {
 
   .business-pricing__note {
     grid-column: auto;
+  }
+
+  .business-pricing-block {
+    margin-top: 56px;
+  }
+
+  .business-pricing-block--projects {
+    padding-top: 56px;
+  }
+
+  .business-plan-card {
+    min-height: auto;
+  }
+
+  .business-plan-card__target,
+  .business-services__grid p {
+    min-height: auto;
+  }
+
+  .business-pricing__formula {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .business-pricing__formula b {
+    line-height: 1;
+  }
+
+  .business-rank-grid article {
+    min-height: auto;
+  }
+
+  .business-revenue-flow {
+    padding: 24px 20px;
+  }
+
+  .business-revenue-flow__steps {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .business-revenue-flow__steps b {
+    text-align: center;
+    transform: rotate(90deg);
   }
 
   .company-page__section {
