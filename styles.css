@@ -4649,6 +4649,34 @@ body.registration-modal-open {
   box-shadow: 0 20px 28px rgba(237, 0, 140, 0.23), 0 14px 22px rgba(255, 184, 0, 0.25);
 }
 
+.hero--student .hero__business-btn {
+  display: flex;
+  width: min(100%, 300px);
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  padding: 12px 24px;
+  border: 1px solid #171717;
+  border-radius: 999px;
+  background: #171717;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero--student .hero__business-btn:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22);
+}
+
 .hero--student .hero__right-image {
   top: 10%;
   right: -2%;
@@ -4759,6 +4787,10 @@ body.registration-modal-open {
     font-size: clamp(1rem, 3vw, 1.35rem);
   }
 
+  .hero--student .hero__business-btn {
+    width: min(100%, 280px);
+  }
+
   .hero--student .hero__right-image {
     top: 38%;
     right: -10%;
@@ -4812,6 +4844,12 @@ body.registration-modal-open {
     width: 100%;
     min-height: 56px;
     padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .hero--student .hero__business-btn {
+    width: 100%;
+    min-height: 48px;
     font-size: 0.9rem;
   }
 
