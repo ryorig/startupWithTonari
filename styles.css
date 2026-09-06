@@ -4658,7 +4658,7 @@ body.registration-modal-open {
   margin-top: 4px;
   padding: 12px 24px;
   border: 1px solid #171717;
-  border-radius: 999px;
+  border-radius: 16px;
   background: #171717;
   color: #fff;
   font-size: 1rem;
@@ -4789,6 +4789,7 @@ body.registration-modal-open {
 
   .hero--student .hero__business-btn {
     width: min(100%, 280px);
+    min-height: 56px;
   }
 
   .hero--student .hero__right-image {
@@ -4849,7 +4850,7 @@ body.registration-modal-open {
 
   .hero--student .hero__business-btn {
     width: 100%;
-    min-height: 48px;
+    min-height: 56px;
     font-size: 0.9rem;
   }
 
