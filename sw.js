@@ -7,7 +7,6 @@ const APP_SHELL = [
   './privacy.html',
   './styles.css?v=lp-reference-30',
   './script.js?v=registration-methods-2',
-  './company.js',
   './manifest.webmanifest',
   './assets/logo.png',
   './assets/favicon.png',

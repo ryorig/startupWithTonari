@@ -32,7 +32,7 @@
           MVP開発・社内ツール開発・業務改善を支援します。
         </p>
         <div class="company-page__hero-actions">
-          <a class="company-page__button company-page__button--primary" href="#inquiry">相談フォームへ</a>
+          <a class="company-page__button company-page__button--primary" href="#inquiry">予約フォームへ</a>
           <a class="company-page__button company-page__button--secondary" href="https://calendar.app.google/i56oNKzchSic3Di78"
             target="_blank" rel="noopener noreferrer">日程を予約する ↗</a>
         </div>
@@ -69,42 +69,16 @@
           <p class="company-page__eyebrow">CONTACT</p>
           <h2>まずは、課題をお聞かせください。</h2>
           <p>
-            ご相談内容を入力して送信すると、メールソフトが起動します。
-            送信後、Googleカレンダーから打ち合わせ日程をご予約いただけます。
+            ご相談・打ち合わせをご希望の方は、以下の予約フォームから空いている日時をお選びください。
           </p>
-          <a class="company-page__calendar-link" href="https://calendar.app.google/i56oNKzchSic3Di78"
-            target="_blank" rel="noopener noreferrer">先に日程を予約する ↗</a>
         </div>
 
-        <div class="company-page__form-wrap">
-          <form id="company-inquiry-form" class="company-page__form">
-            <label>
-              会社名 <span>*</span>
-              <input type="text" name="company" autocomplete="organization" required>
-            </label>
-            <label>
-              お名前 <span>*</span>
-              <input type="text" name="name" autocomplete="name" required>
-            </label>
-            <label>
-              メールアドレス <span>*</span>
-              <input type="email" name="email" autocomplete="email" required>
-            </label>
-            <label>
-              ご相談内容 <span>*</span>
-              <textarea name="message" rows="5" required placeholder="開発したいもの、現在の課題などをご記入ください"></textarea>
-            </label>
-            <button class="company-page__button company-page__button--primary" type="submit">相談内容を送信する</button>
-            <p class="company-page__form-note">送信先：nakamotoryoke@gmail.com</p>
-          </form>
-
-          <div id="company-inquiry-success" class="company-page__success" hidden aria-live="polite">
-            <p class="company-page__success-mark">✓</p>
-            <h3>お問い合わせ内容を準備しました</h3>
-            <p>メールソフトから送信後、以下のボタンから打ち合わせ日程をご予約ください。</p>
-            <a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78"
-              target="_blank" rel="noopener noreferrer">Googleカレンダーで予約する ↗</a>
-          </div>
+        <div class="company-page__calendar-card">
+          <p class="company-page__calendar-card-label">GOOGLE CALENDAR</p>
+          <h3>予約フォームから日程を選択</h3>
+          <p>予約完了後、必要に応じてお問い合わせ内容をメールでお送りください。</p>
+          <a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78"
+            target="_blank" rel="noopener noreferrer">Googleカレンダーの予約フォームを開く ↗</a>
         </div>
       </div>
     </section>
@@ -124,7 +98,6 @@
     <a href="privacy.html">プライバシーポリシー</a>
   </footer>
 
-  <script src="company.js" defer></script>
 </body>
 
 </html>
