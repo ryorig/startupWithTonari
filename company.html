@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法人企業様向け | 隣の高専生</title>
+  <meta name="description" content="隣の高専生の法人企業様向けページ。高専生エンジニアチームによるMVP開発・社内ツール開発をご相談いただけます。">
+  <link rel="canonical" href="https://tonari.ac/company.html">
+  <link rel="icon" type="image/png" sizes="242x242" href="assets/favicon.png?v=icon-1">
+  <link rel="apple-touch-icon" sizes="242x242" href="assets/favicon.png?v=icon-1">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1a4382">
+  <link rel="stylesheet" href="styles.css?v=lp-reference-30">
+</head>
+
+<body class="company-page">
+  <header class="company-page__header">
+    <a class="company-page__brand" href="index.html">
+      <img src="assets/logo.png" alt="隣の高専生">
+    </a>
+    <a class="company-page__back-link" href="index.html">トップページへ戻る</a>
+  </header>
+
+  <main>
+    <section class="company-page__hero">
+      <div class="company-page__hero-inner">
+        <p class="company-page__eyebrow">FOR BUSINESS</p>
+        <h1>高専生の開発チームを、<br>御社の事業へ。</h1>
+        <p class="company-page__lead">
+          隣の高専生は、全国の高専生ネットワークから案件に合ったチームを編成し、
+          MVP開発・社内ツール開発・業務改善を支援します。
+        </p>
+        <div class="company-page__hero-actions">
+          <a class="company-page__button company-page__button--primary" href="#inquiry">相談フォームへ</a>
+          <a class="company-page__button company-page__button--secondary" href="https://calendar.app.google/i56oNKzchSic3Di78"
+            target="_blank" rel="noopener noreferrer">日程を予約する ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="company-page__section company-page__section--white">
+      <div class="company-page__container">
+        <p class="company-page__eyebrow">WHAT WE SUPPORT</p>
+        <h2>事業の前進に必要な開発を支援します</h2>
+        <div class="company-page__cards">
+          <article class="company-page__card">
+            <span class="company-page__card-number">01</span>
+            <h3>MVP・プロトタイプ開発</h3>
+            <p>アイデアを検証できる形に整理し、必要な機能から段階的に開発します。</p>
+          </article>
+          <article class="company-page__card">
+            <span class="company-page__card-number">02</span>
+            <h3>社内ツール・業務改善</h3>
+            <p>現場の業務をヒアリングし、使う人に合わせたツールづくりを支援します。</p>
+          </article>
+          <article class="company-page__card">
+            <span class="company-page__card-number">03</span>
+            <h3>チーム編成・進行支援</h3>
+            <p>必要なスキルに応じてチームを編成し、PM・事務局が連絡と進捗を整理します。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="inquiry" class="company-page__section company-page__section--inquiry">
+      <div class="company-page__container company-page__inquiry-layout">
+        <div class="company-page__inquiry-copy">
+          <p class="company-page__eyebrow">CONTACT</p>
+          <h2>まずは、課題をお聞かせください。</h2>
+          <p>
+            ご相談内容を入力して送信すると、メールソフトが起動します。
+            送信後、Googleカレンダーから打ち合わせ日程をご予約いただけます。
+          </p>
+          <a class="company-page__calendar-link" href="https://calendar.app.google/i56oNKzchSic3Di78"
+            target="_blank" rel="noopener noreferrer">先に日程を予約する ↗</a>
+        </div>
+
+        <div class="company-page__form-wrap">
+          <form id="company-inquiry-form" class="company-page__form">
+            <label>
+              会社名 <span>*</span>
+              <input type="text" name="company" autocomplete="organization" required>
+            </label>
+            <label>
+              お名前 <span>*</span>
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              メールアドレス <span>*</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label>
+              ご相談内容 <span>*</span>
+              <textarea name="message" rows="5" required placeholder="開発したいもの、現在の課題などをご記入ください"></textarea>
+            </label>
+            <button class="company-page__button company-page__button--primary" type="submit">相談内容を送信する</button>
+            <p class="company-page__form-note">送信先：nakamotoryoke@gmail.com</p>
+          </form>
+
+          <div id="company-inquiry-success" class="company-page__success" hidden aria-live="polite">
+            <p class="company-page__success-mark">✓</p>
+            <h3>お問い合わせ内容を準備しました</h3>
+            <p>メールソフトから送信後、以下のボタンから打ち合わせ日程をご予約ください。</p>
+            <a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78"
+              target="_blank" rel="noopener noreferrer">Googleカレンダーで予約する ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="company-page__company-info">
+      <div class="company-page__container">
+        <p class="company-page__eyebrow">COMPANY</p>
+        <h2>会社情報</h2>
+        <p>株式会社Ｙｕｕｔｈ</p>
+        <p>〒771-3310 徳島県名西郡神山町神領字大埜地299番1<br>神山まるごと高専ROOMS・Base</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="company-page__footer">
+    <span>© 2026 株式会社Ｙｕｕｔｈ</span>
+    <a href="privacy.html">プライバシーポリシー</a>
+  </footer>
+
+  <script src="company.js" defer></script>
+</body>
+
+</html>

@@ -1,10 +1,13 @@
-const CACHE_NAME = 'tonari-pwa-v1';
+const CACHE_NAME = 'tonari-pwa-v2';
 
 const APP_SHELL = [
   './',
   './index.html',
-  './styles.css?v=lp-reference-29',
+  './company.html',
+  './privacy.html',
+  './styles.css?v=lp-reference-30',
   './script.js?v=registration-methods-2',
+  './company.js',
   './manifest.webmanifest',
   './assets/logo.png',
   './assets/favicon.png',
@@ -61,7 +64,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
           return response;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match(request).then(cached => cached || caches.match('./index.html')))
     );
     return;
   }
