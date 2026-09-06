@@ -1,11 +1,11 @@
-const CACHE_NAME = 'tonari-pwa-v2';
+const CACHE_NAME = 'tonari-pwa-v3';
 
 const APP_SHELL = [
   './',
   './index.html',
   './company.html',
   './privacy.html',
-  './styles.css?v=lp-reference-30',
+  './styles.css?v=lp-reference-31',
   './script.js?v=registration-methods-2',
   './manifest.webmanifest',
   './assets/logo.png',

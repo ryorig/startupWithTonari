@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="242x242" href="assets/favicon.png?v=icon-1">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1a4382">
-  <link rel="stylesheet" href="styles.css?v=lp-reference-30">
+  <link rel="stylesheet" href="styles.css?v=lp-reference-31">
 </head>
 
 <body class="company-page">
@@ -19,6 +19,13 @@
     <a class="company-page__brand" href="index.html">
       <img src="assets/logo.png" alt="隣の高専生">
     </a>
+    <nav class="company-page__nav" aria-label="法人向けページ内ナビゲーション">
+      <a href="#problem">課題</a>
+      <a href="#services-overview">事業内容</a>
+      <a href="#members">メンバー</a>
+      <a href="#pitch-deck">発表資料</a>
+      <a href="#company-info">会社情報</a>
+    </nav>
     <a class="company-page__back-link" href="index.html">トップページへ戻る</a>
   </header>
 
@@ -39,56 +46,215 @@
       </div>
     </section>
 
-    <section class="company-page__section company-page__section--white">
-      <div class="company-page__container">
-        <p class="company-page__eyebrow">WHAT WE SUPPORT</p>
-        <h2>事業の前進に必要な開発を支援します</h2>
-        <div class="company-page__cards">
-          <article class="company-page__card">
-            <span class="company-page__card-number">01</span>
-            <h3>MVP・プロトタイプ開発</h3>
-            <p>アイデアを検証できる形に整理し、必要な機能から段階的に開発します。</p>
-          </article>
-          <article class="company-page__card">
-            <span class="company-page__card-number">02</span>
-            <h3>社内ツール・業務改善</h3>
-            <p>現場の業務をヒアリングし、使う人に合わせたツールづくりを支援します。</p>
-          </article>
-          <article class="company-page__card">
-            <span class="company-page__card-number">03</span>
-            <h3>チーム編成・進行支援</h3>
-            <p>必要なスキルに応じてチームを編成し、PM・事務局が連絡と進捗を整理します。</p>
-          </article>
+    <!-- Partners / Accelerators / Interview -->
+    <section id="recognition" class="recognition">
+      <div class="recognition__inner">
+        <p class="recognition__eyebrow">PARTNERS / ACCELERATORS / INTERVIEW</p>
+        <div class="recognition__logos">
+          <div class="recognition__logos-row recognition__logos-row--primary">
+            <div class="recognition__logo-card recognition__logo-card--akatsuki">
+              <img src="assets/partner-akatsuki-latest.webp" alt="AKATSUKIプロジェクト" class="recognition__logo">
+            </div>
+            <div class="recognition__logo-card recognition__logo-card--nict">
+              <img src="assets/partner-nict.webp" alt="NICT" class="recognition__logo">
+            </div>
+          </div>
+          <div class="recognition__logos-row recognition__logos-row--secondary">
+            <div class="recognition__logo-card">
+              <img src="assets/partner-program-clean.png" alt="採択・連携プログラム" class="recognition__logo">
+            </div>
+            <div class="recognition__logo-card">
+              <img src="assets/partner-mic-clean.png" alt="総務省" class="recognition__logo">
+            </div>
+            <div class="recognition__logo-card">
+              <img src="assets/partner-japan-clean.png" alt="内閣府" class="recognition__logo">
+            </div>
+            <div class="recognition__logo-card">
+              <img src="assets/partner-sanyo-clean.png" alt="山陽新聞" class="recognition__logo">
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Stakeholder diagram -->
+    <section id="platform" class="our-product">
+      <div class="our-product__inner">
+        <img src="assets/product-title-logo-white.png" alt="隣の高専生" class="our-product__title-image">
+        <p class="our-product__description">
+          高専生と企業をつなぎ、実践の場と新しい価値を生み出すプラットフォーム
+        </p>
+        <div class="stakeholder-diagram" aria-label="高専生、隣の高専生、企業の関係図">
+          <div class="stakeholder-node">
+            <strong>高専生</strong>
+            <small>学び・開発・実績</small>
+          </div>
+          <div class="stakeholder-connector" aria-hidden="true">
+            <span>参加・開発</span>
+            <span class="stakeholder-connector__arrow">→</span>
+          </div>
+          <div class="stakeholder-node stakeholder-node--center">
+            <strong>隣の高専生</strong>
+            <small>マッチング・進行・支援</small>
+          </div>
+          <div class="stakeholder-connector" aria-hidden="true">
+            <span>案件・採用</span>
+            <span class="stakeholder-connector__arrow">→</span>
+          </div>
+          <div class="stakeholder-node">
+            <strong>企業</strong>
+            <small>課題・案件・採用</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="problem">
+      <div class="problem__inner">
+        <div class="problem__header">
+          <p class="problem__label">Problem</p>
+          <h2 class="problem__title">こんな課題ありませんか？</h2>
+        </div>
+        <div class="problem__content">
+          <ul class="problem__list">
+            <li class="problem__item"><span class="problem__x">✕</span><p>必要なエンジニアを採用するまでに<strong>時間がかかっている</strong></p></li>
+            <li class="problem__item"><span class="problem__x">✕</span><p>社内DXや業務効率化が<strong>後回しになっている</strong></p></li>
+            <li class="problem__item"><span class="problem__x">✕</span><p>MVP開発の<strong>見積もりや対応範囲が分からない</strong></p></li>
+            <li class="problem__item"><span class="problem__x">✕</span><p>外部パートナーとの<strong>進行管理に負担がかかっている</strong></p></li>
+          </ul>
+          <div class="problem__illust-wrap">
+            <img src="assets/problem-illustration.png" alt="課題に悩むビジネスマンのイラスト" class="problem__image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services-overview" class="svc-overview">
+      <div class="container">
+        <div class="svc-overview__header">
+          <span class="svc-overview__label">Services</span>
+          <h2 class="svc-overview__title">事業内容</h2>
+        </div>
+        <div class="svc-overview__cards">
+          <div class="svc-overview__card">
+            <div class="svc-overview__card-logo">
+              <img src="assets/logo.png" alt="隣の高専生" class="svc-overview__logo-img">
+              <span class="svc-overview__logo-text">隣の高専生</span>
+            </div>
+            <p class="svc-overview__card-desc">高専生による企業からの案件受託</p>
+          </div>
+          <a href="https://takanome.vercel.app/" target="_blank" rel="noopener noreferrer" class="svc-overview__card svc-overview__card--link">
+            <div class="svc-overview__card-logo">
+              <span class="svc-overview__logo-takano">タカノ<span class="svc-overview__logo-target">◎</span>診断</span>
+            </div>
+            <p class="svc-overview__card-desc">企業コーポレートサイト<br>HP診断サービス</p>
+            <div class="svc-overview__card-external" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founder -->
+    <section id="founder" class="founder">
+      <div class="container founder__inner">
+        <img src="assets/representative.jpg" alt="中本怜祐" class="founder__image">
+        <div class="founder__content">
+          <span class="founder__label">Founder</span>
+          <h2 class="founder__name">中本 怜祐</h2>
+          <p class="founder__school">神山まるごと高専 デザインエンジニアリング学科1年</p>
+          <p class="founder__description">
+            「隣の高専生」代表。岡山県出身の16歳。<br>
+            ミライノピッチ3部門受賞、なんチャレ2025最優秀賞、Akatsukiプロジェクト採択など、
+            高専生として積極的に事業開発・技術開発に取り組む。<br>
+            地域課題解決や次世代エンジニア育成にも注力し、全国の高専生をつなぐネットワークを構築中。
+          </p>
+          <a href="https://ryo.nakamoto.ac/" target="_blank" rel="noopener noreferrer" class="founder__link">ポートフォリオサイトを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Members -->
+    <section id="members" class="members">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Participating Members</span>
+          <h2 class="section__title">全国から集まる精鋭メンバー</h2>
+          <p class="section__description">各高専から選りすぐりのエンジニアが、御社のプロジェクトをサポートします。</p>
+        </div>
+        <div class="members__grid">
+          <a class="member-card member-card--linked" href="https://t-okugawa.dev/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">弓</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">奥河董馬</p></div></a>
+          <a class="member-card member-card--linked" href="https://github.com/ryskn" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中山亮佑</p></div></a>
+          <a class="member-card member-card--linked" href="https://odakuto.com/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">小</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">小田空音</p></div></a>
+          <a class="member-card member-card--linked" href="https://renorari.net/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中野楽士</p></div></a>
+          <a class="member-card member-card--linked" href="https://www.sato4.jp/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中本慧思</p></div></a>
+          <article class="member-card"><div class="member-card__avatar">長</div><div class="member-card__info"><p class="member-card__school">長岡高専</p><p class="member-card__name">眞野航輔</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">神</div><div class="member-card__info"><p class="member-card__school">神山まるごと高専</p><p class="member-card__name">中本怜祐</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">詫</div><div class="member-card__info"><p class="member-card__school">香川高専 詫間キャンパス</p><p class="member-card__name">岡崎春一</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">高</div><div class="member-card__info"><p class="member-card__school">香川高専 高松キャンパス</p><p class="member-card__name">宮武幸人</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">広</div><div class="member-card__info"><p class="member-card__school">広島商船高専</p><p class="member-card__name">坂口拓海</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">鳥</div><div class="member-card__info"><p class="member-card__school">鳥羽商船高専</p><p class="member-card__name">阪本拓海</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">大</div><div class="member-card__info"><p class="member-card__school">大島商船高専</p><p class="member-card__name">縄田嵐</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">呉</div><div class="member-card__info"><p class="member-card__school">呉高専</p><p class="member-card__name">西岡丈</p></div></article>
+          <article class="member-card"><div class="member-card__avatar">知</div><div class="member-card__info"><p class="member-card__school">高知高専</p><p class="member-card__name">片岡勇登</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pitch Deck -->
+    <section id="pitch-deck" class="pitch-deck">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Pitch Deck</span>
+          <h2 class="section__title">発表資料</h2>
+          <p class="section__description">隣の高専生の最新の事業紹介資料をご覧いただけます。</p>
+        </div>
+        <div class="pitch-deck__viewer">
+          <iframe src="assets/pitch-deck.pdf?v=pitch-deck-20260829" title="隣の高専生 ピッチ資料" class="pitch-deck__embed" loading="lazy"></iframe>
+          <p class="pitch-deck__fallback">PDFが表示されない場合は<a href="assets/pitch-deck.pdf?v=pitch-deck-20260829" target="_blank" rel="noopener noreferrer">こちらからダウンロード</a>してください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company Information -->
+    <section id="company-info" class="company-info">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Company Profile</span>
+          <h2 class="section__title">会社情報</h2>
+        </div>
+        <dl class="company-info__list">
+          <div class="company-info__item"><dt>会社名</dt><dd>株式会社Ｙｕｕｔｈ</dd></div>
+          <div class="company-info__item"><dt>代表</dt><dd>中本怜祐</dd></div>
+          <div class="company-info__item"><dt>設立日</dt><dd>2026年06月22日</dd></div>
+          <div class="company-info__item"><dt>法人番号</dt><dd>7480001013211</dd></div>
+          <div class="company-info__item"><dt>資本金</dt><dd>100万円</dd></div>
+          <div class="company-info__item company-info__item--address"><dt>所在地</dt><dd>〒771-3310<br>徳島県名西郡神山町神領字大埜地299番1<br>神山まるごと高専ROOMS・Base</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Inquiry -->
     <section id="inquiry" class="company-page__section company-page__section--inquiry">
       <div class="company-page__container company-page__inquiry-layout">
         <div class="company-page__inquiry-copy">
           <p class="company-page__eyebrow">CONTACT</p>
           <h2>まずは、課題をお聞かせください。</h2>
-          <p>
-            ご相談・打ち合わせをご希望の方は、以下の予約フォームから空いている日時をお選びください。
-          </p>
+          <p>ご相談・打ち合わせをご希望の方は、以下の予約フォームから空いている日時をお選びください。</p>
         </div>
-
         <div class="company-page__calendar-card">
           <p class="company-page__calendar-card-label">GOOGLE CALENDAR</p>
           <h3>予約フォームから日程を選択</h3>
           <p>予約完了後、必要に応じてお問い合わせ内容をメールでお送りください。</p>
-          <a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78"
-            target="_blank" rel="noopener noreferrer">Googleカレンダーの予約フォームを開く ↗</a>
+          <a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78" target="_blank" rel="noopener noreferrer">Googleカレンダーの予約フォームを開く ↗</a>
         </div>
-      </div>
-    </section>
-
-    <section class="company-page__company-info">
-      <div class="company-page__container">
-        <p class="company-page__eyebrow">COMPANY</p>
-        <h2>会社情報</h2>
-        <p>株式会社Ｙｕｕｔｈ</p>
-        <p>〒771-3310 徳島県名西郡神山町神領字大埜地299番1<br>神山まるごと高専ROOMS・Base</p>
       </div>
     </section>
   </main>
