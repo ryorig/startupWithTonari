@@ -104,7 +104,7 @@ img {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 0;
   border-radius: 50px;
   transition: var(--transition-base);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
@@ -5178,7 +5178,7 @@ body.registration-modal-open {
   left: 20px;
   right: 20px;
   background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 0;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(25, 35, 50, 0.1);
   backdrop-filter: blur(18px) saturate(120%);
