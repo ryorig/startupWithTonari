@@ -4662,6 +4662,13 @@ body.registration-modal-open {
   line-height: 1.85;
 }
 
+.business-pricing__terms {
+  margin-top: 12px !important;
+  color: var(--color-akatsuki) !important;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
 .business-plan-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4712,6 +4719,18 @@ body.registration-modal-open {
   color: var(--color-gray-500);
   font-size: 0.88rem;
   line-height: 1.6;
+}
+
+.business-plan-card__target small {
+  color: var(--color-gray-500);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.business-plan-card h4 small {
+  color: var(--color-akatsuki);
+  font-size: 0.72em;
+  white-space: nowrap;
 }
 
 .business-plan-card ul,
@@ -4784,6 +4803,24 @@ body.registration-modal-open {
   font-size: 0.94rem;
 }
 
+.business-subscription-table {
+  min-width: 1040px;
+}
+
+.business-subscription-table thead th:not(:first-child) {
+  color: var(--color-akatsuki);
+}
+
+.business-subscription-table tbody td {
+  width: 24%;
+  vertical-align: top;
+}
+
+.business-subscription-table tbody th {
+  width: 16%;
+  vertical-align: top;
+}
+
 .business-table th,
 .business-table td {
   padding: 15px 18px;
@@ -4842,6 +4879,80 @@ body.registration-modal-open {
 
 .business-pricing__example {
   margin-top: 18px;
+}
+
+.business-subscription-operations {
+  margin-top: 18px;
+  padding: 26px 24px;
+  border: 1px solid var(--color-gray-200);
+  background: #fff;
+}
+
+.business-subscription-operations h4,
+.business-subscription-stories h4 {
+  margin: 0 0 12px;
+  color: var(--color-tech-blue-dark);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+.business-subscription-operations p,
+.business-subscription-stories p {
+  margin: 0 0 16px;
+  color: var(--color-gray-600);
+  line-height: 1.8;
+}
+
+.business-subscription-operations ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.business-subscription-operations li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--color-gray-600);
+  line-height: 1.7;
+}
+
+.business-subscription-operations li::before {
+  position: absolute;
+  left: 0;
+  color: var(--color-akatsuki);
+  content: '✓';
+  font-weight: 800;
+}
+
+.business-subscription-stories {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.business-subscription-stories article {
+  padding: 26px 22px;
+  border: 1px solid var(--color-gray-200);
+  background: #f8fafc;
+}
+
+.business-subscription-stories .business-section__eyebrow {
+  margin-bottom: 10px;
+}
+
+.business-subscription-stories h4 {
+  font-size: 1.05rem;
+}
+
+.business-subscription-stories p:last-child {
+  margin-bottom: 0;
+}
+
+.business-subscription-stories strong {
+  color: var(--color-tech-blue-dark);
 }
 
 .business-checklist {
@@ -5085,7 +5196,8 @@ body.registration-modal-open {
   .business-pricing__details-grid,
   .business-rate-grid,
   .business-rank-grid,
-  .business-services__grid {
+  .business-services__grid,
+  .business-subscription-stories {
     grid-template-columns: 1fr;
   }
 
