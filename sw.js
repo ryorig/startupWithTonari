@@ -1,11 +1,14 @@
-const CACHE_NAME = 'tonari-pwa-v11';
+const CACHE_NAME = 'tonari-pwa-v12';
 
 const APP_SHELL = [
   './',
   './index.html',
   './company.html',
+  './portfolio-kidssafe.html',
+  './portfolio-paravellum.html',
+  './portfolio-sora-no-tokei.html',
   './privacy.html',
-  './styles.css?v=lp-reference-37',
+  './styles.css?v=lp-reference-38',
   './script.js?v=registration-methods-2',
   './manifest.webmanifest',
   './assets/logo.png',
@@ -26,7 +29,10 @@ const APP_SHELL = [
   './assets/partner-mic-clean.png',
   './assets/partner-japan-clean.png',
   './assets/partner-sanyo-clean.png',
-  './assets/pitch-deck.pdf'
+  './assets/pitch-deck.pdf',
+  './assets/portfolio-code4fukui.png',
+  './assets/portfolio-paravellum.webp',
+  './assets/portfolio-convex.png'
 ];
 
 self.addEventListener('install', event => {
