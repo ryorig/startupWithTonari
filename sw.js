@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tonari-pwa-v12';
+const CACHE_NAME = 'tonari-pwa-v13';
 
 const APP_SHELL = [
   './',
