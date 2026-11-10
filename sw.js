@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tonari-pwa-v21';
+const CACHE_NAME = 'tonari-pwa-v22';
 
 const APP_SHELL = [
   './',
@@ -8,8 +8,8 @@ const APP_SHELL = [
   './guide.html',
   './faq.html',
   './about.html',
-  './lp.css?v=lp-figma-7',
-  './lp.js?v=lp-figma-7',
+  './lp.css?v=lp-figma-8',
+  './lp.js?v=lp-figma-8',
   './portfolio-kidssafe.html',
   './portfolio-paravellum.html',
   './portfolio-sora-no-tokei.html',

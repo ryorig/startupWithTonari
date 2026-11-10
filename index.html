@@ -24,8 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kumbh+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="lp.css?v=lp-figma-7">
-  <script src="lp.js?v=lp-figma-7" defer></script>
+  <link rel="stylesheet" href="lp.css?v=lp-figma-8">
+  <script src="lp.js?v=lp-figma-8" defer></script>
 </head>
 
 <body id="top">
@@ -52,12 +52,18 @@
   <main>
     <section class="hero" aria-label="メインビジュアル">
       <div class="hero__panel">
-        <div class="hero__ring" aria-hidden="true"></div>
-        <div class="hero__stripe" aria-hidden="true"></div>
+        <div class="shapes shapes--hero" aria-hidden="true">
+          <span class="shape shape--slab s1"></span>
+          <span class="shape shape--slab s2"></span>
+          <span class="shape shape--ring s3"></span>
+          <img class="shape shape--img s4" src="assets/lp/flow-arrow.png" alt="">
+          <img class="shape shape--img s5" src="assets/lp/flow-infinity.png" alt="">
+        </div>
         <div class="hero__glow" aria-hidden="true"></div>
         <div class="hero__body">
-          <h1 class="hero__title"><span>高専生よ</span><span>実践の場で輝け</span></h1>
-          <a class="hero__register magnetic" href="https://kosen.tonari.ac/">今すぐ新規登録（高専生向け）</a>
+          <h1 class="hero__title"><span><em>高専生</em>よ</span><span><em>実践</em>の場で<em>輝け</em></span></h1>
+          <p class="hero__lead">スタートアップや地域のプロジェクトで、<br>学んだ技術を現場の課題解決に。<br>高専生と企業をつなぐ実践のプラットフォーム。</p>
+          <a class="hero__register magnetic" href="https://kosen.tonari.ac/"><span class="btn-ico" aria-hidden="true">＋</span>今すぐ新規登録（高専生向け）</a>
           <a class="hero__business magnetic" href="company.html">法人企業様向け</a>
         </div>
         <div class="hero__photos" aria-hidden="true">
@@ -83,6 +89,12 @@
     </section>
 
     <section class="problem" id="problem">
+      <div class="shapes shapes--problem" aria-hidden="true">
+        <span class="shape shape--slab p1"></span>
+        <span class="shape shape--slab p2"></span>
+        <img class="shape shape--img p3" src="assets/lp/flow-arrow.png" alt="">
+        <span class="shape shape--ring p4"></span>
+      </div>
       <h2 class="problem__title">こんな課題ありませんか？</h2>
       <div class="problem__grid">
         <article class="problem__card tilt">
