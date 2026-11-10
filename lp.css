@@ -1678,3 +1678,9 @@ html, body { overflow-x: clip; }
   .works .work-card__desc { font-size: 13px; line-height: 22px; }
   .bg-art img { opacity: 0.08; }
 }
+/* 事業内容の各行（バナー以外）の文字をさらに大きく */
+.service-row { font-size: 40px; padding: 44px 52px; letter-spacing: 0.02em; }
+.service-row__icon { width: 72px; height: 72px; }
+.service-row__icon img { width: 34px; height: 34px; }
+@media (max-width: 1180px) { .service-row { font-size: 32px; } }
+@media (max-width: 900px) { .service-row { font-size: 22px; padding: 26px 20px; } .service-row__icon { width: 50px; height: 50px; } .service-row__icon img { width: 24px; height: 24px; } }
