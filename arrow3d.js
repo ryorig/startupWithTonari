@@ -57,17 +57,16 @@ function build(item, font) {
     // 縦並び: 矢印は下向き、文字は右側。上下に回転（X 軸）して上向きに反転する
     arrow.rotation.z = -Math.PI / 2; arrow.position.x = -2.2;
     fwd.position.x = back.position.x = 1.15;
-    back.rotation.x = Math.PI;
     item.axis = 'x';
   } else {
     arrow.position.y = -0.55;
     fwd.position.y = back.position.y = 1.0;
-    back.rotation.y = Math.PI;
     item.axis = 'y';
   }
   back.visible = false;
-  group.add(arrow, fwd, back);
-  scene.add(group);
+  // 文字は回さず正面に固定し、矢印だけを回す
+  group.add(arrow);
+  scene.add(group, fwd, back);
   Object.assign(item, { scene, group, fwd, back, vertical });
 }
 
