@@ -1711,3 +1711,14 @@ html, body { overflow-x: clip; }
   .js-fade .services__list.is-focusing > * { transform: scale(0.92); }
   .js-fade .services__list.is-focusing > .is-focus { transform: scale(1.05); }
 }
+
+/* 事業内容: セクション背景は紺に戻し、各行（枠の中）を白に */
+.services { background: var(--brand); color: #fff; }
+.services .eyebrow-en { color: rgba(255, 255, 255, 0.75); }
+.services__heading h2 { color: #fff; }
+.services .view-more { color: rgba(255, 255, 255, 0.85); }
+.services .bg-art img { mix-blend-mode: screen; opacity: 0.1; filter: blur(3px) saturate(0.6) brightness(1.2); }
+.service-row { background: #fff; color: var(--brand); border: 1.5px solid #fff; box-shadow: 0 12px 30px rgba(4, 14, 54, 0.35); }
+.service-row__icon { background: var(--brand); }
+.service-row__icon img { filter: none; }
+.js-fade .services__list.is-focusing > .service-row.is-focus { background: #fff; border-color: #fff; box-shadow: 0 30px 64px rgba(4, 14, 54, 0.55); }
