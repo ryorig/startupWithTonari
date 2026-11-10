@@ -123,7 +123,7 @@
 
   // --- hero: カーソル位置で光の色と位置・視差が変わる ---
   const panel = document.querySelector('.hero__panel');
-  if (panel && !reduce) {
+  if (false && panel && !reduce) {
     panel.addEventListener('pointermove', e => {
       const r = panel.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;

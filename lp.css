@@ -1199,3 +1199,23 @@ p, h1, h2, h3, dl, dd { margin: 0; }
     radial-gradient(200px circle at var(--mx, 70%) var(--my, 30%), rgba(200, 240, 234, 0.4), transparent 65%),
     radial-gradient(110px circle at var(--mx, 70%) var(--my, 30%), rgba(147, 150, 244, 0.45), transparent 70%) !important;
 }
+
+
+/* ================= Hero v3: Sales Navi 型レイアウトの隣の高専生版 ================= */
+.hero__panel {
+  height: 680px;
+  border-radius: 16px;
+  background: linear-gradient(105deg, #18307a 0%, #213a89 40%, #2c56b8 100%);
+}
+.hero__bg { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.hero__glow { display: none !important; }
+.hero__body { left: max(7%, calc(50% - 560px)); }
+.hero__title span { font-size: 50px; line-height: 1.32; }
+.hero__title em { font-size: 1.3em; }
+.hero__lead { font-size: 16px; line-height: 2.15; margin-bottom: 34px; }
+.hero__photos { right: max(5%, calc(50% - 600px)); }
+@media (max-width: 900px) {
+  .hero__panel { height: auto; }
+  .hero__title span { font-size: 30px; }
+  .hero__lead { font-size: 13px; line-height: 1.9; }
+}
