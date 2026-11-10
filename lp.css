@@ -1351,3 +1351,5 @@ html, body { overflow-x: clip; }
 /* リアルタイム 3D 矢印（canvas） */
 .a3d__canvas { display: block; width: 100%; height: 100%; }
 .a3d-live .a3d__label { transition: opacity 0.12s linear; }
+/* ラベル横の矢印記号は不要（3D 矢印で向きが分かるため） */
+.a3d__label--fwd::after, .a3d__label--back::before { content: none !important; }
