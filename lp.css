@@ -1426,3 +1426,46 @@ html, body { overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) { .burst { display: none; } }
 .burst i { width: 4px; height: 20px; } .burst--l { left: 18px; } .burst--r { right: 18px; }
+
+/* 注目アクション: 手袋の指カーソルがボタンを「ポチッ」と押す */
+.burst { display: none !important; }
+.tap { position: absolute; right: 18%; bottom: -4px; width: 0; height: 0; pointer-events: none; }
+.tap__hand {
+  position: absolute;
+  left: -14px; top: -10px;
+  width: 44px; height: auto;
+  filter: drop-shadow(0 6px 10px rgba(6, 20, 70, 0.35));
+  transform-origin: 30% 5%;
+  opacity: 0;
+  animation: tap-hand 3.6s cubic-bezier(0.22, 1, 0.36, 1) 1.6s infinite;
+}
+.tap__ripple {
+  position: absolute;
+  left: -16px; top: -26px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 184, 0, 0.9);
+  opacity: 0;
+  animation: tap-ripple 3.6s ease-out 1.6s infinite;
+}
+@keyframes tap-hand {
+  0% { opacity: 0; transform: translate(34px, 40px) rotate(-12deg); }
+  18% { opacity: 1; transform: translate(0, 0) rotate(-12deg); }
+  26% { opacity: 1; transform: translate(0, 0) rotate(-12deg) scale(1); }
+  31% { opacity: 1; transform: translate(-2px, -3px) rotate(-12deg) scale(0.86); }
+  37% { opacity: 1; transform: translate(0, 0) rotate(-12deg) scale(1); }
+  52% { opacity: 1; transform: translate(0, 0) rotate(-12deg); }
+  66%, 100% { opacity: 0; transform: translate(34px, 40px) rotate(-12deg); }
+}
+@keyframes tap-ripple {
+  0%, 30% { opacity: 0; transform: scale(0.3); }
+  32% { opacity: 1; transform: scale(0.5); }
+  50% { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+/* 押した瞬間にボタン自体も少し沈む */
+.hero__register.is-entered { animation: tap-press 3.6s ease 1.6s infinite !important; }
+@keyframes tap-press { 0%, 30% { transform: none; } 32% { transform: scale(0.97); } 38%, 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .tap { display: none; } .hero__register.is-entered { animation: none !important; } }
+.tap__hand { max-width: none; }
+.tap__hand { width: 56px; left: -18px; top: -12px; } .tap__ripple { width: 40px; height: 40px; left: -20px; top: -30px; }
