@@ -35,8 +35,8 @@ try {
     const d2 = new THREE.DirectionalLight(0xbcd0ff, 1.0); d2.position.set(-5, -2, -4); scene.add(d2);
     const fwd = host.querySelector('.a3d__label--fwd');
     const back = host.querySelector('.a3d__label--back');
-    [fwd, back].forEach(l => { l.style.animation = 'none'; });
-    items.push({ host, canvas, renderer, scene, cam, mesh, fwd, back, visible: true });
+    [fwd, back].forEach(l => { l.style.animation = 'none'; l.style.transition = 'none'; });
+    items.push({ host, canvas, renderer, scene, cam, mesh, fwd, back, labels: host.querySelector('.a3d__labels'), visible: true });
   });
   document.documentElement.classList.add('a3d-live');
 } catch (e) {
@@ -64,11 +64,15 @@ if ('IntersectionObserver' in window) {
 let lastFacing = null;
 const frame = now => {
   const angle = reduce ? 0 : ((now % PERIOD) / PERIOD) * Math.PI * 2;
+  const deg = (angle * 180) / Math.PI;
+  // 文字は矢印と同じ角度で回す。真横（90°/270°）で見えなくなる瞬間に次の文字へ入れ替え、裏返らないよう 180° ずらす
   const facingFwd = Math.cos(angle) >= 0;
+  const textDeg = facingFwd ? (deg < 90 ? deg : deg - 360) : deg - 180;
   items.forEach(it => {
     if (!it.visible) return;
     it.mesh.rotation.y = angle;
     it.renderer.render(it.scene, it.cam);
+    it.labels.style.transform = `rotateY(${textDeg.toFixed(2)}deg)`;
   });
   if (facingFwd !== lastFacing) {
     lastFacing = facingFwd;
@@ -80,3 +84,5 @@ const frame = now => {
   if (!reduce) requestAnimationFrame(frame);
 };
 if (items.length) requestAnimationFrame(frame);
+// 検証用: 任意の時刻の 1 コマを描画（画面が非表示で rAF が止まる環境でも確認できるように）
+window.__a3dAt = t => { const r = reduce; frame(t); };

@@ -1484,3 +1484,29 @@ html, body { overflow-x: clip; }
   31% { transform: translateY(2px) scale(0.985); box-shadow: 0 6px 14px rgba(6, 20, 70, 0.3); }
   37%, 100% { transform: none; box-shadow: 0 14px 30px rgba(6, 20, 70, 0.35); }
 }
+
+/* 矢印と文字を大きく。文字も矢印と一緒に回る 3D 文字に（JS が rotateY を設定） */
+.flow__arrow--3d { perspective: 600px; }
+.a3d__labels { transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; }
+.a3d__label {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-shadow: 1px 1px 0 #d6def5, 2px 2px 0 #b9c6ec, 3px 3px 0 #9fb0e2, 4px 4px 0 #8597d4, 5px 5px 8px rgba(5, 15, 60, 0.45);
+}
+@media (min-width: 1181px) {
+  .flow { max-width: 1320px; }
+  .flow__arrow--3d { width: 260px; }
+  .a3d__labels { width: 260px; height: 38px; }
+  .a3d, .a3d__rot { width: 240px; height: 140px; }
+}
+@media (min-width: 901px) and (max-width: 1180px) {
+  .a3d__label { font-size: 16px; }
+}
+@media (max-width: 900px) {
+  .a3d__label { font-size: 18px; }
+  .a3d { width: 130px; height: 200px; }
+  .a3d__rot { width: 200px; height: 118px; }
+}
+@media (max-width: 900px) { .flow__arrow--3d { gap: 16px; } }
