@@ -1361,3 +1361,15 @@ html, body { overflow-x: clip; }
   .solution__logo { width: min(680px, 47vw); flex-shrink: 1; }
   .solution__suffix { width: min(573px, 39vw); height: auto; flex-shrink: 1; }
 }
+
+/* ボタン配色: 新規登録はブランドのミント→スカイ→ラベンダー、法人向けは黒 */
+.hero__register {
+  background: linear-gradient(100deg, #5fd8c8 0%, #4aa9f0 48%, #8c7cf6 100%);
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(10, 20, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  text-shadow: 0 1px 2px rgba(10, 30, 90, 0.25);
+}
+.hero__register:hover { background: linear-gradient(100deg, #6ee3d3 0%, #5ab4f5 48%, #9a8bf8 100%); box-shadow: 0 16px 38px rgba(10, 20, 80, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+.hero__register .btn-ico { background: #fff; color: #3f7fe0; }
+.hero__business { background: #141414; border-color: #141414; color: #fff; backdrop-filter: none; box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3); }
+.hero__business:hover { background: #000; border-color: #000; }
