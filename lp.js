@@ -1,5 +1,50 @@
 // 隣の高専生 LP / 詳細ページ共通スクリプト
 (() => {
+  // スクロールでフェードイン（要素ごとに方向を変え、同じ親の兄弟は 80ms ずつずらす）
+  const REVEAL = [
+    ['.partners__label, .problem__title, .members__eyebrow, .members__title, .pitch__head, .page__intro', 'blur'],
+    ['.partners__item, .problem__card, .flow__node, .flow__arrow, .member-card', 'up'],
+    ['.solution__heading, .solution__lead, .pitch__viewer, .company__card', 'zoom'],
+    ['.eyebrow-en, .services__heading, .services__banner, .company__row, .info-table__row', 'left'],
+    ['.service-row', 'right'],
+    ['.merit__title, .merit__text, .page > .panel, .page > .btn-brand, .footer__top > *, .footer__sns, .footer__bottom', 'up'],
+    ['.merit__phone', 'right'],
+  ];
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('js-fade');
+    const groups = new Map();
+    const els = [];
+    REVEAL.forEach(([sel, dir]) => document.querySelectorAll(sel).forEach(el => {
+      if (el.classList.contains('reveal')) return;
+      el.classList.add('reveal');
+      el.dataset.reveal = dir;
+      const i = groups.get(el.parentElement) || 0;
+      groups.set(el.parentElement, i + 1);
+      el.style.setProperty('--reveal-delay', `${Math.min(i, 6) * 0.08}s`);
+      els.push(el);
+    }));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+    // 予備: IntersectionObserver が遅れる環境でも、画面内に入った要素は必ず表示する
+    const check = () => {
+      const limit = innerHeight * 0.95;
+      els.forEach(el => {
+        if (!el.classList.contains('is-visible') && el.getBoundingClientRect().top < limit) {
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        }
+      });
+    };
+    addEventListener('scroll', check, { passive: true });
+    addEventListener('resize', check);
+    addEventListener('load', check);
+    check();
+  }
+
   // モバイル用グローバルナビ
   const nav = document.querySelector('.gnav');
   const toggle = nav?.querySelector('.gnav__toggle');

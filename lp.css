@@ -720,3 +720,64 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   .info-table__row dt { font-size: 12px; opacity: 0.75; }
   .info-table__row dd { font-size: 14px; line-height: 24px; word-break: break-all; }
 }
+
+/* ---------- Scroll reveal (IntersectionObserver で付与) ---------- */
+.js-fade .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease, translate 0.3s ease, box-shadow 0.3s ease;
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js-fade .reveal[data-reveal="left"] { transform: translateX(-40px); }
+.js-fade .reveal[data-reveal="right"] { transform: translateX(40px); }
+.js-fade .reveal[data-reveal="zoom"] { transform: scale(0.92); }
+.js-fade .reveal[data-reveal="blur"] { transform: translateY(16px); filter: blur(8px); }
+.js-fade .reveal.is-visible { opacity: 1; transform: none; filter: none; }
+
+/* ---------- Hero 入場アニメーション ---------- */
+@keyframes rise-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes slide-in { from { opacity: 0; transform: translateX(-32px); clip-path: inset(0 100% 0 0); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.85) translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes float-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes shine { 0%, 70% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+@keyframes nudge-x { 0%, 100% { translate: 0 0; } 50% { translate: 8px 0; } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+.hero__title span { animation: slide-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero__title span:nth-child(1) { animation-delay: 0.15s; }
+.hero__title span:nth-child(2) { animation-delay: 0.35s; }
+.hero__register { position: relative; overflow: hidden; animation: rise-in 0.8s 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero__register::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  animation: shine 4s 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero__business { animation: rise-in 0.8s 0.75s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero__photos img { animation: pop-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both, float-y 6s ease-in-out infinite; }
+.hero__photo--3 { animation-delay: 0.3s, 1.2s !important; }
+.hero__photo--1 { animation-delay: 0.45s, 1.4s !important; }
+.hero__photo--2 { animation-delay: 0.6s, 2s !important; }
+.hero__photo--4 { animation-delay: 0.75s, 2.4s !important; }
+.hero__photo--5 { animation-delay: 0.9s, 1.8s !important; }
+
+/* 補助モーション */
+.flow__arrow img { animation: nudge-x 1.8s ease-in-out infinite; }
+.flow__node:nth-of-type(3) img { animation: breathe 4s ease-in-out infinite; }
+.btn-pill, .btn-brand, .service-row, .member-card, .problem__card, .merit { transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.2s; }
+.problem__card:hover, .member-card:hover { translate: 0 -4px; box-shadow: 0 12px 28px rgba(33, 58, 137, 0.14); }
+.service-row:hover .service-row__icon { transform: rotate(-8deg) scale(1.08); }
+.service-row__icon { transition: transform 0.3s ease; }
+.services__banner img { transition: transform 0.6s ease; }
+.services__banner:hover img { transform: scale(1.02); }
+.view-more img { transition: transform 0.3s ease; }
+.view-more:hover img { transform: translateX(4px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-fade .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .hero__title span, .hero__register, .hero__register::after, .hero__business, .hero__photos img,
+  .flow__arrow img, .flow__node img { animation: none !important; }
+}
