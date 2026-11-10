@@ -1520,3 +1520,13 @@ html, body { overflow-x: clip; }
   .a3d-text3d .a3d { width: 300px; max-width: 100%; height: 150px; }
   .a3d-text3d .a3d__rot { width: 100%; height: 150px; transform: none; }
 }
+
+/* 新規登録: Figma 元デザインのピンク→コーラル→アンバー（白文字）に戻す */
+.hero__register { background: linear-gradient(139.6deg, #ed008c 6.17%, #f4384f 48.25%, #ffb800 93.83%); color: #fff; text-shadow: none; box-shadow: 0 16px 24px rgba(237, 0, 140, 0.18), 0 10px 20px rgba(255, 184, 0, 0.2); }
+.hero__register:hover { background: linear-gradient(139.6deg, #f21796 6.17%, #f6495f 48.25%, #ffc020 93.83%); box-shadow: 0 18px 28px rgba(237, 0, 140, 0.24), 0 12px 22px rgba(255, 184, 0, 0.24); }
+.hero__register .btn-ico { background: #fff; color: #ed008c; }
+@keyframes tap-press {
+  0%, 29% { transform: none; }
+  31% { transform: translateY(2px) scale(0.985); }
+  37%, 100% { transform: none; }
+}
