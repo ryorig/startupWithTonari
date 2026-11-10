@@ -3,7 +3,7 @@
   // スクロールでフェードイン（要素ごとに方向を変え、同じ親の兄弟は 80ms ずつずらす）
   const REVEAL = [
     ['.partners__label, .problem__title, .members__eyebrow, .members__title, .pitch__head, .page__intro', 'blur'],
-    ['.partners__item, .problem__card, .flow__node, .flow__arrow, .member-card', 'up'],
+    ['.partners__item, .problem__card, .flow__node, .flow__arrow, .member-card, .work-card', 'up'],
     ['.solution__heading, .solution__lead, .pitch__viewer, .company__card', 'zoom'],
     ['.eyebrow-en, .services__heading, .services__banner, .company__row, .info-table__row', 'left'],
     ['.service-row', 'right'],

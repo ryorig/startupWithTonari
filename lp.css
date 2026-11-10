@@ -1530,3 +1530,48 @@ html, body { overflow-x: clip; }
   31% { transform: translateY(2px) scale(0.985); }
   37%, 100% { transform: none; }
 }
+
+/* ---------- ポートフォリオ（Figma「ポートフォリオ」ページ node 370:1214） ---------- */
+.works { padding: 96px 24px 112px; background: #fff; }
+.works__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; }
+.work-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 358px;
+  height: 457px;
+  padding: 20px;
+  border: 2px solid #213a89;
+  border-radius: 10px;
+  background: #fff;
+  color: #2b2b2b;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, translate 0.3s ease;
+}
+.work-card:hover { translate: 0 -4px; box-shadow: 0 14px 30px rgba(33, 58, 137, 0.14); }
+.work-card__img { position: relative; display: block; flex-shrink: 0; width: calc(100% + 40px); height: 196px; margin: -20px -20px 0; overflow: hidden; background: #fff; }
+.work-card__img img { position: absolute; max-width: none; object-fit: contain; }
+.work-card__img--kids img { left: 0; top: 4px; width: 100%; height: auto; }
+.work-card__img--para img { left: 50%; top: -5px; width: 154px; height: 209px; margin-left: -77px; }
+.work-card__img--convex img { left: 50%; top: 26px; width: 82px; height: 159px; margin-left: -41px; }
+.work-card__tag { margin: 10px 0; padding: 4px 10px; border-radius: 99px; background: #213a89; color: #fffefc; font-size: 13.33px; line-height: 1.2; }
+.work-card__title { padding-bottom: 13px; font-size: 18px; font-weight: 700; line-height: 1.45; color: #2b2b2b; }
+.work-card__desc { font-size: 12px; line-height: 21.6px; color: #2b2b2b; }
+.work-card__more { display: inline-flex; align-items: center; gap: 4px; margin-top: auto; padding-top: 14px; font-family: var(--font-kumbh); font-size: 11px; line-height: 11px; color: #2b2b2b; }
+.work-card__more img { width: 30px; height: 11px; object-fit: contain; transition: transform 0.3s ease; }
+.work-card:hover .work-card__more img { transform: translateX(4px); }
+@media (max-width: 900px) {
+  .works { padding: 48px 20px 56px; }
+  .works__list { gap: 20px; }
+  .work-card { width: 100%; max-width: 400px; height: auto; min-height: 400px; }
+  .work-card__img--kids img { top: 0; }
+}
+/* Figma に合わせた微調整: 画像枠は上に 20px はみ出しつつ本文は 218px から開始、見出しは 22px 行、リスト下に 12px */
+.work-card__img { height: 216px; }
+.work-card__title { line-height: 22px; }
+.works__list { padding-bottom: 12px; }
+/* Figma と同じ切り抜き（恐竜と棒グラフのみ）をどの幅でも保つ */
+
+.work-card__img--kids img { left: 50%; top: 4px; width: 356px; height: 276px; margin-left: -178px; }
+@media (max-width: 900px) { .work-card__img--kids img { top: 4px; } }
