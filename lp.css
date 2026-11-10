@@ -1694,3 +1694,20 @@ html, body { overflow-x: clip; }
   box-shadow: 0 10px 26px rgba(4, 14, 54, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 .js-fade .services__list.is-focusing > .service-row.is-focus { background: linear-gradient(180deg, #3253b0 0%, #2a479e 100%); border-color: #fff; box-shadow: 0 24px 50px rgba(4, 14, 54, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12); }
+
+/* 事業内容: 背景は白、フォーカスの拡大・縮小を大きく */
+.services { background: #fff; color: #1d1d1f; }
+.services .eyebrow-en { color: #6e6e73; }
+.services__heading h2 { color: #000; }
+.services .view-more { color: #2b2b2b; }
+.services .bg-art img { mix-blend-mode: multiply; opacity: 0.06; filter: blur(3px) grayscale(0.2); }
+.services__list > * { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease, border-color 0.6s ease, background 0.6s ease; }
+.js-fade .services__list.is-focusing > * { transform: scale(0.9); }
+.js-fade .services__list.is-focusing > .is-focus { transform: scale(1.08); z-index: 2; }
+.service-row { box-shadow: 0 10px 26px rgba(33, 58, 137, 0.18); }
+.js-fade .services__list.is-focusing > .service-row.is-focus { border-color: #213a89; box-shadow: 0 30px 60px rgba(33, 58, 137, 0.35); }
+.services__list { gap: 28px; }
+@media (max-width: 900px) {
+  .js-fade .services__list.is-focusing > * { transform: scale(0.92); }
+  .js-fade .services__list.is-focusing > .is-focus { transform: scale(1.05); }
+}
