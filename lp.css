@@ -1353,3 +1353,4 @@ html, body { overflow-x: clip; }
 .a3d-live .a3d__label { transition: opacity 0.12s linear; }
 /* ラベル横の矢印記号は不要（3D 矢印で向きが分かるため） */
 .a3d__label--fwd::after, .a3d__label--back::before { content: none !important; }
+.a3d__label--back { color: #fff; }
