@@ -1617,3 +1617,64 @@ html, body { overflow-x: clip; }
 .js-fade .services__list.is-focusing > * { opacity: 0.38; transform: scale(0.97); }
 .js-fade .services__list.is-focusing > .is-focus { opacity: 1; transform: scale(1.03); }
 @media (max-width: 900px) { .works__head { align-items: baseline; row-gap: 2px; } .works__head .eyebrow-en { flex-basis: 100%; } }
+
+/* ===== 01–03 〜 メンバーまでを隣の高専生の紺で統一。事業内容・実績は全画面で大きく ===== */
+.services, .works { position: relative; background: var(--brand); color: #fff; overflow: clip; }
+.bg-art { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg-art img { position: absolute; max-width: none; opacity: 0.1; filter: blur(3px) saturate(0.6) brightness(1.2); mix-blend-mode: screen; }
+.bg-art__a { width: min(900px, 70vw); left: -8%; top: 8%; transform: rotate(-8deg); }
+.bg-art__b { width: min(760px, 58vw); right: -10%; bottom: -12%; }
+.bg-art__c { width: min(1000px, 76vw); right: -14%; top: 4%; }
+.bg-art__d { width: min(700px, 54vw); left: -10%; bottom: -6%; transform: rotate(10deg); }
+.services > *:not(.bg-art) { position: relative; z-index: 1; }
+.works__sticky { z-index: 1; }
+
+/* 事業内容: 全画面・大きく */
+.services { min-height: 100vh; display: flex; align-items: center; padding: 120px 24px; }
+.services__inner { width: 100%; max-width: 1240px; }
+.services .eyebrow-en { color: rgba(255, 255, 255, 0.75); font-size: 22px; }
+.services__heading h2 { color: #fff; font-size: 64px; line-height: 1.2; }
+.services .view-more { color: rgba(255, 255, 255, 0.85); font-size: 18px; }
+.services__list { gap: 22px; margin-top: 56px; }
+.services__banner { border-radius: 18px; box-shadow: 0 20px 50px rgba(0, 10, 50, 0.35); }
+.service-row { padding: 40px 48px; border: 1.5px solid rgba(255, 255, 255, 0.35); border-radius: 18px; background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 28px; line-height: 1.4; backdrop-filter: blur(4px); }
+.service-row:hover { box-shadow: 0 20px 44px rgba(0, 10, 50, 0.35); }
+.service-row__icon { width: 64px; height: 64px; border-radius: 14px; background: #fff; }
+.service-row__icon img { width: 30px; height: 30px; filter: brightness(0) saturate(100%) invert(18%) sepia(53%) saturate(2060%) hue-rotate(214deg) brightness(92%) contrast(95%); }
+.js-fade .services__list.is-focusing > .is-focus { border-color: #fff; background: rgba(255, 255, 255, 0.14); box-shadow: 0 26px 56px rgba(0, 10, 50, 0.45); }
+
+/* プロジェクト実績: 全画面・大きいカード */
+.works__head h2 { color: #fff; font-size: 64px; line-height: 1.2; }
+.works .eyebrow-en { color: rgba(255, 255, 255, 0.75); font-size: 22px; }
+.works__count { color: rgba(255, 255, 255, 0.55); font-size: 20px; }
+.works__current { color: #fff; font-size: 40px; }
+.works__head { max-width: 1240px; margin-bottom: 44px; }
+.works--scroll .work-card { width: 440px; height: 560px; border-color: rgba(255, 255, 255, 0.9); }
+.works--scroll .work-card.is-active { box-shadow: 0 40px 80px rgba(0, 10, 50, 0.5); }
+.works .work-card__img { height: 270px; }
+.works .work-card__img--kids img { width: 440px; height: 341px; margin-left: -220px; }
+.works .work-card__img--para img { width: 190px; height: 258px; margin-left: -95px; }
+.works .work-card__img--convex img { top: 34px; width: 104px; height: 201px; margin-left: -52px; }
+.works .work-card__title { font-size: 22px; line-height: 30px; }
+.works .work-card__desc { font-size: 15px; line-height: 26px; }
+.works .work-card__more { font-size: 14px; }
+
+@media (max-width: 900px) {
+  .services { min-height: 100svh; padding: 72px 20px; }
+  .services .eyebrow-en, .works .eyebrow-en { font-size: 15px; }
+  .services__heading h2, .works__head h2 { font-size: 34px; }
+  .services__list { margin-top: 28px; gap: 14px; }
+  .service-row { padding: 24px 20px; font-size: 18px; }
+  .service-row__icon { width: 46px; height: 46px; }
+  .service-row__icon img { width: 22px; height: 22px; }
+  .works__current { font-size: 28px; }
+  .works__head { margin-bottom: 18px; }
+  .works--scroll .work-card { width: 82vw; max-width: 380px; height: auto; min-height: 0; }
+  .works .work-card__img { height: 220px; }
+  .works .work-card__img--kids img { width: 360px; height: 279px; margin-left: -180px; }
+  .works .work-card__img--para img { width: 150px; height: 204px; margin-left: -75px; }
+  .works .work-card__img--convex img { width: 84px; height: 162px; margin-left: -42px; }
+  .works .work-card__title { font-size: 19px; line-height: 27px; }
+  .works .work-card__desc { font-size: 13px; line-height: 22px; }
+  .bg-art img { opacity: 0.08; }
+}

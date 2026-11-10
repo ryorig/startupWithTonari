@@ -302,7 +302,7 @@
   };
 
   // 後半セクション: 入場時に引きから全体表示へズーム
-  const zoomEls = reduce ? [] : ['.services__inner', '.members', '.pitch__viewer', '.company__card'].map(q => document.querySelector(q)).filter(Boolean);
+  const zoomEls = reduce ? [] : ['.pitch__viewer', '.company__card'].map(q => document.querySelector(q)).filter(Boolean);
   zoomEls.forEach(el => el.setAttribute('data-zoom', ''));
   const updateZoom = () => zoomEls.forEach(el => {
     const r = el.getBoundingClientRect();
