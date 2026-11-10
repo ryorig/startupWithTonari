@@ -1111,3 +1111,72 @@ p, h1, h2, h3, dl, dd { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .shape { animation: none !important; }
 }
+
+
+/* ================= Branding pass ================= */
+.progress { display: none !important; }
+
+/* Hero: 揺れ・浮遊・視差をなくし、ブランド色のグラデーション＋カーソル追従の光のみ */
+.hero__panel {
+  animation: none;
+  background:
+    radial-gradient(120% 90% at 85% 10%, rgba(135, 201, 234, 0.55) 0%, rgba(135, 201, 234, 0) 55%),
+    radial-gradient(90% 80% at 10% 100%, rgba(147, 150, 244, 0.45) 0%, rgba(147, 150, 244, 0) 60%),
+    linear-gradient(135deg, #172d74 0%, #213a89 45%, #2c4fae 100%);
+}
+.hero__panel::before, .hero__panel::after { display: none; }
+.hero__glow {
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transition: opacity 0.6s ease;
+  background:
+    radial-gradient(560px circle at var(--mx, 70%) var(--my, 30%), rgba(200, 240, 234, 0.42), transparent 62%),
+    radial-gradient(320px circle at var(--mx, 70%) var(--my, 30%), rgba(147, 150, 244, 0.45), transparent 70%);
+}
+.hero__panel:hover .hero__glow { opacity: 1; }
+.hero__photos { translate: 0 -50% !important; transition: none; }
+.hero__photos img { animation: pop-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both !important; }
+.hero__photo--3 { animation-delay: 0.3s !important; }
+.hero__photo--1 { animation-delay: 0.45s !important; }
+.hero__photo--2 { animation-delay: 0.6s !important; }
+.hero__photo--4 { animation-delay: 0.75s !important; }
+.hero__photo--5 { animation-delay: 0.9s !important; }
+.shapes--hero .shape { animation: none !important; translate: none !important; }
+.shapes--hero .shape--img { display: none; }
+.shapes--hero .shape--slab { background: linear-gradient(145deg, rgba(200, 240, 234, 0.22), rgba(200, 240, 234, 0.02)); }
+.hero__register, .hero__business { animation-name: rise-in !important; }
+.hero__register.is-entered, .hero__business.is-entered, .hero__register.is-entered:hover, .hero__business.is-entered:hover { animation: none !important; }
+.hero__register { background: linear-gradient(90deg, #ffffff 0%, #eaf6fc 100%); color: var(--brand); box-shadow: 0 14px 30px rgba(6, 20, 70, 0.35); }
+.hero__register .btn-ico { background: var(--brand); color: #fff; }
+.hero__register:hover { background: #fff; box-shadow: 0 16px 36px rgba(6, 20, 70, 0.45); }
+.hero__business:hover { background: rgba(255, 255, 255, 0.16); }
+
+/* 参加するメリット: ステップごとに 3D 画像が切り替わる */
+.steps__card { position: relative; }
+.steps__art { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.steps__intro, .steps__phone { position: relative; z-index: 1; }
+.art {
+  position: absolute;
+  right: 4%;
+  bottom: 6%;
+  width: min(380px, 30vw);
+  opacity: 0;
+  transform: translateY(30px) scale(0.92);
+  transition: opacity 0.8s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 30px 40px rgba(0, 10, 50, 0.45));
+}
+.steps:not([data-index]) .art--0, .steps[data-index="0"] .art--0,
+.steps[data-index="1"] .art--1, .steps[data-index="2"] .art--2 { opacity: 0.9; transform: none; }
+.art--arrow { left: 38%; right: auto; top: 10%; bottom: auto; width: min(160px, 12vw); opacity: 0.5; transform: rotate(-20deg); }
+.steps[data-index="1"] .art--arrow { transform: rotate(0deg) translateX(20px); }
+.steps[data-index="2"] .art--arrow { transform: rotate(20deg) translateX(40px); }
+@media (max-width: 900px) {
+  .art { right: -20px; bottom: auto; top: 40%; width: 150px; opacity: 0; }
+  .steps:not([data-index]) .art--0, .steps[data-index="0"] .art--0,
+  .steps[data-index="1"] .art--1, .steps[data-index="2"] .art--2 { opacity: 0.5; }
+  .art--arrow { display: none; }
+}
+@media (min-width: 901px) {
+  .art { right: auto; left: calc(50% - 170px); bottom: 4%; width: min(300px, 22vw); }
+  .art--arrow { left: calc(50% - 60px); top: 14%; }
+}

@@ -160,7 +160,6 @@
     ticking = false;
     const y = scrollY;
     const max = document.documentElement.scrollHeight - innerHeight;
-    progress?.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : '0');
     if (nav) {
       nav.classList.toggle('is-scrolled', y > 10);
       nav.classList.toggle('is-hidden', y > lastY && y > 300);
