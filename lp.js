@@ -138,8 +138,8 @@
   // --- スクロール進捗 / ヘッダーの出し入れ / 01–03 スティッキー ---
   const progress = document.querySelector('.progress');
   const steps = document.querySelector('[data-steps]');
-  const stepEls = steps ? [...steps.querySelectorAll('.step')] : [];
-  const dots = steps ? [...steps.querySelectorAll('.steps__dot')] : [];
+  const stepEls = steps ? [...steps.querySelectorAll('.chip')] : [];
+  const dots = steps ? [...steps.querySelectorAll('.chip__head')] : [];
   let lastY = scrollY;
   let ticking = false;
   const setStep = i => {
@@ -149,7 +149,7 @@
       el.classList.toggle('is-active', k === i);
       el.classList.toggle('is-past', k < i);
     });
-    dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+    dots.forEach((d, k) => d.setAttribute('aria-expanded', String(k === i)));
   };
   const onScroll = () => {
     ticking = false;
@@ -185,7 +185,7 @@
         tx = e.clientX; ty = e.clientY;
         const t = e.target;
         cursor.classList.toggle('is-hover', !!t.closest?.('a, button, .tilt, [data-goto]'));
-        cursor.classList.toggle('is-dark', !!t.closest?.('.solution, .members, .company, .footer'));
+        cursor.classList.toggle('is-dark', !!t.closest?.('.solution, .members, .company, .footer') && !t.closest?.('.steps__card'));
       });
       const loop = () => {
         cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
@@ -200,8 +200,8 @@
     document.querySelectorAll('.magnetic').forEach(el => {
       el.addEventListener('pointermove', e => {
         const r = el.getBoundingClientRect();
-        el.style.setProperty('--tx', `${(e.clientX - r.left - r.width / 2) * 0.25}px`);
-        el.style.setProperty('--ty', `${(e.clientY - r.top - r.height / 2) * 0.35}px`);
+        el.style.setProperty('--tx', `${(e.clientX - r.left - r.width / 2) * 0.06}px`);
+        el.style.setProperty('--ty', `${(e.clientY - r.top - r.height / 2) * 0.1}px`);
       });
       el.addEventListener('pointerleave', () => { el.style.setProperty('--tx', '0px'); el.style.setProperty('--ty', '0px'); });
     });

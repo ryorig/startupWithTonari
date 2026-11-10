@@ -24,8 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kumbh+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="lp.css?v=lp-figma-4">
-  <script src="lp.js?v=lp-figma-4" defer></script>
+  <link rel="stylesheet" href="lp.css?v=lp-figma-5">
+  <script src="lp.js?v=lp-figma-5" defer></script>
 </head>
 
 <body id="top">
@@ -132,29 +132,37 @@
       <div class="steps" data-steps>
         <div class="steps__sticky">
           <div class="steps__card">
-            <div class="steps__text">
-            <article class="step is-active" data-step="0">
-              <p class="step__num">01</p>
-              <h3 class="step__title">実際のプロジェクトで実践経験が積める</h3>
-              <p class="step__text">スタートアップや地域のプロジェクトで、実際の開発に参加できます。学んだ技術を、現場の課題解決に活かし、リアルなプロジェクト経験を積めます。</p>
-              <a class="btn-pill magnetic" href="https://kosen.tonari.ac/">プロジェクトに参加</a>
-            </article>
-            <article class="step" data-step="1">
-              <p class="step__num">02</p>
-              <h3 class="step__title">報酬を得ながらスキルアップできる</h3>
-              <p class="step__text">チームに加わり、実際の開発に参加。先輩メンバーがサポートするので、初心者でも安心して取り組めます。プロジェクト完了後に報酬をお支払いします。</p>
-              <a class="btn-pill magnetic" href="guide.html">参加の流れを見る</a>
-            </article>
-            <article class="step" data-step="2">
-              <p class="step__num">03</p>
-              <h3 class="step__title">ポートフォリオやガクチカに使える実績</h3>
-              <p class="step__text">プロジェクトで取り組んだ成果物は、ポートフォリオとして活用できます。実践で得た経験や実績を、これからの挑戦につなげていきましょう。</p>
-              <a class="btn-pill magnetic" href="https://kosen.tonari.ac/">実績をつくる</a>
-            </article>
-              <div class="steps__dots"><button type="button" class="steps__dot is-active" data-goto="0" aria-label="01へ"></button><button type="button" class="steps__dot" data-goto="1" aria-label="02へ"></button><button type="button" class="steps__dot" data-goto="2" aria-label="03へ"></button></div>
+            <div class="steps__intro">
+              <p class="steps__eyebrow">隣の高専生に参加するメリット</p>
+              <ul class="chips">
+              <li class="chip is-active" data-step="0">
+                <button type="button" class="chip__head" data-goto="0" aria-expanded="true"><span class="chip__icon" aria-hidden="true"></span><span class="chip__num">01</span>実践経験</button>
+                <div class="chip__body">
+                  <div class="chip__inner"><h3 class="chip__title">実際のプロジェクトで実践経験が積める</h3>
+                  <p>スタートアップや地域のプロジェクトで、実際の開発に参加できます。学んだ技術を現場の課題解決に活かし、リアルなプロジェクト経験を積めます。</p>
+                  <a class="chip__link" href="https://kosen.tonari.ac/">プロジェクトに参加 <span aria-hidden="true">›</span></a></div>
+                </div>
+              </li>
+              <li class="chip" data-step="1">
+                <button type="button" class="chip__head" data-goto="1" aria-expanded="false"><span class="chip__icon" aria-hidden="true"></span><span class="chip__num">02</span>報酬</button>
+                <div class="chip__body">
+                  <div class="chip__inner"><h3 class="chip__title">報酬を得ながらスキルアップできる</h3>
+                  <p>チームに加わり、実際の開発に参加。先輩メンバーがサポートするので、初心者でも安心して取り組めます。プロジェクト完了後に報酬をお支払いします。</p>
+                  <a class="chip__link" href="guide.html">参加の流れを見る <span aria-hidden="true">›</span></a></div>
+                </div>
+              </li>
+              <li class="chip" data-step="2">
+                <button type="button" class="chip__head" data-goto="2" aria-expanded="false"><span class="chip__icon" aria-hidden="true"></span><span class="chip__num">03</span>実績</button>
+                <div class="chip__body">
+                  <div class="chip__inner"><h3 class="chip__title">ポートフォリオやガクチカに使える実績</h3>
+                  <p>プロジェクトで取り組んだ成果物は、ポートフォリオとして活用できます。実践で得た経験や実績を、これからの挑戦につなげていきましょう。</p>
+                  <a class="chip__link" href="https://kosen.tonari.ac/">実績をつくる <span aria-hidden="true">›</span></a></div>
+                </div>
+              </li>
+              </ul>
             </div>
             <div class="steps__phone" aria-hidden="true">
-              <div class="phone"><div class="phone__screen"><img src="assets/lp/app-screen.png" alt=""></div></div>
+              <div class="phone"><span class="phone__btn phone__btn--a"></span><span class="phone__btn phone__btn--b"></span><span class="phone__btn phone__btn--c"></span><div class="phone__screen"><img src="assets/lp/app-screen.png" alt=""></div></div>
             </div>
           </div>
         </div>
