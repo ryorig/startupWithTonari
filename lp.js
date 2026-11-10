@@ -113,6 +113,11 @@
     });
   }
 
+  document.querySelectorAll('.hero__register, .hero__business').forEach(el => {
+    el.addEventListener('animationend', e => { if (e.animationName === 'rise-in') el.classList.add('is-entered'); });
+    setTimeout(() => el.classList.add('is-entered'), 2000);
+  });
+
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
