@@ -1734,3 +1734,7 @@ html, body { overflow-x: clip; }
 .js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(2), .service-row:nth-child(2) { background: url("assets/lp/service-pattern-1.svg") center / cover no-repeat; }
 .js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(3), .service-row:nth-child(3) { background: url("assets/lp/service-pattern-2.svg") center / cover no-repeat; }
 .js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(4), .service-row:nth-child(4) { background: url("assets/lp/service-pattern-3.svg") center / cover no-repeat; }
+
+/* 事業内容の 3 行: バナーと同じ背景画像（ザラつきのある青＋斜めの面）を使用 */
+.service-row:nth-child(n),
+.js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(n) { background: #0b56a3 url("assets/lp/service-bg.jpg") center / cover no-repeat; }
