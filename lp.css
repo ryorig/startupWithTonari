@@ -1180,3 +1180,15 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   .art { right: auto; left: calc(50% - 170px); bottom: 4%; width: min(300px, 22vw); }
   .art--arrow { left: calc(50% - 60px); top: 14%; }
 }
+
+/* 3D 画像: Sales Navi の背景のように大きく・薄く（主役の邪魔をしない） */
+.art { left: auto !important; right: -6% !important; bottom: -12% !important; top: auto !important; width: min(820px, 62vw) !important; filter: blur(2px) saturate(0.7) brightness(1.15); mix-blend-mode: screen; }
+.steps:not([data-index]) .art--0, .steps[data-index="0"] .art--0,
+.steps[data-index="1"] .art--1, .steps[data-index="2"] .art--2 { opacity: 0.14 !important; }
+.art--arrow { left: 22% !important; right: auto !important; top: -6% !important; bottom: auto !important; width: min(520px, 40vw) !important; opacity: 0.08 !important; }
+.shapes--problem .shape--img { width: 520px; opacity: 0.06; filter: blur(2px); }
+@media (max-width: 900px) {
+  .art { width: 120vw !important; right: -40% !important; bottom: -8% !important; }
+  .steps:not([data-index]) .art--0, .steps[data-index="0"] .art--0,
+  .steps[data-index="1"] .art--1, .steps[data-index="2"] .art--2 { opacity: 0.1 !important; }
+}
