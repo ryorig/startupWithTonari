@@ -1378,3 +1378,8 @@ html, body { overflow-x: clip; }
 .hero__register { background: linear-gradient(100deg, #ff7a6b 0%, #ff9a3d 55%, #ffc23d 100%); color: #14245e; text-shadow: none; box-shadow: 0 14px 32px rgba(255, 120, 60, 0.35), 0 6px 16px rgba(8, 18, 70, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
 .hero__register:hover { background: linear-gradient(100deg, #ff8a7c 0%, #ffa94f 55%, #ffcc55 100%); }
 .hero__register .btn-ico { background: #14245e; color: #fff; }
+
+/* 新規登録: Figma 元デザインのピンク→コーラル→アンバー、白文字 */
+.hero__register { background: linear-gradient(139.6deg, #ed008c 6.17%, #f4384f 48.25%, #ffb800 93.83%); color: #fff; text-shadow: none; box-shadow: 0 16px 24px rgba(237, 0, 140, 0.18), 0 10px 20px rgba(255, 184, 0, 0.2); }
+.hero__register:hover { background: linear-gradient(139.6deg, #f21796 6.17%, #f6495f 48.25%, #ffc020 93.83%); }
+.hero__register .btn-ico { background: #fff; color: #ed008c; }
