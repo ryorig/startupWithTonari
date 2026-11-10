@@ -1298,3 +1298,29 @@ p, h1, h2, h3, dl, dd { margin: 0; }
 @media (max-width: 900px) { .hero__photos { translate: none !important; } }
 @keyframes a3d-fwd { 0%, 24% { opacity: 1; } 25%, 75% { opacity: 0; } 76%, 100% { opacity: 1; } }
 @keyframes a3d-back { 0%, 24% { opacity: 0; } 25.5%, 74.5% { opacity: 1; } 75.5%, 100% { opacity: 0; } }
+
+/* 3D 矢印: three.js で書き出した 48 コマを順に表示（ラベルと同じ 6s の時計で同期、2 本とも同じ角度） */
+.a3d { width: 170px; height: 100px; perspective: none; }
+.a3d__rot { width: 170px; height: 100px; }
+.a3d__sprite {
+  display: block;
+  width: 170px;
+  height: 100px;
+  background: url("assets/lp/arrow-3d-sprite.png") 0 0 / 8160px 100px no-repeat;
+  animation: a3d-frames 6s steps(48) infinite;
+}
+@keyframes a3d-frames { from { background-position: 0 0; } to { background-position: -8160px 0; } }
+.flow__arrow--3d .a3d__label, .flow__arrow--3d:nth-of-type(4) .a3d__label { animation-delay: 0s; }
+@media (max-width: 900px) {
+  .a3d { width: 100px; height: 150px; display: grid; place-items: center; }
+  .a3d__rot { width: 150px; height: 88px; transform: rotate(90deg); }
+  .a3d__sprite { width: 150px; height: 88px; background-size: 7200px 88px; animation-name: a3d-frames-sm; }
+  @keyframes a3d-frames-sm { from { background-position: 0 0; } to { background-position: -7200px 0; } }
+}
+@media (prefers-reduced-motion: reduce) { .a3d__sprite { animation: none; } }
+.steps { width: calc(100% + 32px); margin-left: -16px; margin-right: -16px; }
+@media (max-width: 900px) { .steps { width: calc(100% + 20px); margin-left: -10px; margin-right: -10px; } }
+html, body { overflow-x: clip; }
+@media (max-width: 900px) {
+  .js-fade .reveal[data-reveal="right"], .js-fade .reveal[data-reveal="left"] { transform: translateY(24px); }
+}
