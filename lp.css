@@ -1192,3 +1192,10 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   .steps:not([data-index]) .art--0, .steps[data-index="0"] .art--0,
   .steps[data-index="1"] .art--1, .steps[data-index="2"] .art--2 { opacity: 0.1 !important; }
 }
+
+/* カーソル追従の光を小さく */
+.hero__glow {
+  background:
+    radial-gradient(200px circle at var(--mx, 70%) var(--my, 30%), rgba(200, 240, 234, 0.4), transparent 65%),
+    radial-gradient(110px circle at var(--mx, 70%) var(--my, 30%), rgba(147, 150, 244, 0.45), transparent 70%) !important;
+}
