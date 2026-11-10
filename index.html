@@ -24,11 +24,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kumbh+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="lp.css?v=lp-figma-3">
-  <script src="lp.js?v=lp-figma-3" defer></script>
+  <link rel="stylesheet" href="lp.css?v=lp-figma-4">
+  <script src="lp.js?v=lp-figma-4" defer></script>
 </head>
 
 <body id="top">
+  <div class="progress" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
   <header class="gnav">
     <a class="gnav__logo" href="index.html" aria-label="隣の高専生 トップ">
       <img src="assets/lp/header-logo.png" alt="隣の高専生" width="170" height="40">
@@ -41,7 +43,7 @@
       <a href="about.html">会社情報</a>
       <a class="btn-brand gnav__mobile-cta" href="company.html#inquiry">お問い合わせ ↗</a>
     </nav>
-    <a class="btn-brand gnav__cta" href="company.html#inquiry">お問い合わせ ↗</a>
+    <a class="btn-brand gnav__cta magnetic" href="company.html#inquiry">お問い合わせ ↗</a>
     <button class="gnav__toggle" type="button" aria-label="メニューを開く" aria-controls="gnav-links" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -52,10 +54,11 @@
       <div class="hero__panel">
         <div class="hero__ring" aria-hidden="true"></div>
         <div class="hero__stripe" aria-hidden="true"></div>
+        <div class="hero__glow" aria-hidden="true"></div>
         <div class="hero__body">
           <h1 class="hero__title"><span>高専生よ</span><span>実践の場で輝け</span></h1>
-          <a class="hero__register" href="https://kosen.tonari.ac/">今すぐ新規登録（高専生向け）</a>
-          <a class="hero__business" href="company.html">法人企業様向け</a>
+          <a class="hero__register magnetic" href="https://kosen.tonari.ac/">今すぐ新規登録（高専生向け）</a>
+          <a class="hero__business magnetic" href="company.html">法人企業様向け</a>
         </div>
         <div class="hero__photos" aria-hidden="true">
           <img class="hero__photo--3" src="assets/lp/hero-photo-3.png" alt="">
@@ -82,7 +85,7 @@
     <section class="problem" id="problem">
       <h2 class="problem__title">こんな課題ありませんか？</h2>
       <div class="problem__grid">
-        <article class="problem__card">
+        <article class="problem__card tilt">
           <h3>必要なエンジニアを採用するまでに時間がかかっている</h3>
           <img src="assets/lp/problem-1.png" alt="" width="243" height="159" loading="lazy">
           <ul>
@@ -91,7 +94,7 @@
             <li>適切な人材・チームを提案する</li>
           </ul>
         </article>
-        <article class="problem__card">
+        <article class="problem__card tilt">
           <h3>社内DXや業務効率化が<br>後回しになっている</h3>
           <img src="assets/lp/problem-2.png" alt="" width="243" height="159" loading="lazy">
           <ul>
@@ -100,7 +103,7 @@
             <li>実際のシステム開発や実装を行う</li>
           </ul>
         </article>
-        <article class="problem__card">
+        <article class="problem__card tilt">
           <h3>外部パートナーとの<br>進行管理に負担が<br>かかっている</h3>
           <img src="assets/lp/problem-3.png" alt="" width="243" height="159" loading="lazy">
           <ul>
@@ -126,36 +129,36 @@
         <div class="flow__arrow"><span>案件・採用</span><img src="assets/lp/flow-arrow.png" alt="" loading="lazy"></div>
         <div class="flow__node"><img src="assets/lp/flow-company.png" alt="" loading="lazy"><p class="flow__name">企業</p><p class="flow__desc">課題・案件・採用</p></div>
       </div>
-      <article class="merit">
-        <h3 class="merit__title"><span class="merit__num">01</span><span class="merit__label">実際のプロジェクトで実践経験が積める</span></h3>
-        <div class="merit__body">
-          <div class="merit__text">
-            <p>スタートアップや地域のプロジェクトで、<br>実際の開発に参加できます。<br>学んだ技術を、現場の課題解決に活かし、<br>リアルなプロジェクト経験を積めます。</p>
-            <a class="btn-pill" href="https://kosen.tonari.ac/" target="_blank" rel="noopener noreferrer">プロジェクトに参加</a>
+      <div class="steps" data-steps>
+        <div class="steps__sticky">
+          <div class="steps__card">
+            <div class="steps__text">
+            <article class="step is-active" data-step="0">
+              <p class="step__num">01</p>
+              <h3 class="step__title">実際のプロジェクトで実践経験が積める</h3>
+              <p class="step__text">スタートアップや地域のプロジェクトで、実際の開発に参加できます。学んだ技術を、現場の課題解決に活かし、リアルなプロジェクト経験を積めます。</p>
+              <a class="btn-pill magnetic" href="https://kosen.tonari.ac/">プロジェクトに参加</a>
+            </article>
+            <article class="step" data-step="1">
+              <p class="step__num">02</p>
+              <h3 class="step__title">報酬を得ながらスキルアップできる</h3>
+              <p class="step__text">チームに加わり、実際の開発に参加。先輩メンバーがサポートするので、初心者でも安心して取り組めます。プロジェクト完了後に報酬をお支払いします。</p>
+              <a class="btn-pill magnetic" href="guide.html">参加の流れを見る</a>
+            </article>
+            <article class="step" data-step="2">
+              <p class="step__num">03</p>
+              <h3 class="step__title">ポートフォリオやガクチカに使える実績</h3>
+              <p class="step__text">プロジェクトで取り組んだ成果物は、ポートフォリオとして活用できます。実践で得た経験や実績を、これからの挑戦につなげていきましょう。</p>
+              <a class="btn-pill magnetic" href="https://kosen.tonari.ac/">実績をつくる</a>
+            </article>
+              <div class="steps__dots"><button type="button" class="steps__dot is-active" data-goto="0" aria-label="01へ"></button><button type="button" class="steps__dot" data-goto="1" aria-label="02へ"></button><button type="button" class="steps__dot" data-goto="2" aria-label="03へ"></button></div>
+            </div>
+            <div class="steps__phone" aria-hidden="true">
+              <div class="phone"><div class="phone__screen"><img src="assets/lp/app-screen.png" alt=""></div></div>
+            </div>
           </div>
-          <div class="merit__phone"><img src="assets/lp/phone-mock.png" alt="隣の高専生アプリの画面" width="343" height="364" loading="lazy"></div>
         </div>
-      </article>
-      <article class="merit">
-        <h3 class="merit__title"><span class="merit__num">02</span><span class="merit__label">報酬を得ながらスキルアップできる</span></h3>
-        <div class="merit__body">
-          <div class="merit__text">
-            <p>チームに加わり、実際の開発に参加。<br>先輩メンバーがサポートするので、<br>初心者でも安心して取り組めます。<br>プロジェクト完了後に報酬をお支払いします。</p>
-            <a class="btn-pill" href="guide.html">参加の流れを見る</a>
-          </div>
-          <div class="merit__phone"><img src="assets/lp/phone-mock.png" alt="隣の高専生アプリの画面" width="343" height="364" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="merit">
-        <h3 class="merit__title"><span class="merit__num">03</span><span class="merit__label">ポートフォリオやガクチカに使える実績</span></h3>
-        <div class="merit__body">
-          <div class="merit__text">
-            <p>プロジェクトで取り組んだ成果物は、<br>ポートフォリオとして活用できます。<br>実践で得た経験や実績を、<br>これからの挑戦につなげていきましょう。</p>
-            <a class="btn-pill" href="https://kosen.tonari.ac/" target="_blank" rel="noopener noreferrer">実績をつくる</a>
-          </div>
-          <div class="merit__phone"><img src="assets/lp/phone-mock.png" alt="隣の高専生アプリの画面" width="343" height="364" loading="lazy"></div>
-        </div>
-      </article>
+      </div>
     </section>
 
     <section class="services" id="services">
@@ -179,20 +182,20 @@
       <h2 class="members__title">全国から集まる高専生メンバー</h2>
       <div class="members__scroller" tabindex="0" aria-label="メンバー一覧（横にスクロール）">
         <ul class="members__track">
-          <li class="member-card"><span class="member-card__school">弓削商船高専</span><span class="member-card__name">奥河董馬</span></li>
-          <li class="member-card"><span class="member-card__school">東京都立産業技術高専</span><span class="member-card__name">中山亮佑</span></li>
-          <li class="member-card"><span class="member-card__school">釧路高専</span><span class="member-card__name">小田空音</span></li>
-          <li class="member-card"><span class="member-card__school">長岡高専</span><span class="member-card__name">中野楽士</span></li>
-          <li class="member-card"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本慧思</span></li>
-          <li class="member-card"><span class="member-card__school">長岡高専</span><span class="member-card__name">眞野航輔</span></li>
-          <li class="member-card"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本怜祐</span></li>
-          <li class="member-card"><span class="member-card__school">香川高専 詫間キャンパス</span><span class="member-card__name">岡崎春一</span></li>
-          <li class="member-card"><span class="member-card__school">香川高専 高松キャンパス</span><span class="member-card__name">宮武幸人</span></li>
-          <li class="member-card"><span class="member-card__school">広島商船高専</span><span class="member-card__name">坂口拓海</span></li>
-          <li class="member-card"><span class="member-card__school">鳥羽商船高専</span><span class="member-card__name">阪本拓海</span></li>
-          <li class="member-card"><span class="member-card__school">大島商船高専</span><span class="member-card__name">縄田嵐</span></li>
-          <li class="member-card"><span class="member-card__school">呉高専</span><span class="member-card__name">西岡丈</span></li>
-          <li class="member-card"><span class="member-card__school">高知高専</span><span class="member-card__name">片岡勇登</span></li>
+          <li class="member-card tilt"><span class="member-card__school">弓削商船高専</span><span class="member-card__name">奥河董馬</span></li>
+          <li class="member-card tilt"><span class="member-card__school">東京都立産業技術高専</span><span class="member-card__name">中山亮佑</span></li>
+          <li class="member-card tilt"><span class="member-card__school">釧路高専</span><span class="member-card__name">小田空音</span></li>
+          <li class="member-card tilt"><span class="member-card__school">長岡高専</span><span class="member-card__name">中野楽士</span></li>
+          <li class="member-card tilt"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本慧思</span></li>
+          <li class="member-card tilt"><span class="member-card__school">長岡高専</span><span class="member-card__name">眞野航輔</span></li>
+          <li class="member-card tilt"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本怜祐</span></li>
+          <li class="member-card tilt"><span class="member-card__school">香川高専 詫間キャンパス</span><span class="member-card__name">岡崎春一</span></li>
+          <li class="member-card tilt"><span class="member-card__school">香川高専 高松キャンパス</span><span class="member-card__name">宮武幸人</span></li>
+          <li class="member-card tilt"><span class="member-card__school">広島商船高専</span><span class="member-card__name">坂口拓海</span></li>
+          <li class="member-card tilt"><span class="member-card__school">鳥羽商船高専</span><span class="member-card__name">阪本拓海</span></li>
+          <li class="member-card tilt"><span class="member-card__school">大島商船高専</span><span class="member-card__name">縄田嵐</span></li>
+          <li class="member-card tilt"><span class="member-card__school">呉高専</span><span class="member-card__name">西岡丈</span></li>
+          <li class="member-card tilt"><span class="member-card__school">高知高専</span><span class="member-card__name">片岡勇登</span></li>
         </ul>
       </div>
     </section>

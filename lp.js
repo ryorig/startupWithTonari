@@ -7,8 +7,7 @@
     ['.solution__heading, .solution__lead, .pitch__viewer, .company__card', 'zoom'],
     ['.eyebrow-en, .services__heading, .services__banner, .company__row, .info-table__row', 'left'],
     ['.service-row', 'right'],
-    ['.merit__title, .merit__text, .page > .panel, .page > .btn-brand, .footer__top > *, .footer__sns, .footer__bottom', 'up'],
-    ['.merit__phone', 'right'],
+    ['.steps__card, .page > .panel, .page > .btn-brand, .footer__top > *, .footer__sns, .footer__bottom', 'up'],
   ];
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js-fade');
@@ -112,5 +111,131 @@
       el.style.animationDuration = `${5 + (i % 4)}s`;
       skyline.appendChild(el);
     });
+  }
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // --- hero: カーソル位置で光の色と位置・視差が変わる ---
+  const panel = document.querySelector('.hero__panel');
+  if (panel && !reduce) {
+    panel.addEventListener('pointermove', e => {
+      const r = panel.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      panel.style.setProperty('--mx', `${x * 100}%`);
+      panel.style.setProperty('--my', `${y * 100}%`);
+      panel.style.setProperty('--hue', String(Math.round(180 + x * 160 + y * 40)));
+      panel.style.setProperty('--px', (x - 0.5).toFixed(3));
+      panel.style.setProperty('--py', (y - 0.5).toFixed(3));
+    });
+    panel.addEventListener('pointerleave', () => {
+      panel.style.setProperty('--px', '0');
+      panel.style.setProperty('--py', '0');
+    });
+  }
+
+  // --- スクロール進捗 / ヘッダーの出し入れ / 01–03 スティッキー ---
+  const progress = document.querySelector('.progress');
+  const steps = document.querySelector('[data-steps]');
+  const stepEls = steps ? [...steps.querySelectorAll('.step')] : [];
+  const dots = steps ? [...steps.querySelectorAll('.steps__dot')] : [];
+  let lastY = scrollY;
+  let ticking = false;
+  const setStep = i => {
+    if (!steps || steps.dataset.index === String(i)) return;
+    steps.dataset.index = String(i);
+    stepEls.forEach((el, k) => {
+      el.classList.toggle('is-active', k === i);
+      el.classList.toggle('is-past', k < i);
+    });
+    dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+  };
+  const onScroll = () => {
+    ticking = false;
+    const y = scrollY;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress?.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : '0');
+    if (nav) {
+      nav.classList.toggle('is-scrolled', y > 10);
+      nav.classList.toggle('is-hidden', y > lastY && y > 300);
+    }
+    lastY = y;
+    if (steps) {
+      const r = steps.getBoundingClientRect();
+      const t = Math.min(Math.max(-r.top / (r.height - innerHeight), 0), 0.999);
+      setStep(Math.floor(t * stepEls.length));
+    }
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+  dots.forEach((d, i) => d.addEventListener('click', () => {
+    const top = steps.getBoundingClientRect().top + scrollY;
+    const span = steps.offsetHeight - innerHeight;
+    scrollTo({ top: top + span * ((i + 0.5) / stepEls.length), behavior: reduce ? 'auto' : 'smooth' });
+  }));
+
+  if (finePointer && !reduce) {
+    // --- カスタムカーソル（少し遅れて追従） ---
+    const cursor = document.querySelector('.cursor');
+    if (cursor) {
+      let tx = -100, ty = -100, cx = -100, cy = -100;
+      addEventListener('pointermove', e => {
+        tx = e.clientX; ty = e.clientY;
+        const t = e.target;
+        cursor.classList.toggle('is-hover', !!t.closest?.('a, button, .tilt, [data-goto]'));
+        cursor.classList.toggle('is-dark', !!t.closest?.('.solution, .members, .company, .footer'));
+      });
+      const loop = () => {
+        cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
+        cursor.style.setProperty('--cx', `${cx}px`);
+        cursor.style.setProperty('--cy', `${cy}px`);
+        requestAnimationFrame(loop);
+      };
+      loop();
+    }
+
+    // --- マグネットボタン ---
+    document.querySelectorAll('.magnetic').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--tx', `${(e.clientX - r.left - r.width / 2) * 0.25}px`);
+        el.style.setProperty('--ty', `${(e.clientY - r.top - r.height / 2) * 0.35}px`);
+      });
+      el.addEventListener('pointerleave', () => { el.style.setProperty('--tx', '0px'); el.style.setProperty('--ty', '0px'); });
+    });
+
+    // --- 3D チルト ---
+    document.querySelectorAll('.tilt').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.classList.add('is-tilting');
+        el.style.transform = `perspective(900px) rotateX(${(0.5 - y) * 10}deg) rotateY(${(x - 0.5) * 12}deg)`;
+        el.style.setProperty('--gx', `${x * 100}%`);
+        el.style.setProperty('--gy', `${y * 100}%`);
+      });
+      el.addEventListener('pointerleave', () => { el.classList.remove('is-tilting'); el.style.transform = ''; });
+    });
+  }
+
+  // --- メンバー: ゆっくり自動スクロール（触れている間は停止、端で折り返し） ---
+  const ms = document.querySelector('.members__scroller');
+  if (ms && !reduce) {
+    let paused = false, dir = 1, acc = 0;
+    ['pointerenter', 'pointerdown', 'touchstart', 'focusin'].forEach(ev => ms.addEventListener(ev, () => { paused = true; }, { passive: true }));
+    ['pointerleave', 'focusout'].forEach(ev => ms.addEventListener(ev, () => { paused = false; }));
+    ms.addEventListener('touchend', () => setTimeout(() => { paused = false; }, 2500), { passive: true });
+    const drift = () => {
+      if (!paused && ms.scrollWidth > ms.clientWidth) {
+        acc += 0.5 * dir;
+        if (Math.abs(acc) >= 1) { ms.scrollLeft += Math.trunc(acc); acc -= Math.trunc(acc); }
+        if (ms.scrollLeft + ms.clientWidth >= ms.scrollWidth - 1) dir = -1;
+        else if (ms.scrollLeft <= 0) dir = 1;
+      }
+      requestAnimationFrame(drift);
+    };
+    drift();
   }
 })();

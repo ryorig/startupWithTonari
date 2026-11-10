@@ -104,7 +104,7 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   /* fallback: Figma の静的グラデーション */
   background: linear-gradient(90deg, #eaf6fc 0%, #9396f4 52.488%, #87c9ea 107.03%);
   background: linear-gradient(90deg in oklch, var(--hero-c1) 0%, var(--hero-c2) 52.5%, var(--hero-c3) 107%);
-  animation: hero-tide 24s ease-in-out infinite;
+  animation: hero-tide 9s linear infinite;
 }
 /* 水の流れのように動く光のにじみ（transform のみ動かして再描画を抑える） */
 .hero__panel::before,
@@ -124,22 +124,24 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   left: -10%;
   top: -30%;
   background: radial-gradient(circle, #b9e6ff 0%, rgba(185, 230, 255, 0) 70%);
-  animation: hero-drift-a 28s ease-in-out infinite alternate;
+  animation: hero-drift-a 11s ease-in-out infinite alternate;
 }
 .hero__panel::after {
   right: -15%;
   bottom: -40%;
   background: radial-gradient(circle, #c3b8ff 0%, rgba(195, 184, 255, 0) 70%);
-  animation: hero-drift-b 34s ease-in-out infinite alternate;
+  animation: hero-drift-b 14s ease-in-out infinite alternate;
 }
 @property --hero-c1 { syntax: "<color>"; inherits: false; initial-value: #eaf6fc; }
 @property --hero-c2 { syntax: "<color>"; inherits: false; initial-value: #9396f4; }
 @property --hero-c3 { syntax: "<color>"; inherits: false; initial-value: #87c9ea; }
 @keyframes hero-tide {
   0%, 100% { --hero-c1: #eaf6fc; --hero-c2: #9396f4; --hero-c3: #87c9ea; }
-  25% { --hero-c1: #dff3fb; --hero-c2: #8aa8f6; --hero-c3: #9fd8ee; }
-  50% { --hero-c1: #eef0ff; --hero-c2: #7fb4f2; --hero-c3: #a8a6f4; }
-  75% { --hero-c1: #e4f7f6; --hero-c2: #a091f2; --hero-c3: #7fc6ec; }
+  16% { --hero-c1: #ffe3f1; --hero-c2: #ff7eb6; --hero-c3: #8f7bff; }
+  33% { --hero-c1: #fff1d6; --hero-c2: #ffa86b; --hero-c3: #ff6fa5; }
+  50% { --hero-c1: #dcfff4; --hero-c2: #3fd6c0; --hero-c3: #4aa8ff; }
+  66% { --hero-c1: #e2ecff; --hero-c2: #4f7dff; --hero-c3: #a56bff; }
+  83% { --hero-c1: #f2e6ff; --hero-c2: #b06bff; --hero-c3: #5fd3ff; }
 }
 @keyframes hero-drift-a {
   from { transform: translate(0, 0) scale(1); }
@@ -666,7 +668,7 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   /* Members */
   .members { padding: 48px 0; }
   .members__title { padding: 0 20px; font-size: 24px; line-height: 36px; }
-  .members__scroller { margin-top: 24px; scroll-snap-type: x mandatory; }
+  .members__scroller { margin-top: 24px; }
   .members__track { gap: 12px; padding: 0 20px; }
   .member-card { width: 220px; height: 130px; padding: 18px; border-radius: 16px; scroll-snap-align: start; }
   .member-card__school { min-height: 40px; font-size: 13px; line-height: 20px; }
@@ -780,4 +782,165 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   .js-fade .reveal { opacity: 1; transform: none; filter: none; transition: none; }
   .hero__title span, .hero__register, .hero__register::after, .hero__business, .hero__photos img,
   .flow__arrow img, .flow__node img { animation: none !important; }
+}
+
+
+/* ================= Interactive layer ================= */
+/* カーソル追従の光（hero）: JS が --mx/--my/--hue を更新 */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background:
+    radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), hsl(var(--hue, 300) 100% 72% / 0.75), transparent 60%),
+    radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), hsl(calc(var(--hue, 300) + 60) 100% 85% / 0.6), transparent 70%);
+  mix-blend-mode: soft-light;
+}
+.hero__panel:hover .hero__glow { opacity: 1; }
+.hero__ring, .hero__stripe { transition: translate 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.hero__ring { translate: calc(var(--px, 0) * -18px) calc(var(--py, 0) * -12px); }
+.hero__stripe { translate: calc(var(--px, 0) * 26px) calc(var(--py, 0) * 18px); }
+.hero__photos { translate: calc(var(--px, 0) * -14px) calc(var(--py, 0) * -10px); transition: translate 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* スクロール進捗バー */
+.progress { position: fixed; top: 0; left: 0; z-index: 200; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, #ed008c, #ffb800, #3fd6c0, #4f7dff); pointer-events: none; }
+
+/* カスタムカーソル（マウス環境のみ） */
+.cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cursor {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 300;
+    width: 34px; height: 34px;
+    margin: -17px 0 0 -17px;
+    border: 1.5px solid rgba(33, 58, 137, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(var(--cx, -100px), var(--cy, -100px)) scale(var(--cs, 1));
+    transition: width 0.25s, height 0.25s, background 0.25s, border-color 0.25s, opacity 0.3s;
+    mix-blend-mode: multiply;
+  }
+  .cursor.is-hover { --cs: 1.8; background: rgba(255, 184, 0, 0.25); border-color: rgba(237, 0, 140, 0.6); }
+  .cursor.is-dark { border-color: rgba(255, 255, 255, 0.8); mix-blend-mode: normal; }
+}
+
+/* マグネットボタン */
+.magnetic { translate: var(--tx, 0) var(--ty, 0); transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s, opacity 0.2s, box-shadow 0.3s; }
+
+/* 3D チルト + ハイライト */
+.tilt { transform-style: preserve-3d; will-change: transform; }
+.tilt.is-tilting { transition: transform 0.1s linear !important; }
+.tilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(300px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.55), transparent 60%);
+}
+.problem__card, .member-card { position: relative; }
+.tilt.is-tilting::after { opacity: 1; }
+.tilt-soft { transition: box-shadow 0.3s, border-color 0.3s; }
+.tilt-soft:hover { border-color: rgba(33, 58, 137, 0.4); box-shadow: 0 14px 30px rgba(33, 58, 137, 0.1); }
+
+/* ヘッダー: 下スクロールで隠れ、上スクロールで出る */
+.gnav { transition: translate 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s; }
+.gnav.is-hidden:not(.is-open) { translate: 0 -130%; }
+.gnav.is-scrolled { box-shadow: 0 8px 24px rgba(33, 58, 137, 0.1); }
+
+/* ---------- 01–03 スティッキーセクション ---------- */
+.steps { position: relative; height: 300vh; max-width: 1000px; margin: 0 auto; }
+.steps__sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; }
+.steps__card {
+  width: 100%;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 64px;
+  border-radius: 16px;
+  background: #fff;
+  color: #283233;
+  overflow: hidden;
+}
+.steps__text { position: relative; height: 380px; }
+.step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+  filter: blur(6px);
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+}
+.step.is-active { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+.step.is-past { transform: translateY(-40px); }
+.step__num {
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #213a89, #4f7dff 60%, #3fd6c0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.step__title { font-size: 30px; font-weight: 800; line-height: 1.4; color: var(--brand); }
+.step__text { font-size: 17px; font-weight: 700; line-height: 32px; }
+.steps__dots { position: absolute; left: 0; bottom: -28px; display: flex; gap: 10px; }
+.steps__dot { width: 34px; height: 6px; border: 0; border-radius: 3px; background: rgba(33, 58, 137, 0.15); cursor: pointer; padding: 0; transition: background 0.3s, width 0.3s; }
+.steps__dot.is-active { width: 54px; background: var(--brand); }
+.steps__phone { display: flex; justify-content: center; }
+.phone {
+  position: relative;
+  width: 290px;
+  aspect-ratio: 9 / 19.2;
+  padding: 11px;
+  border-radius: 48px;
+  background: linear-gradient(145deg, #2b2f38, #0d0f14);
+  box-shadow: 0 0 0 2px #c7ccd6, 0 30px 60px rgba(33, 58, 137, 0.35);
+  animation: float-y 6s ease-in-out infinite;
+}
+.phone::before { content: ""; position: absolute; top: 22px; left: 50%; z-index: 2; width: 90px; height: 26px; margin-left: -45px; border-radius: 20px; background: #000; }
+.phone__screen { position: relative; height: 100%; overflow: hidden; border-radius: 38px; background: #fff; }
+.phone__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* 関係図: ホバーで浮く */
+.flow__node img { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.flow__node:hover img { transform: translateY(-8px) rotate(-3deg) scale(1.05); }
+
+/* メンバー: 自動でゆっくり流れる（JS） / ホバーで止まる */
+.member-card { transition: box-shadow 0.3s, translate 0.3s; }
+
+@media (max-width: 900px) {
+  .steps { height: 300svh; }
+  .steps__sticky { height: 100svh; padding-top: 48px; }
+  .steps__card { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 12px; min-height: 0; height: calc(100svh - 72px); padding: 24px 20px 0; align-items: start; }
+  .steps__text { height: 230px; }
+  .step { justify-content: flex-start; align-items: center; text-align: center; gap: 8px; }
+  .step__num { font-size: 52px; }
+  .step__title { font-size: 19px; }
+  .step__text { font-size: 13px; line-height: 22px; }
+  .step .btn-pill { height: 44px; max-width: 220px; font-size: 14px; }
+  .steps__dots { left: 50%; bottom: -14px; transform: translateX(-50%); }
+  .steps__phone { align-self: stretch; overflow: hidden; align-items: flex-start; padding-top: 16px; }
+  .phone { width: min(220px, 58vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__panel { animation: none; }
+  .phone { animation: none; }
+  .step { transition: opacity 0.2s; transform: none; filter: none; }
 }
