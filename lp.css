@@ -1478,3 +1478,9 @@ html, body { overflow-x: clip; }
   32% { transform: translateY(2px) scale(0.985); box-shadow: 0 6px 14px rgba(6, 20, 70, 0.3); }
   40%, 100% { transform: none; box-shadow: 0 14px 30px rgba(6, 20, 70, 0.35); }
 }
+/* 指が当たる瞬間（31%）とボタンが沈む瞬間をそろえる */
+@keyframes tap-press {
+  0%, 29% { transform: none; box-shadow: 0 14px 30px rgba(6, 20, 70, 0.35); }
+  31% { transform: translateY(2px) scale(0.985); box-shadow: 0 6px 14px rgba(6, 20, 70, 0.3); }
+  37%, 100% { transform: none; box-shadow: 0 14px 30px rgba(6, 20, 70, 0.35); }
+}

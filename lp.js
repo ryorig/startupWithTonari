@@ -113,9 +113,18 @@
     });
   }
 
+  // ボタンの沈み込みを手のアニメーションと同じ時間軸にそろえる
+  const syncTap = () => {
+    const btn = document.querySelector('.hero__register');
+    const hand = document.querySelector('.tap__hand');
+    if (!btn || !hand) return;
+    const h = hand.getAnimations().find(a => a.animationName === 'tap-hand');
+    const b = btn.getAnimations().find(a => a.animationName === 'tap-press');
+    if (h && b && h.startTime != null) b.startTime = h.startTime;
+  };
   document.querySelectorAll('.hero__register, .hero__business').forEach(el => {
-    el.addEventListener('animationend', e => { if (e.animationName === 'rise-in') el.classList.add('is-entered'); });
-    setTimeout(() => el.classList.add('is-entered'), 2000);
+    el.addEventListener('animationend', e => { if (e.animationName === 'rise-in') { el.classList.add('is-entered'); requestAnimationFrame(syncTap); } });
+    setTimeout(() => { el.classList.add('is-entered'); requestAnimationFrame(syncTap); }, 2000);
   });
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
