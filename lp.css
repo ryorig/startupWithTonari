@@ -1347,3 +1347,7 @@ html, body { overflow-x: clip; }
   .a3d__label { font-size: 13px; white-space: normal; text-align: center; line-height: 1.3; }
 }
 @keyframes a3d-frames-md { from { background-position: 0 0; } to { background-position: -6528px 0; } }
+
+/* リアルタイム 3D 矢印（canvas） */
+.a3d__canvas { display: block; width: 100%; height: 100%; }
+.a3d-live .a3d__label { transition: opacity 0.12s linear; }
