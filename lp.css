@@ -1722,3 +1722,15 @@ html, body { overflow-x: clip; }
 .service-row__icon { background: var(--brand); }
 .service-row__icon img { filter: none; }
 .js-fade .services__list.is-focusing > .service-row.is-focus { background: #fff; border-color: #fff; box-shadow: 0 30px 64px rgba(4, 14, 54, 0.55); }
+
+/* 事業内容の 3 行: バナーと同系統の柄（青の地＋斜めの面＋細かいノイズ）、白文字 */
+.service-row, .js-fade .services__list.is-focusing > .service-row.is-focus { color: #fff; border-color: rgba(255, 255, 255, 0.18); background-size: cover; background-position: center; }
+.service-row:nth-child(2) { background-image: url("assets/lp/service-pattern-1.svg"); }
+.service-row:nth-child(3) { background-image: url("assets/lp/service-pattern-2.svg"); }
+.service-row:nth-child(4) { background-image: url("assets/lp/service-pattern-3.svg"); }
+.js-fade .services__list.is-focusing > .service-row.is-focus { border-color: rgba(255, 255, 255, 0.6); }
+.service-row__icon { background: #fff; }
+.service-row__icon img { filter: brightness(0) saturate(100%) invert(18%) sepia(53%) saturate(2060%) hue-rotate(214deg) brightness(92%) contrast(95%); }
+.js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(2), .service-row:nth-child(2) { background: url("assets/lp/service-pattern-1.svg") center / cover no-repeat; }
+.js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(3), .service-row:nth-child(3) { background: url("assets/lp/service-pattern-2.svg") center / cover no-repeat; }
+.js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(4), .service-row:nth-child(4) { background: url("assets/lp/service-pattern-3.svg") center / cover no-repeat; }
