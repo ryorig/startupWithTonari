@@ -3,7 +3,7 @@
   // スクロールでフェードイン（要素ごとに方向を変え、同じ親の兄弟は 80ms ずつずらす）
   const REVEAL = [
     ['.partners__label, .problem__title, .members__eyebrow, .members__title, .pitch__head, .page__intro', 'blur'],
-    ['.partners__item, .problem__card, .flow__node, .flow__arrow, .member-card, .work-card', 'up'],
+    ['.partners__item, .problem__card, .flow__node, .flow__arrow, .member-card', 'up'],
     ['.solution__heading, .solution__lead, .pitch__viewer, .company__card', 'zoom'],
     ['.eyebrow-en, .services__heading, .services__banner, .company__row, .info-table__row', 'left'],
     ['.service-row', 'right'],
@@ -251,4 +251,71 @@
     };
     drift();
   }
+
+  // ===== 臨場感のあるスクロール演出 =====
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  // Project Portfolio: 縦スクロールを横送りに変換
+  const works = document.querySelector('.works');
+  const wList = works?.querySelector('.works__list');
+  const wCards = wList ? [...wList.querySelectorAll('.work-card')] : [];
+  const wCurrent = works?.querySelector('.works__current');
+  if (works && wCards.length && !reduce) {
+    works.classList.add('works--scroll');
+  }
+  const updateWorks = () => {
+    if (!works || !works.classList.contains('works--scroll')) return;
+    const r = works.getBoundingClientRect();
+    const span = works.offsetHeight - innerHeight;
+    const p = clamp(-r.top / Math.max(span, 1), 0, 1);
+    const f = p * (wCards.length - 1);
+    const card = wCards[0].offsetWidth;
+    const gap = parseFloat(getComputedStyle(wList).columnGap) || 48;
+    const vw = works.querySelector('.works__viewport').clientWidth;
+    const x = vw / 2 - card / 2 - f * (card + gap);
+    wList.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+    wCards.forEach((c, i) => {
+      const d = i - f;
+      const a = Math.min(Math.abs(d), 1.4);
+      const scale = 1.06 - 0.16 * Math.min(a, 1);
+      const rot = clamp(-d * 28, -38, 38);
+      c.style.transform = `rotateY(${rot.toFixed(1)}deg) scale(${scale.toFixed(3)})`;
+      c.style.opacity = (1 - 0.5 * Math.min(a, 1)).toFixed(2);
+      c.classList.toggle('is-active', Math.abs(d) < 0.5);
+    });
+    if (wCurrent) wCurrent.textContent = String(Math.round(f) + 1).padStart(2, '0');
+  };
+
+  // 事業内容: 画面中央に最も近い行にフォーカス
+  const sList = document.querySelector('.services__list');
+  const sItems = sList ? [...sList.children] : [];
+  const updateServices = () => {
+    if (!sList || reduce) return;
+    const r = sList.getBoundingClientRect();
+    const mid = innerHeight * 0.5;
+    const inView = r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25;
+    sList.classList.toggle('is-focusing', inView);
+    if (!inView) { sItems.forEach(el => el.classList.remove('is-focus')); return; }
+    let best = null, bestD = Infinity;
+    sItems.forEach(el => { const b = el.getBoundingClientRect(); const d = Math.abs(b.top + b.height / 2 - mid); if (d < bestD) { bestD = d; best = el; } });
+    sItems.forEach(el => el.classList.toggle('is-focus', el === best));
+  };
+
+  // 後半セクション: 入場時に引きから全体表示へズーム
+  const zoomEls = reduce ? [] : ['.services__inner', '.members', '.pitch__viewer', '.company__card'].map(q => document.querySelector(q)).filter(Boolean);
+  zoomEls.forEach(el => el.setAttribute('data-zoom', ''));
+  const updateZoom = () => zoomEls.forEach(el => {
+    const r = el.getBoundingClientRect();
+    const e = clamp((innerHeight - r.top) / (innerHeight * 0.7), 0, 1);
+    const ease = 1 - Math.pow(1 - e, 3);
+    el.style.transform = `scale(${(0.88 + 0.12 * ease).toFixed(4)})`;
+    el.style.borderRadius = `${((1 - ease) * 36).toFixed(1)}px`;
+  });
+
+  let fxTick = false;
+  const fx = () => { fxTick = false; updateWorks(); updateServices(); updateZoom(); };
+  addEventListener('scroll', () => { if (!fxTick) { fxTick = true; requestAnimationFrame(fx); } }, { passive: true });
+  addEventListener('resize', fx);
+  fx();
+  window.__fx = fx;
 })();

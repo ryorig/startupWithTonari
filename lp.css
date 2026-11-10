@@ -1322,7 +1322,7 @@ p, h1, h2, h3, dl, dd { margin: 0; }
 @media (max-width: 900px) { .steps { width: calc(100% + 20px); margin-left: -10px; margin-right: -10px; } }
 html, body { overflow-x: clip; }
 @media (max-width: 900px) {
-  .js-fade .reveal[data-reveal="right"], .js-fade .reveal[data-reveal="left"] { transform: translateY(24px); }
+  .js-fade .reveal[data-reveal="right"]:not(.is-visible), .js-fade .reveal[data-reveal="left"]:not(.is-visible) { transform: translateY(24px); }
 }
 
 /* ===== 検証で見つかった不具合の修正 ===== */
@@ -1575,3 +1575,45 @@ html, body { overflow-x: clip; }
 
 .work-card__img--kids img { left: 50%; top: 4px; width: 356px; height: 276px; margin-left: -178px; }
 @media (max-width: 900px) { .work-card__img--kids img { top: 4px; } }
+
+/* ================= 臨場感のあるスクロール演出（事業内容以降） ================= */
+/* --- Project Portfolio: 縦スクロールで横に送り、中央の 1 枚を拡大・左右はめくれたカードのように傾ける --- */
+.works { position: relative; padding: 0; }
+.works--scroll { height: calc(100vh + 140vh); }
+.works__sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: 72px 0 40px; }
+.works:not(.works--scroll) .works__sticky { position: static; height: auto; padding: 96px 0 112px; }
+.works__head { max-width: 1152px; width: calc(100% - 48px); margin: 0 auto 36px; display: flex; align-items: flex-end; gap: 20px; }
+.works__head h2 { font-size: 40px; font-weight: 900; line-height: 52px; color: #000; }
+.works__count { margin-left: auto; font-family: var(--font-en); font-size: 15px; font-weight: 700; color: #8a93a8; letter-spacing: 0.1em; }
+.works__current { color: var(--brand); font-size: 28px; }
+.works__viewport { perspective: 1400px; }
+.works--scroll .works__list { flex-wrap: nowrap; justify-content: flex-start; width: max-content; padding: 30px 0 42px; will-change: transform; }
+.works--scroll .work-card { flex-shrink: 0; transform-origin: 50% 60%; transition: box-shadow 0.4s ease; will-change: transform, opacity; }
+.works--scroll .work-card.is-active { box-shadow: 0 30px 60px rgba(33, 58, 137, 0.22); }
+.works--scroll .work-card:hover { translate: none; }
+
+/* --- 事業内容: スクロール位置に応じて 1 行ずつフォーカス --- */
+.services__list > * { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease; }
+.services__list.is-focusing > * { opacity: 0.38; transform: scale(0.97); }
+.services__list.is-focusing > .is-focus { opacity: 1; transform: scale(1.03); box-shadow: 0 22px 44px rgba(33, 58, 137, 0.18); border-color: var(--brand); }
+
+/* --- 後半セクション: 画面に入るとき「引き → 全体表示」にズーム --- */
+[data-zoom] { transform-origin: 50% 30%; will-change: transform; }
+.members[data-zoom], .company[data-zoom] { overflow: hidden; }
+
+@media (max-width: 900px) {
+  .works--scroll { height: calc(100svh + 160svh); }
+  .works__sticky { height: 100svh; padding: 64px 0 24px; }
+  .works__head { width: calc(100% - 40px); margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
+  .works__head h2 { font-size: 24px; line-height: 36px; }
+  .works__current { font-size: 22px; }
+  .works--scroll .works__list { gap: 20px; padding: 16px 0 24px; }
+  .works--scroll .work-card { width: 78vw; max-width: 340px; min-height: 0; height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .works--scroll { height: auto; }
+  .works__sticky { position: static; height: auto; }
+}
+.js-fade .services__list.is-focusing > * { opacity: 0.38; transform: scale(0.97); }
+.js-fade .services__list.is-focusing > .is-focus { opacity: 1; transform: scale(1.03); }
+@media (max-width: 900px) { .works__head { align-items: baseline; row-gap: 2px; } .works__head .eyebrow-en { flex-basis: 100%; } }
