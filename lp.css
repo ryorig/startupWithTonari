@@ -1373,3 +1373,8 @@ html, body { overflow-x: clip; }
 .hero__register .btn-ico { background: #fff; color: #3f7fe0; }
 .hero__business { background: #141414; border-color: #141414; color: #fff; backdrop-filter: none; box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3); }
 .hero__business:hover { background: #000; border-color: #000; }
+
+/* 新規登録: 紺の補色にあたる暖色（コーラル→オレンジ→アンバー）。文字は読みやすさのため紺 */
+.hero__register { background: linear-gradient(100deg, #ff7a6b 0%, #ff9a3d 55%, #ffc23d 100%); color: #14245e; text-shadow: none; box-shadow: 0 14px 32px rgba(255, 120, 60, 0.35), 0 6px 16px rgba(8, 18, 70, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+.hero__register:hover { background: linear-gradient(100deg, #ff8a7c 0%, #ffa94f 55%, #ffcc55 100%); }
+.hero__register .btn-ico { background: #14245e; color: #fff; }
