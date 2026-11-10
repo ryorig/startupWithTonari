@@ -1354,3 +1354,10 @@ html, body { overflow-x: clip; }
 /* ラベル横の矢印記号は不要（3D 矢印で向きが分かるため） */
 .a3d__label--fwd::after, .a3d__label--back::before { content: none !important; }
 .a3d__label--back { color: #fff; }
+
+/* PC 幅では「隣の高専生 が解決します！」を常に 1 行に。画面が狭いほど両方を同じ比率で縮める */
+@media (min-width: 901px) {
+  .solution__heading { flex-wrap: nowrap; gap: clamp(12px, 2.2vw, 31px); }
+  .solution__logo { width: min(680px, 47vw); flex-shrink: 1; }
+  .solution__suffix { width: min(573px, 39vw); height: auto; flex-shrink: 1; }
+}
