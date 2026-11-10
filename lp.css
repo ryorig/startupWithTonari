@@ -981,3 +981,14 @@ p, h1, h2, h3, dl, dd { margin: 0; }
   .phone { animation: none; }
   .step { transition: opacity 0.2s; transform: none; filter: none; }
 }
+
+/* 01–03: スクロール中は画面いっぱいに表示 */
+.steps { max-width: none; width: 100vw; margin-left: calc(50% - 50vw); }
+.steps__sticky { align-items: stretch; }
+.steps__card { height: 100vh; border-radius: 0; padding: 80px max(72px, calc((100vw - 1200px) / 2)) 40px; }
+.steps__phone .phone { width: min(330px, 34vh); }
+@media (max-width: 900px) {
+  .steps__sticky { padding-top: 0; }
+  .steps__card { height: 100svh; border-radius: 0; padding: 64px 20px 0; }
+  .steps__phone .phone { width: min(210px, 52vw); }
+}
