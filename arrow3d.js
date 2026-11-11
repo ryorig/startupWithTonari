@@ -5,7 +5,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 import opentype from 'https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.module.js';
 
 const PERIOD = 6000;
-const EASE = 0.25; // 0〜0.5。大きいほど緩急が強い（正面での速さ = 1 - 2×EASE 倍、真横 = 1 + 2×EASE 倍）
+const EASE = 0.4; // 0〜0.5。大きいほど緩急が強い（正面での速さ = 1 - 2×EASE 倍、真横 = 1 + 2×EASE 倍）
 const FONT_URL = 'assets/lp/fonts/noto-sans-jp-800-arrow-labels.woff';
 const hosts = [...document.querySelectorAll('.flow__arrow--3d')];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -76,8 +76,8 @@ function build(item, font) {
     // 縦並び: 矢印（下向き）と縦書きの文字を左右に並べ、全体を中央に配置。X 軸回転で上向きに反転
     fwd = verticalText(font, item.fwdText, 4.2, textMat);
     back = verticalText(font, item.backText, 4.2, textMat);
-    arrow.rotation.z = -Math.PI / 2; arrow.position.x = -0.75;
-    fwd.position.x = back.position.x = 0.95;
+    arrow.rotation.z = -Math.PI / 2; arrow.scale.x = 0.8; arrow.position.x = 0;
+    fwd.position.x = back.position.x = 1.45; // 矢印を中央に置き、文字は右へずらす
     item.axis = 'x';
   } else {
     fwd = new THREE.Mesh(textGeometry(font, item.fwdText, 4.8), textMat);
@@ -126,7 +126,7 @@ const resize = () => items.forEach(it => {
   it.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   it.renderer.setSize(w, h, false);
   it.cam.aspect = w / h;
-  if (it.vertical) { it.cam.fov = 30; it.cam.position.set(0, 0, 11); it.cam.lookAt(0.1, 0, 0); }
+  if (it.vertical) { it.cam.fov = 30; it.cam.position.set(0, 0, 11); it.cam.lookAt(0, 0, 0); }
   else { it.cam.fov = 30; it.cam.position.set(0, 0.5, 9.5); it.cam.lookAt(0, 0.15, 0); }
   it.cam.updateProjectionMatrix();
 });
