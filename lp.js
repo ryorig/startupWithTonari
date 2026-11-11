@@ -295,10 +295,19 @@
     const mid = innerHeight * 0.5;
     const inView = r.top < innerHeight * 0.75 && r.bottom > innerHeight * 0.25;
     sList.classList.toggle('is-focusing', inView);
-    if (!inView) { sItems.forEach(el => el.classList.remove('is-focus')); return; }
+    if (!inView) { sItems.forEach(el => { el.classList.remove('is-focus'); el.style.transform = ''; }); return; }
     let best = null, bestD = Infinity;
     sItems.forEach(el => { const b = el.getBoundingClientRect(); const d = Math.abs(b.top + b.height / 2 - mid); if (d < bestD) { bestD = d; best = el; } });
     sItems.forEach(el => el.classList.toggle('is-focus', el === best));
+    // 画面中央からの距離に応じて連続的に拡大・縮小（段階的に切り替えず、なめらかに追従）
+    const narrow = innerWidth <= 900;
+    const maxS = narrow ? 1.05 : 1.08, minS = narrow ? 0.9 : 0.88;
+    sItems.forEach(el => {
+      const b = el.getBoundingClientRect();
+      const d = Math.min(Math.abs(b.top + b.height / 2 - mid) / (innerHeight * (narrow ? 0.38 : 0.45)), 1);
+      const e = 1 - d * d * (3 - 2 * d); // smoothstep
+      el.style.transform = `scale(${(minS + (maxS - minS) * e).toFixed(4)})`;
+    });
   };
 
   // 後半セクション: 入場時に引きから全体表示へズーム

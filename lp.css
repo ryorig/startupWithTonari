@@ -1758,3 +1758,5 @@ html, body { overflow-x: clip; }
   .services__banner-sp img { width: 100%; max-width: 300px; height: auto; mix-blend-mode: normal; }
 }
 @media (max-width: 900px) { .services__banner-sp img { aspect-ratio: 810 / 150; } }
+/* 事業内容: 大きさはスクロールに直接追従させる（transition で段付きにならないよう transform は除外） */
+.services__list > * { transition: box-shadow 0.4s ease, border-color 0.4s ease; will-change: transform; }
