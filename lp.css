@@ -1749,3 +1749,4 @@ html, body { overflow-x: clip; }
 }
 @media (max-width: 900px) { .a3d-text3d .a3d { width: 200px; height: 185px; } }
 @media (max-width: 900px) { .a3d-text3d .a3d { width: 280px; height: 185px; } }
+.cursor { display: none !important; }
