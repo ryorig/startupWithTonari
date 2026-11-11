@@ -28,6 +28,25 @@ function textGeometry(font, text, maxWidth) {
   return g;
 }
 
+function verticalText(font, text, maxHeight, mat) {
+  const g = new THREE.Group();
+  const chars = [...text];
+  const step = Math.min(0.62, maxHeight / chars.length);
+  chars.forEach((ch, i) => {
+    const geo = textGeometry(font, ch, 10);
+    geo.computeBoundingBox();
+    const bb = geo.boundingBox; const h = bb.max.y - bb.min.y || 1; const w = bb.max.x - bb.min.x || 1;
+    const k = (step * 0.86) / Math.max(h, w, 0.62 * 0.6);
+    geo.scale(k, k, k);
+    const m = new THREE.Mesh(geo, mat);
+    if (ch === 'ー' || ch === '－') m.rotation.z = -Math.PI / 2;
+    if (ch === '・') m.scale.setScalar(0.7);
+    m.position.y = ((chars.length - 1) / 2 - i) * step;
+    g.add(m);
+  });
+  return g;
+}
+
 function arrowGeometry() {
   const s = new THREE.Shape();
   s.moveTo(-1.6, -0.34); s.lineTo(0.45, -0.34); s.lineTo(0.45, -0.82); s.lineTo(1.6, 0);
@@ -51,14 +70,17 @@ function build(item, font) {
   const d2 = new THREE.DirectionalLight(0xbcd0ff, 1.0); d2.position.set(-5, -2, -4); scene.add(d2);
   const group = new THREE.Group();
   const arrow = new THREE.Mesh(arrowGeometry(), arrowMat);
-  const fwd = new THREE.Mesh(textGeometry(font, item.fwdText, vertical ? 4.2 : 4.8), textMat);
-  const back = new THREE.Mesh(textGeometry(font, item.backText, vertical ? 4.2 : 4.8), textMat);
+  let fwd, back;
   if (vertical) {
-    // 縦並び: 矢印は下向き、文字は右側。上下に回転（X 軸）して上向きに反転する
-    arrow.rotation.z = -Math.PI / 2; arrow.position.x = -2.2;
-    fwd.position.x = back.position.x = 1.15;
+    // 縦並び: 矢印（下向き）と縦書きの文字を左右に並べ、全体を中央に配置。X 軸回転で上向きに反転
+    fwd = verticalText(font, item.fwdText, 4.2, textMat);
+    back = verticalText(font, item.backText, 4.2, textMat);
+    arrow.rotation.z = -Math.PI / 2; arrow.position.x = -0.75;
+    fwd.position.x = back.position.x = 0.95;
     item.axis = 'x';
   } else {
+    fwd = new THREE.Mesh(textGeometry(font, item.fwdText, 4.8), textMat);
+    back = new THREE.Mesh(textGeometry(font, item.backText, 4.8), textMat);
     arrow.position.y = -0.55;
     fwd.position.y = back.position.y = 1.0;
     item.axis = 'y';
@@ -103,7 +125,7 @@ const resize = () => items.forEach(it => {
   it.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   it.renderer.setSize(w, h, false);
   it.cam.aspect = w / h;
-  if (it.vertical) { it.cam.fov = 30; it.cam.position.set(0, 0, 10.5); it.cam.lookAt(0, 0, 0); }
+  if (it.vertical) { it.cam.fov = 30; it.cam.position.set(0, 0, 11); it.cam.lookAt(0.1, 0, 0); }
   else { it.cam.fov = 30; it.cam.position.set(0, 0.5, 9.5); it.cam.lookAt(0, 0.15, 0); }
   it.cam.updateProjectionMatrix();
 });

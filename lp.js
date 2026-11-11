@@ -259,7 +259,7 @@
   const works = document.querySelector('.works');
   const wList = works?.querySelector('.works__list');
   const wCards = wList ? [...wList.querySelectorAll('.work-card')] : [];
-  const wCurrent = works?.querySelector('.works__current');
+  const wCurrent = null;
   if (works && wCards.length && !reduce) {
     works.classList.add('works--scroll');
   }

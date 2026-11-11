@@ -1738,3 +1738,12 @@ html, body { overflow-x: clip; }
 /* 事業内容の 3 行: バナーと同じ背景画像（ザラつきのある青＋斜めの面）を使用 */
 .service-row:nth-child(n),
 .js-fade .services__list.is-focusing > .service-row.is-focus:nth-child(n) { background: #0b56a3 url("assets/lp/service-bg.jpg") center / cover no-repeat; }
+@media (max-width: 900px) {
+  /* 矢印と縦書きの 3D 文字を中央に */
+  .a3d-text3d .flow__arrow--3d { width: 100%; display: flex; justify-content: center; align-items: center; padding: 6px 0; }
+  .a3d-text3d .a3d { width: 260px; max-width: 100%; height: 240px; margin: 0 auto; }
+  .a3d-text3d .a3d__rot { width: 100%; height: 100%; }
+  /* スマホではポチッと押す手のアニメーションを出さない（下のボタンと重なるため） */
+  .tap { display: none !important; }
+  .hero__register.is-entered { animation: none !important; }
+}
