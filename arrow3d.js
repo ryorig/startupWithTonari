@@ -5,7 +5,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 import opentype from 'https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.module.js';
 
 const PERIOD = 6000;
-const EASE = 0.4; // 0〜0.5。大きいほど緩急が強い（正面での速さ = 1 - 2×EASE 倍、真横 = 1 + 2×EASE 倍）
+const EASE = 0.3; // 緩急の強さ。正面での速さ = 1 - 2×EASE 倍（0.3 なら 0.4 倍 = 約 24°/秒で常に回り続ける）、真横 = 1 + 2×EASE 倍。止まって見えないよう 0.35 以下にする
 const FONT_URL = 'assets/lp/fonts/noto-sans-jp-800-arrow-labels.woff';
 const hosts = [...document.querySelectorAll('.flow__arrow--3d')];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
