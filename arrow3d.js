@@ -5,6 +5,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 import opentype from 'https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.module.js';
 
 const PERIOD = 6000;
+const EASE = 0.25; // 0〜0.5。大きいほど緩急が強い（正面での速さ = 1 - 2×EASE 倍、真横 = 1 + 2×EASE 倍）
 const FONT_URL = 'assets/lp/fonts/noto-sans-jp-800-arrow-labels.woff';
 const hosts = [...document.querySelectorAll('.flow__arrow--3d')];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -140,7 +141,9 @@ if ('IntersectionObserver' in window) {
 }
 
 const draw = now => {
-  const angle = reduce ? 0 : ((now % PERIOD) / PERIOD) * Math.PI * 2;
+  // 緩急: 正面（大きく見える 0°/180°）付近はゆっくり、真横（見えにくい 90°/270°）付近は速く
+  const u = ((now % PERIOD) / PERIOD) * Math.PI * 2;
+  const angle = reduce ? 0 : u - EASE * Math.sin(2 * u);
   const facingFwd = Math.cos(angle) >= 0;
   items.forEach(it => {
     if (!it.visible) return;

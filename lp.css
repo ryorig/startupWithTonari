@@ -1747,3 +1747,4 @@ html, body { overflow-x: clip; }
   .tap { display: none !important; }
   .hero__register.is-entered { animation: none !important; }
 }
+@media (max-width: 900px) { .a3d-text3d .a3d { width: 200px; height: 185px; } }
