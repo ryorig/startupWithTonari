@@ -7,7 +7,7 @@
   // 1. 要素ごとの出現アニメーション
   const MAP = [
     ['.biz-head, .biz-proof__item, .biz-timeline li, .biz-founder > div', 'up'],
-    ['.biz-case__visual, .biz-founder img', 'mask'],
+    ['.biz-case__visual, .biz-founder img', 'up'],
     ['.biz-case__body, .biz-inquiry__copy', 'left'],
     ['.biz-service, .biz-inquiry__card', 'right'],
   ];
@@ -49,7 +49,9 @@
   const photos = $$('.biz-hero__photos img');
   const caseImg = $('.biz-case__visual img');
   const scope = $('[data-scope]');
-  const cards = scope ? $$('.biz-scope__card', scope) : [];
+  const cards = scope ? $$('.biz-scope__text', scope) : [];
+  const stage = scope ? $('.biz-scope__stage', scope) : null;
+  const FX = ['dissolve', 'push', 'slide', 'move'];
   const navs = scope ? $$('.biz-scope__nav li', scope) : [];
   const bar = scope ? $('.biz-scope__bar', scope) : null;
   const timeline = $('.biz-timeline');
@@ -78,8 +80,15 @@
       bar?.style.setProperty('--sp', k.toFixed(3));
       const i = Math.min(cards.length - 1, Math.floor(k * cards.length));
       if (i !== current) {
+        const dir = i > current ? 1 : -1;
+        const fx = FX[Math.max(i, 0) % FX.length];
+        cards.forEach((c, n) => {
+          c.dataset.fx = fx;
+          c.style.setProperty('--dir', n === i ? dir : -dir);
+          c.classList.toggle('is-active', n === i);
+        });
+        stage.dataset.step = i;
         current = i;
-        cards.forEach((c, n) => { c.classList.toggle('is-active', n === i); c.classList.toggle('is-past', n < i); });
         navs.forEach((l, n) => l.classList.toggle('is-active', n === i));
       }
     }

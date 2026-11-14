@@ -28,7 +28,9 @@
 .biz-hero__title span { display: block; opacity: 0; transform: translateY(40px); animation: biz-rise .9s cubic-bezier(.22,1,.36,1) forwards; }
 .biz-hero__title span:nth-child(2) { animation-delay: .12s; }
 .biz-hero__title span:nth-child(3) { animation-delay: .24s; }
-.biz-hero__title em { font-style: normal; background: linear-gradient(transparent 62%, rgba(255,255,255,.45) 62%); }
+.biz-hero__title em { font-style: normal; position: relative; }
+.biz-hero__title em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .08em; height: .14em; border-radius: 4px; background: #ff7eb6; transform-origin: 0 50%; transform: scaleX(0); animation: biz-line .8s 1s var(--ease-out, ease) forwards; }
+@keyframes biz-line { to { transform: scaleX(1); } }
 .biz-hero__lead { font-size: 16px; line-height: 1.95; opacity: 0; animation: biz-rise .9s .4s cubic-bezier(.22,1,.36,1) forwards; }
 .biz-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; opacity: 0; animation: biz-rise .9s .55s cubic-bezier(.22,1,.36,1) forwards; }
 @keyframes biz-rise { to { opacity: 1; transform: none; } }
@@ -65,7 +67,7 @@
 /* 任せられる範囲（スクロールで切り替わるスティッキー演出） */
 .biz-scope { position: relative; height: 380vh; background: #f4f7fd; }
 .biz-scope__sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
-.biz-scope__inner { width: 100%; max-width: 1160px; margin: 0 auto; padding: 100px 20px 40px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; }
+.biz-scope__inner { width: 100%; max-width: 1160px; margin: 0 auto; padding: 100px 20px 40px; display: grid; grid-template-columns: .9fr 1.3fr; gap: 56px; align-items: center; }
 .biz-scope__side { display: flex; flex-direction: column; gap: 14px; }
 .biz-scope__side h2 { font-size: 40px; font-weight: 800; line-height: 1.4; }
 .biz-scope__side > p:not(.eyebrow-en) { color: var(--ink-soft); line-height: 1.9; }
@@ -75,14 +77,75 @@
 .biz-scope__nav li.is-active { color: var(--brand); transform: translateX(10px); }
 .biz-scope__bar { height: 4px; border-radius: 4px; background: rgba(33,58,137,.12); overflow: hidden; margin-top: 10px; }
 .biz-scope__bar span { display: block; height: 100%; background: var(--brand); transform-origin: 0 50%; transform: scaleX(var(--sp, 0)); }
-.biz-scope__stage { position: relative; aspect-ratio: 1 / .9; }
-.biz-scope__card { position: absolute; inset: 0; padding: 44px; border-radius: 24px; background: #fff; box-shadow: 0 30px 70px rgba(33,58,137,.14); display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; opacity: 0; transform: translateY(60px) scale(.94) rotate(2deg); transition: opacity .6s ease, transform .7s cubic-bezier(.22,1,.36,1); }
-.biz-scope__card.is-active { opacity: 1; transform: none; }
-.biz-scope__card.is-past { opacity: 0; transform: translateY(-60px) scale(.94) rotate(-2deg); }
-.biz-scope__card img { position: absolute; top: 40px; right: 40px; width: 52%; max-height: 50%; object-fit: contain; }
-.biz-scope__num { font: 800 72px/1 var(--font-en); color: rgba(33,58,137,.12); }
-.biz-scope__card h3 { font-size: 30px; font-weight: 800; }
-.biz-scope__card p { font-size: 16px; line-height: 1.9; color: var(--ink-soft); }
+/* Figma のプロトタイプで使うイージング（Gentle / Bouncy スプリング） */
+.biz-scope { --spring: linear(0, .009, .035 2.1%, .141 4.4%, .723 12.9%, .938 16.7%, 1.017 19.4%, 1.067, 1.099 24.3%, 1.104 26.1%, 1.098 28.2%, 1.012 36.8%, .993 41.4%, .998 52%, 1.001 63%, 1); --gentle: cubic-bezier(.34, 1.25, .5, 1); --ease-out: cubic-bezier(.22, 1, .36, 1); }
+.biz-scope__stage { position: relative; display: flex; flex-direction: column; gap: 20px; }
+.biz-scope__visual { position: relative; width: 100%; margin: 0; height: auto; max-width: none; aspect-ratio: 16 / 11; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 70px rgba(33,58,137,.18); }
+.biz-scope__shapes { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .35; z-index: 0; transition: transform 1.2s var(--ease-out); }
+.biz-scope__ring { position: absolute; left: 50%; top: 52%; width: 46%; aspect-ratio: 1; border-radius: 50%; border: 2px solid rgba(255,255,255,.55); translate: -50% -50%; scale: 0; opacity: 0; transition: scale .9s var(--spring), opacity .5s; }
+.biz-scope__ring--2 { width: 64%; border-style: dashed; border-color: rgba(255,255,255,.35); animation: biz-spin 18s linear infinite; }
+@keyframes biz-spin { to { rotate: 360deg; } }
+
+/* 3D オブジェクト：ステップごとに位置・大きさ・回転を Smart Animate で補間 */
+.obj { position: absolute; left: var(--x); top: var(--y); width: var(--w, 34%); translate: -50% -50%; rotate: var(--r, 0deg); scale: var(--s, 1); opacity: var(--o, 1); z-index: var(--z, 2); filter: drop-shadow(0 18px 24px rgba(20,30,90,.28)); transition: left .9s var(--spring), top .9s var(--spring), width .9s var(--spring), rotate .9s var(--spring), scale .9s var(--spring), opacity .45s ease; }
+.obj img { width: 100%; animation: biz-float 4.5s ease-in-out infinite; }
+.obj--company img { animation-delay: -1.5s; }
+.obj--infinity img { animation-delay: -3s; }
+.obj--arrow img, .obj--arrow2 img { animation: none; }
+@keyframes biz-float { 50% { transform: translateY(-10px); } }
+
+/* 01 要件整理：高専生と企業が向き合い、間で整理（矢印が往復） */
+[data-step="0"] .obj--student  { --x: 24%; --y: 56%; --w: 40%; }
+[data-step="0"] .obj--company  { --x: 77%; --y: 54%; --w: 40%; }
+[data-step="0"] .obj--infinity { --x: 50%; --y: 22%; --w: 22%; --o: 0; --s: .4; }
+[data-step="0"] .obj--arrow    { --x: 50%; --y: 46%; --w: 22%; }
+[data-step="0"] .obj--arrow2   { --x: 50%; --y: 64%; --w: 22%; --r: 180deg; }
+[data-step="0"] .biz-scope__bubble { opacity: 1; scale: 1; }
+
+/* 02 設計・開発：高専生が主役に（Push で前に出る） */
+[data-step="1"] .obj--student  { --x: 40%; --y: 56%; --w: 62%; --z: 3; }
+[data-step="1"] .obj--company  { --x: 88%; --y: 30%; --w: 22%; --o: .85; }
+[data-step="1"] .obj--infinity { --x: 12%; --y: 20%; --w: 18%; --o: 0; --s: .4; }
+[data-step="1"] .obj--arrow    { --x: 80%; --y: 62%; --w: 24%; --r: -35deg; }
+[data-step="1"] .obj--arrow2   { --x: 84%; --y: 84%; --w: 18%; --r: -35deg; --o: 0; }
+
+/* 03 確認・改善：無限ループが中央で回り、改善サイクルを表現 */
+[data-step="2"] .obj--student  { --x: 18%; --y: 72%; --w: 30%; }
+[data-step="2"] .obj--company  { --x: 82%; --y: 72%; --w: 30%; }
+[data-step="2"] .obj--infinity { --x: 50%; --y: 40%; --w: 52%; --z: 3; }
+[data-step="2"] .obj--arrow    { --x: 30%; --y: 30%; --w: 18%; --r: -60deg; --o: 0; }
+[data-step="2"] .obj--arrow2   { --x: 70%; --y: 30%; --w: 18%; --r: 60deg; --o: 0; }
+[data-step="2"] .biz-scope__ring { scale: 1; opacity: 1; }
+[data-step="2"] .obj--infinity img { animation: biz-breathe 2.4s ease-in-out infinite; }
+@keyframes biz-breathe { 50% { transform: scale(1.06) rotate(-4deg); } }
+
+/* 04 導入・保守：企業に届き、上向きに成長 */
+[data-step="3"] .obj--student  { --x: 16%; --y: 80%; --w: 24%; --o: .9; }
+[data-step="3"] .obj--company  { --x: 54%; --y: 56%; --w: 56%; --z: 3; }
+[data-step="3"] .obj--infinity { --x: 84%; --y: 24%; --w: 24%; }
+[data-step="3"] .obj--arrow    { --x: 28%; --y: 58%; --w: 22%; --r: -20deg; }
+[data-step="3"] .obj--arrow2   { --x: 86%; --y: 62%; --w: 18%; --r: -90deg; }
+[data-step="3"] .biz-scope__check { opacity: 1; scale: 1; }
+[data-step="1"] .biz-scope__shapes { transform: scale(1.15) translateX(-4%); }
+[data-step="2"] .biz-scope__shapes { transform: scale(1.1) rotate(4deg); }
+[data-step="3"] .biz-scope__shapes { transform: scale(1.2) translateX(4%); }
+
+.biz-scope__bubble, .biz-scope__check { position: absolute; z-index: 4; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #fff; color: var(--brand); font: 800 24px/1 var(--font-en); box-shadow: 0 10px 24px rgba(20,30,90,.2); opacity: 0; scale: 0; transition: scale .7s var(--spring) .25s, opacity .3s .25s; }
+.biz-scope__bubble { left: 46%; top: 12%; }
+.biz-scope__check { left: 70%; top: 18%; background: #ff7eb6; color: #fff; }
+
+/* テキスト：Figma のトランジション（Dissolve / Push / Slide in / Move in）をステップごとに切替 */
+.biz-scope__texts { position: relative; display: grid; }
+.biz-scope__text { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 6px; padding: 22px 26px; border-radius: 18px; background: #fff; box-shadow: 0 14px 34px rgba(33,58,137,.1); opacity: 0; visibility: hidden; transition: opacity .5s ease, transform .8s var(--gentle), visibility 0s .8s; }
+.biz-scope__text.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .5s ease, transform .8s var(--gentle), visibility 0s; }
+.biz-scope__text[data-fx="dissolve"] { transform: none; }
+.biz-scope__text[data-fx="push"] { transform: translateY(calc(var(--dir, 1) * 100%)); }
+.biz-scope__text[data-fx="slide"] { transform: translateX(calc(var(--dir, 1) * 40%)); }
+.biz-scope__text[data-fx="move"] { transform: translateX(calc(var(--dir, 1) * 18%)) scale(.92) rotate(calc(var(--dir, 1) * 3deg)); }
+.biz-scope__text.is-active[data-fx] { transform: none; }
+.biz-scope__text h3 { font-size: 26px; font-weight: 800; line-height: 1.4; }
+.biz-scope__text p { font-size: 15px; line-height: 1.8; color: var(--ink-soft); }
+.biz-scope__num { font: 800 14px/1 var(--font-en); letter-spacing: 3px; color: #9396f4; }
 
 /* 体制と進め方（濃色に切り替わるタイムライン） */
 .biz-process { padding: 120px 20px; background: var(--brand); position: relative; overflow: hidden; }
@@ -130,8 +193,8 @@
 .js-biz [data-biz="up"] { transform: translateY(50px); }
 .js-biz [data-biz="left"] { transform: translateX(-60px); }
 .js-biz [data-biz="right"] { transform: translateX(60px); }
-.js-biz [data-biz="mask"] { opacity: 1; clip-path: inset(0 100% 0 0 round 24px); }
-.js-biz [data-biz].is-in { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 24px); }
+.js-biz [data-biz="mask"] { clip-path: inset(0 100% 0 0); }
+.js-biz [data-biz].is-in { opacity: 1; transform: none; clip-path: none; }
 
 @media (max-width: 900px) {
   .biz-hero { padding-top: 86px; }
@@ -152,13 +215,13 @@
   .biz-case__body h3 { font-size: 20px; }
   .biz-scope { height: 340vh; }
   .biz-scope__inner { grid-template-columns: 1fr; gap: 20px; padding-top: 90px; }
+  .biz-scope__side { gap: 8px; }
   .biz-scope__side > p:not(.eyebrow-en), .biz-scope__nav { display: none; }
-  .biz-scope__stage { aspect-ratio: auto; height: 52vh; }
-  .biz-scope__card { padding: 26px; }
-  .biz-scope__card img { top: 22px; right: 22px; width: 46%; }
-  .biz-scope__card h3 { font-size: 22px; }
-  .biz-scope__card p { font-size: 14px; }
-  .biz-scope__num { font-size: 48px; }
+  .biz-scope__visual { aspect-ratio: 4 / 3; }
+  .biz-scope__text { padding: 16px 18px; }
+  .biz-scope__text h3 { font-size: 20px; }
+  .biz-scope__text p { font-size: 13.5px; line-height: 1.7; }
+  .biz-scope__bubble, .biz-scope__check { width: 40px; height: 40px; font-size: 18px; }
   .biz-process { padding: 80px 20px; }
   .biz-timeline { grid-template-columns: 1fr; gap: 32px; padding-left: 36px; }
   .biz-timeline::before, .biz-timeline::after { left: 9px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; transform-origin: 50% 0; transform: scaleY(var(--tp, 0)); }
@@ -178,6 +241,6 @@
   .js-biz [data-biz] { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none; }
   .biz-scope { height: auto; }
   .biz-scope__sticky { position: static; height: auto; }
-  .biz-scope__stage { aspect-ratio: auto; height: auto; display: grid; gap: 16px; }
-  .biz-scope__card { position: relative; opacity: 1; transform: none; min-height: 260px; }
+  .biz-scope__text { position: relative; opacity: 1; visibility: visible; transform: none; grid-area: auto; }
+  .biz-scope__texts { gap: 12px; }
 }
