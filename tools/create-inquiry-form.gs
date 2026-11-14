@@ -7,6 +7,8 @@
  * 3. 関数「createInquiryForm」を選んで実行（初回のみGoogleアカウントの承認が必要）
  * 4. 実行ログに表示される「回答用URL」をサイトの予約フォーム欄に設定
  */
+const BOOKING_URL = 'https://calendar.app.google/i56oNKzchSic3Di78';
+
 function createInquiryForm() {
   const form = FormApp.create('【隣の高専生】開発・業務改善のご相談フォーム');
   form.setDescription(
@@ -19,7 +21,7 @@ function createInquiryForm() {
   form.setProgressBar(true);
   form.setConfirmationMessage(
     'ご相談ありがとうございます。2営業日以内に担当よりご連絡します。\n' +
-    'お急ぎの場合は、サイトの予約フォームからオンライン相談の日程をご予約ください。'
+    'まだオンライン相談の日程を予約されていない場合は、こちらからご予約いただけます。\n' + BOOKING_URL
   );
 
   // ── 1. お客様情報 ──
@@ -67,8 +69,18 @@ function createInquiryForm() {
   form.addMultipleChoiceItem().setTitle('現在の検討状況')
     .setChoiceValues(['発注先を探している', '見積り・概算を知りたい', '社内で検討中（情報収集）', '他社と比較中']);
 
-  // ── 4. その他 ──
-  form.addPageBreakItem().setTitle('4. その他');
+  // ── 4. オンライン相談の予約 ──
+  form.addPageBreakItem().setTitle('4. オンライン相談の予約（任意）')
+    .setHelpText('30分ほどのオンライン面談で、課題の大きさと進め方を一緒に整理します。\n' +
+      '下記のリンクから空いている日時を選んでご予約ください（別タブで開きます）。\n\n' +
+      '▶ 予約カレンダー：' + BOOKING_URL);
+  form.addMultipleChoiceItem().setTitle('オンライン相談のご予約状況').setRequired(true)
+    .setChoiceValues(['上記のカレンダーで予約した', 'あとで予約する', '面談は不要（メールでの連絡を希望）']);
+  form.addParagraphTextItem().setTitle('カレンダーで都合が合わない場合の候補日時（任意）')
+    .setHelpText('例：11/20（木）14:00〜17:00、11/21（金）午前中');
+
+  // ── 5. その他 ──
+  form.addPageBreakItem().setTitle('5. その他');
   form.addMultipleChoiceItem().setTitle('ご希望の連絡方法')
     .setChoiceValues(['メール', 'オンライン面談（Google Meet / Zoom）', '電話']);
   form.addCheckboxItem().setTitle('隣の高専生を知ったきっかけ')
