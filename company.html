@@ -13,220 +13,267 @@
   <meta name="theme-color" content="#1a4382">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kumbh+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=lp-reference-39">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kumbh+Sans:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lp.css?v=lp-figma-68">
+  <link rel="stylesheet" href="company.css?v=biz-1">
+  <script src="lp.js?v=lp-figma-68" defer></script>
+  <script src="company.js?v=biz-1" defer></script>
 </head>
 
-<body class="company-page">
-  <header class="company-page__header">
-    <a class="company-page__brand" href="index.html"><img src="assets/lp/header-logo.png" alt="隣の高専生"></a>
-    <nav class="company-page__nav" aria-label="法人向けページ内ナビゲーション">
-      <a href="#case-studies">開発事例</a><a href="#scope">対応範囲</a><a href="#process">体制と進め方</a><a href="#pricing">料金</a><a href="#services">サービス</a><a href="#portfolio">ポートフォリオ</a>
+<body id="top" class="biz">
+  <div class="biz-progress" aria-hidden="true"><span></span></div>
+  <header class="gnav">
+    <a class="gnav__logo" href="index.html" aria-label="隣の高専生 トップ">
+      <img src="assets/lp/header-logo.png" alt="隣の高専生" width="170" height="40">
+    </a>
+    <nav class="gnav__links" id="gnav-links" aria-label="グローバルナビ">
+      <a href="index.html">トップ</a>
+      <a href="projects.html">事例紹介</a>
+      <a href="guide.html">参加・依頼ガイド</a>
+      <a href="faq.html">よくある質問</a>
+      <a href="about.html">会社情報</a>
+      <a class="btn-brand gnav__mobile-cta" href="company.html#inquiry">お問い合わせ ↗</a>
     </nav>
-    <a class="company-page__back-link" href="index.html">トップページへ戻る</a>
+    <a class="btn-brand gnav__cta magnetic" href="company.html#inquiry">お問い合わせ ↗</a>
+    <button class="gnav__toggle" type="button" aria-label="メニューを開く" aria-controls="gnav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <main>
-    <!-- 1. Who we support -->
-    <section class="company-page__hero">
-      <div class="company-page__hero-inner">
-        <p class="company-page__eyebrow">FOR BUSINESS</p>
-        <h1>後回しになっている業務ツールを、<br>使える形へ。</h1>
-        <p class="company-page__lead">高専生チームと株式会社Ｙｕｕｔｈの開発支援で、必要な機能の整理から開発まで進めます。MVP、社内ツール、業務改善など、まずは課題の大きさを一緒に整理します。</p>
-        <div class="company-page__hero-actions">
-          <a class="company-page__button company-page__button--primary" href="#inquiry">開発の進め方を相談する</a>
-          <a class="company-page__button company-page__button--secondary" href="#case-studies">開発事例を見る</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="business-proof" aria-label="法人向けページの概要">
-      <div class="business-section__inner business-proof__grid">
-        <a class="business-proof__item" href="#members"><strong>131名</strong><span>参加高専生</span><small>全国の高専生ネットワーク</small></a>
-        <a class="business-proof__item" href="#case-studies"><strong>CASE STUDY</strong><span>実際の開発事例</span><small>画面・課題・担当範囲を公開</small></a>
-        <a class="business-proof__item" href="#process"><strong>TEAM</strong><span>対応体制</span><small>窓口・進行・技術レビュー</small></a>
-      </div>
-    </section>
-
-    <!-- 2. Development case -->
-    <section id="case-studies" class="business-section business-section--case">
-      <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">CASE STUDY</p><h2>開発事例</h2><p>公開できる範囲で、実際の画面・課題・担当範囲・期間・確認できた成果を整理しています。</p></div>
-        <article class="business-case">
-          <div class="business-case__visual"><img src="assets/app-screenshot.png" alt="隣の高専生アプリのプロフィール画面" loading="lazy"></div>
-          <div class="business-case__body">
-            <p class="business-case__type">自社開発・デモ</p><h3>高専生向けプロフィール／案件管理アプリ</h3>
-            <p class="business-case__summary">高専生のプロフィール、スキル、案件情報を一つの画面で確認し、案件との接点をつくるための管理アプリです。</p>
-            <dl class="business-case__details">
-              <div><dt>課題</dt><dd>スキルや案件情報が分散し、マッチング前の確認に時間がかかる。</dd></div>
-              <div><dt>担当範囲</dt><dd>企画・要件整理・UI設計・フロントエンド実装。</dd></div>
-              <div><dt>期間</dt><dd>継続開発。</dd></div>
-              <div><dt>成果</dt><dd>プロフィールと案件情報をまとめて確認できるデモを構築。</dd></div>
-            </dl>
-            <p class="business-case__note">※顧客納品実績ではなく、隣の高専生による自社開発・デモです。</p>
+    <section class="biz-hero" aria-label="法人企業様向け">
+      <div class="hero__panel biz-hero__panel">
+        <img class="biz-hero__bg" src="assets/lp/hero-shapes.svg" alt="" aria-hidden="true">
+        <div class="biz-hero__body">
+          <p class="biz-hero__eyebrow">FOR BUSINESS</p>
+          <h1 class="biz-hero__title"><span>後回しになっている</span><span>業務ツールを、</span><span><em>使える形</em>へ。</span></h1>
+          <p class="biz-hero__lead">高専生チームと株式会社Ｙｕｕｔｈの開発支援で、必要な機能の整理から開発まで進めます。MVP、社内ツール、業務改善など、まずは課題の大きさを一緒に整理します。</p>
+          <div class="biz-hero__actions">
+            <a class="biz-btn biz-btn--white magnetic" href="#inquiry">開発の進め方を相談する ↗</a>
+            <a class="biz-btn biz-btn--ghost" href="#case-studies">開発事例を見る</a>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- 3. Scope -->
-    <section id="scope" class="business-section business-section--muted">
-      <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">SCOPE</p><h2>任せられる範囲</h2><p>案件の規模や体制に合わせて、必要な工程だけを組み合わせます。</p></div>
-        <div class="business-scope__grid">
-          <article class="business-scope__card"><span>01</span><h3>要件整理</h3><p>目的・利用者・必要な機能を整理し、優先順位と確認事項を言語化します。</p></article>
-          <article class="business-scope__card"><span>02</span><h3>設計・開発</h3><p>画面やデータの設計から、MVP・業務ツールの実装まで進めます。</p></article>
-          <article class="business-scope__card"><span>03</span><h3>確認・改善</h3><p>動作確認やフィードバックをもとに、使い方と修正内容を整理します。</p></article>
-          <article class="business-scope__card"><span>04</span><h3>導入・保守相談</h3><p>導入時の確認と、運用開始後の改善・保守について相談できます。</p></article>
         </div>
-      </div>
-    </section>
-
-    <!-- 4. Team and process -->
-    <section id="process" class="business-section business-section--white">
-      <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">PROCESS &amp; TEAM</p><h2>体制と進め方</h2><p>法人窓口を株式会社Ｙｕｕｔｈが担当し、案件に合う高専生メンバーを編成します。</p></div>
-        <div class="business-process__grid">
-          <article><span>窓口</span><h3>株式会社Ｙｕｕｔｈ</h3><p>相談内容、契約、連絡事項をまとめる法人窓口です。</p></article>
-          <article><span>PM・進行</span><h3>要件と予定を整理</h3><p>決めること、担当、次回確認日を共有しながら進行します。</p></article>
-          <article><span>技術レビュー</span><h3>案件に合うメンバー</h3><p>必要なスキルに合わせてメンバーを編成し、実装内容を確認します。</p></article>
-          <article><span>報告・引き継ぎ</span><h3>合意した頻度で共有</h3><p>報告頻度は案件ごとに合意し、引き継ぎ可能な状態で記録を残します。</p></article>
+        <div class="biz-hero__photos" aria-hidden="true">
+          <img src="assets/lp/hero-photo-1.jpg" alt="" data-speed="0.18">
+          <img src="assets/lp/hero-photo-2.jpg" alt="" data-speed="-0.12">
+          <img src="assets/lp/hero-photo-4.jpg" alt="" data-speed="0.26">
         </div>
+        <a class="biz-hero__scroll" href="#proof" aria-label="下へスクロール"><span></span>SCROLL</a>
       </div>
     </section>
 
-    <!-- 5. Subscription, project pricing and revenue model -->
-    <section id="pricing" class="business-section business-section--muted">
-      <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">COST &amp; SCHEDULE</p><h2>費用と期間</h2><p>継続的な課題整理から、必要なときの開発発注まで。サブスクと案件受託を分け、要件・成果物・期間・対応範囲を確認したうえでご案内します。</p></div>
+    <section class="biz-proof" id="proof" aria-label="法人向けページの概要">
+      <a class="biz-proof__item" href="#members"><strong><span data-count="131">0</span>名</strong><span>参加高専生</span><small>全国の高専生ネットワーク</small></a>
+      <a class="biz-proof__item" href="#case-studies"><strong>CASE</strong><span>実際の開発事例</span><small>画面・課題・担当範囲を公開</small></a>
+      <a class="biz-proof__item" href="#process"><strong>TEAM</strong><span>対応体制</span><small>窓口・進行・技術レビュー</small></a>
+    </section>
 
-        <div id="subscription" class="business-pricing-block">
-          <div class="business-subheading"><p class="business-section__eyebrow">SUBSCRIPTION</p><h3>法人向けサブスク</h3><p>「開発し放題」ではなく、開発課題を継続的に整理し、必要なときに高専生チームへ発注できる状態をつくるサービスです。</p><p class="business-pricing__terms">税別・オンライン中心・初回3か月契約／開発作業は含みません</p></div>
-          <div class="business-plan-grid">
-            <article class="business-plan-card"><p class="business-plan-card__label">CONSULTATION</p><h4>相談プラン</h4><p class="business-plan-card__price">月額 <strong>8万円</strong></p><p class="business-plan-card__target">課題と改善の方向性を整理したい企業<br><small>3か月総額：24万円</small></p><ul><li>月1回・60分の課題相談会</li><li>高専生2名が参加</li><li>相談会内で企画への意見収集</li><li>月次の課題整理シート</li></ul></article>
-            <article class="business-plan-card business-plan-card--featured"><p class="business-plan-card__label">CO-CREATION / MAIN</p><h4>共創プラン <small>【主力】</small></h4><p class="business-plan-card__price">月額 <strong>15万円</strong></p><p class="business-plan-card__target">社内で検討できる具体案が欲しい企業<br><small>3か月総額：45万円</small></p><ul><li>月1回・90分の課題相談会</li><li>高専生3名が参加</li><li>3か月に1回・3時間の企業専用アイデアソン</li><li>企画案の比較資料を提出</li></ul></article>
-            <article class="business-plan-card"><p class="business-plan-card__label">VALIDATION</p><h4>検証プラン</h4><p class="business-plan-card__price">月額 <strong>20万円</strong></p><p class="business-plan-card__target">案を選ぶ根拠まで得たい企業<br><small>3か月総額：60万円</small></p><ul><li>月1回・90分の課題相談会</li><li>高専生3名が参加</li><li>別の高専生6名への意見収集</li><li>意見収集結果と次の検証計画</li></ul></article>
+    <section class="partners" aria-label="採択・報道実績">
+      <p class="partners__label">ACCELERATORS / INTERVIEW / CONTEST</p>
+      <ul class="partners__list">
+        <li class="partners__item"><img src="assets/lp/partner-nict.png" alt="NICT 情報通信研究機構" loading="lazy"><span>採択・プログラム</span></li>
+        <li class="partners__item"><img src="assets/lp/partner-akatsuki.png" alt="AKATSUKIプロジェクト" loading="lazy"><span>採択・プログラム</span></li>
+        <li class="partners__item"><img src="assets/lp/partner-mitoyo.png" alt="三豊市" loading="lazy"><span>報道掲載</span></li>
+        <li class="partners__item"><img src="assets/lp/partner-soumu.png" alt="総務省" loading="lazy"><span>報道掲載</span></li>
+        <li class="partners__item"><img src="assets/lp/partner-shikoku.png" alt="四国新聞" loading="lazy"><span>報道掲載</span></li>
+        <li class="partners__item"><img src="assets/lp/partner-sanyo.png" alt="山陽新聞" loading="lazy"><span>報道掲載</span></li>
+      </ul>
+    </section>
+
+    <section class="biz-case" id="case-studies">
+      <div class="biz-head"><p class="eyebrow-en">Case Study</p><h2>開発事例</h2><p>公開できる範囲で、実際の画面・課題・担当範囲・確認できた成果を整理しています。</p></div>
+      <article class="biz-case__card">
+        <div class="biz-case__visual"><img src="assets/app-screenshot.png" alt="隣の高専生アプリのプロフィール画面" loading="lazy"></div>
+        <div class="biz-case__body">
+          <span class="biz-tag">自社開発・デモ</span>
+          <h3>高専生向けプロフィール／案件管理アプリ</h3>
+          <p>高専生のプロフィール、スキル、案件情報を一つの画面で確認し、案件との接点をつくるための管理アプリです。</p>
+          <dl class="biz-case__details">
+            <div><dt>課題</dt><dd>スキルや案件情報が分散し、マッチング前の確認に時間がかかる。</dd></div>
+            <div><dt>担当範囲</dt><dd>企画・要件整理・UI設計・フロントエンド実装。</dd></div>
+            <div><dt>成果</dt><dd>プロフィールと案件情報をまとめて確認できるデモを構築。</dd></div>
+          </dl>
+          <p class="biz-note">※顧客納品実績ではなく、隣の高専生による自社開発・デモです。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="biz-scope" id="scope" data-scope>
+      <div class="biz-scope__sticky">
+        <div class="biz-scope__inner">
+          <div class="biz-scope__side">
+            <p class="eyebrow-en">Scope</p>
+            <h2>任せられる範囲</h2>
+            <p>案件の規模や体制に合わせて、必要な工程だけを組み合わせます。</p>
+            <ol class="biz-scope__nav" aria-hidden="true"><li class="is-active">要件整理</li><li>設計・開発</li><li>確認・改善</li><li>導入・保守相談</li></ol>
+            <div class="biz-scope__bar" aria-hidden="true"><span></span></div>
           </div>
-          <div class="business-table-wrap business-subscription-table-wrap"><table class="business-table business-subscription-table"><thead><tr><th scope="col">内容</th><th scope="col">相談プラン</th><th scope="col">共創プラン【主力】</th><th scope="col">検証プラン</th></tr></thead><tbody><tr><th scope="row">月額</th><td>8万円</td><td>15万円</td><td>20万円</td></tr><tr><th scope="row">得られる価値</th><td>課題と改善の方向性が整理できる</td><td>社内で検討できる具体案ができる</td><td>企画への反応を踏まえて実施判断ができる</td></tr><tr><th scope="row">課題相談会</th><td>月1回・60分</td><td>月1回・90分</td><td>月1回・90分</td></tr><tr><th scope="row">相談会の高専生</th><td>2名</td><td>3名</td><td>3名</td></tr><tr><th scope="row">企業専用アイデアソン</th><td>含まない</td><td>3か月に1回・3時間<br>高専生6名</td><td>3か月に1回・3時間<br>高専生8名</td></tr><tr><th scope="row">企画への意見収集</th><td>相談会の中で実施</td><td>相談会の中で実施</td><td>3か月に1回<br>別の高専生6名</td></tr><tr><th scope="row">提出資料</th><td>月次の課題整理シート</td><td>左記＋企画案の比較資料</td><td>左記＋意見収集結果・次の検証計画</td></tr><tr><th scope="row">向いている企業</th><td>課題はあるが、何から取り組むか迷っている</td><td>新商品や業務改善の案が欲しい</td><td>有望案を選び、社内提案や試行につなげたい</td></tr></tbody></table></div>
-          <div class="business-subscription-operations"><h4>全プラン共通の運営</h4><p>Yuuthが参加者の選定・日程調整・事前説明・当日の進行・資料作成を担当します。アイデアソンは月次相談会とは別枠です。</p><ul><li>1契約につき、同時に扱うテーマは一つ。テーマ変更は相談会で合意します。</li><li>学生への謝礼は月額に含み、事前準備と資料作成の時間も見込みます。</li><li>会議外の連絡は日程調整・資料確認が中心です。追加調査・追加イベントは別途見積もります。</li><li>対面開催の交通費・会場費、開発、専門家による詳細評価は別途見積もります。</li><li>秘密情報の共有範囲、企画の利用条件、公開可否を事前に決めます。</li></ul></div>
-          <div class="business-subscription-stories"><article><p class="business-section__eyebrow">8万円</p><h4>社外の視点を、毎月の意思決定に取り入れる</h4><p>「若い人に商品が選ばれない」「社内でAI活用の話が進まない」といった相談を毎月一つ扱います。事前ヒアリングをもとに高専生2名を選び、課題の背景、学生からの質問、改善仮説、次に確認することを整理します。</p><p>企業には議事録に加えて、<strong>何が課題で、何を確かめれば判断が進むか</strong>をまとめたシートを提出します。個別調査や大人数の募集は含めず、相談の準備と継続性に集中します。</p></article><article><p class="business-section__eyebrow">15万円</p><h4>社員と高専生で、具体的な解決案をつくる</h4><p>相談会に加えて、3か月に1回、その企業のためのアイデアソンを開催します。1か月目に現状・対象顧客・予算を整理し、2か月目に高専生6名と社員で議論し、3か月目に案の優先順位と次の行動を決めます。</p><p>企画案には対象者、解決する課題、利用場面、期待する効果、実施上の懸念を記載し、企業担当者がそのまま社内で検討を始められる状態を目指します。</p></article><article><p class="business-section__eyebrow">20万円</p><h4>複数地域の反応を確かめ、企画を磨く</h4><p>15万円の内容に加え、アイデアソンに参加していない高専生6名からも意見を集めます。可能な場合は3地域から各2名を選び、利用したい場面、利用しない理由、地域による使いにくさを同じ質問で確認します。</p><p>異なる地域の視点で案を見直せますが、少人数の意見は仮説を見つける材料であり、市場全体の需要を証明する調査とは区別します。</p></article></div>
-          <p class="business-pricing__note">実際のアプリ開発や長時間の実装はサブスク料金とは別に案件として見積もります。営業では、8万円を「相談の習慣をつくりたい企業」、15万円を「具体案が欲しい企業」、20万円を「案を選ぶ根拠まで欲しい企業」に提案します。</p>
-        </div>
-
-        <div class="business-pricing-block business-pricing-block--projects">
-          <div class="business-subheading"><p class="business-section__eyebrow">PROJECT PRICING</p><h3>案件受託の価格帯</h3><p>以下は代表的な目安です。高専生に適しているのは、最初は30〜100万円程度の小〜中規模案件です。</p></div>
-          <div class="business-table-wrap"><table class="business-table"><thead><tr><th scope="col">案件種別</th><th scope="col">価格帯</th><th scope="col">期間目安</th></tr></thead><tbody><tr><th scope="row">要件整理・技術調査</th><td>10〜30万円</td><td>1〜2週間</td></tr><tr><th scope="row">業務自動化・簡易ツール</th><td>30〜80万円</td><td>2〜6週間</td></tr><tr><th scope="row">社内Webアプリ</th><td>60〜150万円</td><td>1〜2か月</td></tr><tr><th scope="row">MVP・プロトタイプ</th><td>80〜300万円</td><td>1〜3か月</td></tr><tr><th scope="row">AI・技術PoC</th><td>50〜200万円</td><td>1〜2か月</td></tr><tr><th scope="row">継続改善・保守</th><td>月5〜30万円</td><td>継続</td></tr></tbody></table></div>
-          <p class="business-pricing__note">300万円を超える案件や、医療・金融・基幹業務などの高リスク案件は、専門会社と組むか、要件整理・試作部分を中心に担当します。</p>
-        </div>
-
-        <div class="business-pricing-block">
-          <div class="business-subheading"><p class="business-section__eyebrow">HOW WE PRICE</p><h3>価格の決め方</h3><p>「学生だから安くする」のではなく、作業・進行・品質・運用に必要な要素を合計して決めます。</p></div>
-          <div class="business-pricing__formula"><span>案件価格</span><b>＝</b><span>学生チームの作業費</span><b>＋</b><span>PM・要件整理費</span><b>＋</b><span>品質レビュー費</span><b>＋</b><span>ツール・サーバー費</span><b>＋</b><span>予備費・Yuuthの管理手数料</span></div>
-          <div class="business-rate-grid"><div><h4>作業費の目安</h4><ul><li>初級メンバー：1時間2,000〜2,500円</li><li>実績のあるメンバー：1時間3,000〜4,000円</li><li>リーダー・専門人材：1時間4,000〜6,000円</li><li>PM・品質レビュー：1時間4,000〜8,000円</li></ul></div><div><h4>管理手数料の目安</h4><ul><li>30万円未満：最低手数料10万円</li><li>30〜100万円：20〜30％</li><li>100万円以上：15〜25％</li><li>継続案件：個別に料率調整</li></ul></div></div>
-          <div class="business-pricing__example"><h4>例：60万円の社内ツール案件</h4><div class="business-table-wrap"><table class="business-table"><tbody><tr><th scope="row">学生チーム報酬</th><td>42万円</td></tr><tr><th scope="row">PM・要件整理</th><td>6.4万円</td></tr><tr><th scope="row">品質レビュー</th><td>4万円</td></tr><tr><th scope="row">ツール・決済費</th><td>0.6万円</td></tr><tr><th scope="row">バックアップ・修正予備費</th><td>1.2万円</td></tr><tr><th scope="row">Yuuthの管理・運営手数料</th><td>5.8万円</td></tr><tr class="business-table__total"><th scope="row">合計</th><td>約60万円</td></tr></tbody></table></div></div>
-        </div>
-
-        <div class="business-pricing-block">
-          <div class="business-subheading"><p class="business-section__eyebrow">PROJECT RANK</p><h3>案件ランクによる価格決定</h3></div>
-          <div class="business-rank-grid"><article><span>S</span><h4>短期・低リスク</h4><p>要件明確、低リスク、短期</p><strong>30〜60万円</strong></article><article><span>M</span><h4>複数人開発</h4><p>要件整理が必要、複数人開発</p><strong>60〜150万円</strong></article><article><span>L</span><h4>MVP・外部連携</h4><p>MVP、AI、外部連携あり</p><strong>150〜300万円</strong></article><article><span>Partner</span><h4>専門会社と連携</h4><p>高リスク、大規模、専門性が必要</p><strong>300万円〜・外部連携</strong></article></div>
-          <div class="business-checklist"><h4>価格確認時に確認する項目</h4><ul><li>納期の厳しさ・必要な学生人数・開発時間</li><li>要件の不確実性、個人情報・機密情報の有無</li><li>品質レビューの必要量、外部API・サーバー費</li><li>学生の試験・長期休暇との重複</li><li>納品後の保守責任・失敗時の代替要員確保</li></ul><p>納期が短い案件、要件が曖昧な案件、機密性が高い案件は、通常価格の1.2〜1.5倍を目安に個別相談します。</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Additional services -->
-    <section id="services" class="business-section business-section--white">
-      <div class="business-section__inner">
-        <div class="business-section__heading"><p class="business-section__eyebrow">ADDITIONAL SERVICES</p><h2>追加で展開するサービス</h2><p>まずは案件と継続接点をつくり、実績と体制に合わせて支援領域を広げます。</p></div>
-        <div class="business-services__grid">
-          <article><span>01</span><h3>継続保守・改善</h3><p>月額5〜30万円で、納品後の改善やバグ修正を行います。</p><ul><li>月次改善・バグ修正</li><li>操作ログ分析・ドキュメント更新</li><li>小規模な機能追加・学生チーム再編成</li></ul></article>
-          <article><span>02</span><h3>AIBPO業務支援</h3><p>月額5〜20万円程度で、担当者の報告・整理・引き継ぎの時間を減らします。</p><ul><li>会議・要件・タスク・進捗の整理</li><li>問い合わせ分類・マニュアル作成</li><li>社内ナレッジ・引き継ぎ資料作成</li></ul></article>
-          <article><span>03</span><h3>有償技術チャレンジ</h3><p>企業が出した課題に、高専生が有償で提案・試作します。</p><ul><li>企画・課題設定費：10〜30万円</li><li>試作・検証費：30〜100万円</li><li>優秀チームへの追加開発：別見積</li></ul></article>
-          <article><span>04</span><h3>高専生向け企業ブランディング</h3><p>協賛を通じて、高専生との仕事を起点にした相互理解の機会をつくります。</p><ul><li>技術勉強会・会社説明会</li><li>ハッカソン・社員交流会</li><li>技術課題の提供・インターン候補者との接点</li></ul></article>
-          <article><span>05</span><h3>卒業生レビューネットワーク</h3><p>卒業した高専生や経験者を、品質レビュー・PM・技術メンターとして活用します。</p><ul><li>納品前コードレビュー</li><li>顧客との技術説明・高難度案件支援</li><li>学生チームの相談役・新メンバー教育</li></ul></article>
-        </div>
-        <div class="business-revenue-flow"><p class="business-section__eyebrow">REVENUE FLOW</p><h3>事業の収益導線</h3><div class="business-revenue-flow__steps"><span>無料相談</span><b>→</b><span>月額サブスク</span><b>→</b><span>小規模案件</span><b>→</b><span>継続開発・保守</span><b>→</b><span>PoC・新規事業支援</span><b>→</b><span>採用・協業・卒業生ネットワーク</span></div><p>当面は「月額3万円のパートナープラン」「30〜150万円の開発案件」「月額5〜30万円の保守・改善契約」に絞り、企業との継続接点と収益基盤をつくります。</p></div>
-      </div>
-    </section>
-
-    <!-- 6. Inquiry -->
-    <section id="inquiry" class="company-page__section company-page__section--inquiry">
-      <div class="company-page__container company-page__inquiry-layout">
-        <div class="company-page__inquiry-copy"><p class="company-page__eyebrow">CONTACT</p><h2>開発の進め方を相談する。</h2><p>Googleカレンダーの予約フォームから日程を選択してください。予約後、必要に応じて相談内容をメールでお送りください。</p></div>
-        <div class="company-page__calendar-card"><p class="company-page__calendar-card-label">GOOGLE CALENDAR</p><h3>相談日時を予約する</h3><p>課題の概要、希望時期、検討中のツールなどを分かる範囲でご用意ください。</p><a class="company-page__button company-page__button--primary" href="https://calendar.app.google/i56oNKzchSic3Di78" target="_blank" rel="noopener noreferrer">Googleカレンダーの予約フォームを開く ↗</a></div>
-      </div>
-    </section>
-
-    <!-- Project Portfolio -->
-    <section id="portfolio" class="portfolio-section portfolio-section--company">
-      <div class="portfolio-section__inner">
-        <p class="portfolio-section__eyebrow">PROJECT PORTFOLIO</p>
-        <div class="portfolio-grid">
-          <a class="portfolio-card" href="portfolio-kidssafe.html">
-            <div class="portfolio-card__image"><img src="assets/portfolio-code4fukui.png" alt="Code for FUKUI" loading="lazy"></div>
-            <div class="portfolio-card__meta"><span>地域・事業検証</span><span>Code for FUKUI</span></div>
-            <h3>神山町の地域安全マップ「kidssafe」</h3>
-            <p>code for fukuiの福野泰介様から依頼を受け、地域安全マップの事業検証に取り組みました。</p>
-            <span class="portfolio-card__link">詳細を見る ↗</span>
-          </a>
-          <a class="portfolio-card" href="portfolio-paravellum.html">
-            <div class="portfolio-card__image"><img src="assets/portfolio-paravellum.webp" alt="Paravellum" loading="lazy"></div>
-            <div class="portfolio-card__meta"><span>協業プロジェクト</span><span>Paravellum</span></div>
-            <h3>AIアプリケーション開発プロジェクト</h3>
-            <p>合同会社Paravellumの開発パートナーとして、AIアプリケーション開発に参画しました。</p>
-            <span class="portfolio-card__link">詳細を見る ↗</span>
-          </a>
-          <a class="portfolio-card" href="portfolio-sora-no-tokei.html">
-            <div class="portfolio-card__image"><img src="assets/portfolio-convex.png" alt="コンベックスコーポレーション" loading="lazy"></div>
-            <div class="portfolio-card__meta"><span>研究開発</span><span>コンベックスコーポレーション</span></div>
-            <h3>ソラのトケイ</h3>
-            <p>コンベックスコーポレーションとの研究開発として、ソラのトケイを開発しました。</p>
-            <span class="portfolio-card__link">詳細を見る ↗</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Recognition and media -->
-    <section id="recognition" class="recognition">
-      <div class="recognition__inner">
-        <p class="recognition__eyebrow">PARTNERS / ACCELERATORS / INTERVIEW</p>
-        <div class="recognition__logos">
-          <div class="recognition__logos-row recognition__logos-row--primary">
-            <div class="recognition__logo-card recognition__logo-card--akatsuki"><img src="assets/partner-akatsuki-latest.webp" alt="AKATSUKIプロジェクト・採択" class="recognition__logo"><span class="recognition__logo-caption">採択・プログラム</span></div>
-            <div class="recognition__logo-card recognition__logo-card--nict"><img src="assets/partner-nict.webp" alt="NICT・採択・プログラム" class="recognition__logo"><span class="recognition__logo-caption">採択・プログラム</span></div>
-          </div>
-          <div class="recognition__logos-row recognition__logos-row--secondary">
-            <div class="recognition__logo-card"><img src="assets/partner-program-clean.png" alt="三豊市・報道掲載" class="recognition__logo"><span class="recognition__logo-caption">報道掲載</span></div>
-            <div class="recognition__logo-card"><img src="assets/partner-mic-clean.png" alt="総務省・報道掲載" class="recognition__logo"><span class="recognition__logo-caption">報道掲載</span></div>
-            <div class="recognition__logo-card"><img src="assets/partner-japan-clean.png" alt="四国新聞・報道掲載" class="recognition__logo"><span class="recognition__logo-caption">報道掲載</span></div>
-            <div class="recognition__logo-card"><img src="assets/partner-sanyo-clean.png" alt="山陽新聞・報道掲載" class="recognition__logo"><span class="recognition__logo-caption">報道掲載</span></div>
+          <div class="biz-scope__stage">
+            <article class="biz-scope__card is-active"><span class="biz-scope__num">01</span><img src="assets/lp/problem-2.png" alt="" loading="lazy"><h3>要件整理</h3><p>目的・利用者・必要な機能を整理し、優先順位と確認事項を言語化します。</p></article>
+            <article class="biz-scope__card"><span class="biz-scope__num">02</span><img src="assets/lp/problem-1.png" alt="" loading="lazy"><h3>設計・開発</h3><p>画面やデータの設計から、MVP・業務ツールの実装まで進めます。</p></article>
+            <article class="biz-scope__card"><span class="biz-scope__num">03</span><img src="assets/lp/problem-3.png" alt="" loading="lazy"><h3>確認・改善</h3><p>動作確認やフィードバックをもとに、使い方と修正内容を整理します。</p></article>
+            <article class="biz-scope__card"><span class="biz-scope__num">04</span><img src="assets/lp/flow-infinity.png" alt="" loading="lazy"><h3>導入・保守相談</h3><p>導入時の確認と、運用開始後の改善・保守について相談できます。</p></article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Founder -->
-    <section id="founder" class="founder"><div class="container founder__inner"><img src="assets/representative.jpg" alt="中本怜祐" class="founder__image"><div class="founder__content"><span class="founder__label">Founder</span><h2 class="founder__name">中本 怜祐</h2><p class="founder__school">神山まるごと高専 デザインエンジニアリング学科1年</p><p class="founder__description">「隣の高専生」代表。岡山県出身の16歳。<br>ミライノピッチ3部門受賞、なんチャレ2025最優秀賞、Akatsukiプロジェクト採択など、高専生として積極的に事業開発・技術開発に取り組む。</p><a href="https://ryo.nakamoto.ac/" target="_blank" rel="noopener noreferrer" class="founder__link">ポートフォリオサイトを見る</a></div></div></section>
+    <section class="biz-process" id="process">
+      <div class="biz-head biz-head--light"><p class="eyebrow-en">Process &amp; Team</p><h2>体制と進め方</h2><p>法人窓口を株式会社Ｙｕｕｔｈが担当し、案件に合う高専生メンバーを編成します。</p></div>
+      <ol class="biz-timeline">
+        <li><span class="biz-timeline__dot"></span><p class="biz-timeline__role">窓口</p><h3>株式会社Ｙｕｕｔｈ</h3><p>相談内容、契約、連絡事項をまとめる法人窓口です。</p></li>
+        <li><span class="biz-timeline__dot"></span><p class="biz-timeline__role">PM・進行</p><h3>要件と予定を整理</h3><p>決めること、担当、次回確認日を共有しながら進行します。</p></li>
+        <li><span class="biz-timeline__dot"></span><p class="biz-timeline__role">技術レビュー</p><h3>案件に合うメンバー</h3><p>必要なスキルに合わせてメンバーを編成し、実装内容を確認します。</p></li>
+        <li><span class="biz-timeline__dot"></span><p class="biz-timeline__role">報告・引き継ぎ</p><h3>合意した頻度で共有</h3><p>報告頻度は案件ごとに合意し、引き継ぎ可能な状態で記録を残します。</p></li>
+      </ol>
+    </section>
 
-    <!-- Members -->
-    <section id="members" class="members"><div class="container"><div class="section__header"><span class="section__label">Participating Members</span><h2 class="section__title">全国から集まる精鋭メンバー</h2><p class="section__description">各高専から選りすぐりのエンジニアが、御社のプロジェクトをサポートします。</p></div><div class="members__grid">
-      <a class="member-card member-card--linked" href="https://researchmap.jp/t_okugawa" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">弓</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">奥河董馬</p></div></a>
-      <a class="member-card member-card--linked" href="https://github.com/ryskn" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中山亮佑</p></div></a>
-      <a class="member-card member-card--linked" href="https://odakuto.com/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">小</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">小田空音</p></div></a>
-      <a class="member-card member-card--linked" href="https://renorari.net/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中野楽士</p></div></a>
-      <a class="member-card member-card--linked" href="https://www.sato4.jp/" target="_blank" rel="noopener noreferrer"><div class="member-card__avatar">中</div><div class="member-card__info"><p class="member-card__school">ポートフォリオを見る ↗</p><p class="member-card__name">中本慧思</p></div></a>
-      <article class="member-card"><div class="member-card__avatar">長</div><div class="member-card__info"><p class="member-card__school">長岡高専</p><p class="member-card__name">眞野航輔</p></div></article><article class="member-card"><div class="member-card__avatar">神</div><div class="member-card__info"><p class="member-card__school">神山まるごと高専</p><p class="member-card__name">中本怜祐</p></div></article><article class="member-card"><div class="member-card__avatar">詫</div><div class="member-card__info"><p class="member-card__school">香川高専 詫間キャンパス</p><p class="member-card__name">岡崎春一</p></div></article><article class="member-card"><div class="member-card__avatar">高</div><div class="member-card__info"><p class="member-card__school">香川高専 高松キャンパス</p><p class="member-card__name">宮武幸人</p></div></article><article class="member-card"><div class="member-card__avatar">広</div><div class="member-card__info"><p class="member-card__school">広島商船高専</p><p class="member-card__name">坂口拓海</p></div></article><article class="member-card"><div class="member-card__avatar">鳥</div><div class="member-card__info"><p class="member-card__school">鳥羽商船高専</p><p class="member-card__name">阪本拓海</p></div></article><article class="member-card"><div class="member-card__avatar">大</div><div class="member-card__info"><p class="member-card__school">大島商船高専</p><p class="member-card__name">縄田嵐</p></div></article><article class="member-card"><div class="member-card__avatar">呉</div><div class="member-card__info"><p class="member-card__school">呉高専</p><p class="member-card__name">西岡丈</p></div></article><article class="member-card"><div class="member-card__avatar">知</div><div class="member-card__info"><p class="member-card__school">高知高専</p><p class="member-card__name">片岡勇登</p></div></article>
-    </div></div></section>
+    <section class="biz-services" id="services">
+      <div class="biz-head"><p class="eyebrow-en">Additional Services</p><h2>追加で展開するサービス</h2><p>まずは案件と継続接点をつくり、実績と体制に合わせて支援領域を広げます。</p></div>
+      <div class="biz-services__list">
+        <article class="biz-service"><span>01</span><div><h3>継続保守・改善</h3><p>納品後の改善やバグ修正を継続的に行います。</p></div><ul><li>月次改善・バグ修正</li><li>操作ログ分析・ドキュメント更新</li><li>小規模な機能追加・学生チーム再編成</li></ul></article>
+        <article class="biz-service"><span>02</span><div><h3>AIBPO業務支援</h3><p>担当者の報告・整理・引き継ぎの時間を減らします。</p></div><ul><li>会議・要件・タスク・進捗の整理</li><li>問い合わせ分類・マニュアル作成</li><li>社内ナレッジ・引き継ぎ資料作成</li></ul></article>
+        <article class="biz-service"><span>03</span><div><h3>有償技術チャレンジ</h3><p>企業が出した課題に、高専生が有償で提案・試作します。</p></div><ul><li>企画・課題設定</li><li>試作・検証</li><li>優秀チームへの追加開発</li></ul></article>
+        <article class="biz-service"><span>04</span><div><h3>高専生向け企業ブランディング</h3><p>協賛を通じて、高専生との仕事を起点にした相互理解の機会をつくります。</p></div><ul><li>技術勉強会・会社説明会</li><li>ハッカソン・社員交流会</li><li>技術課題の提供・インターン候補者との接点</li></ul></article>
+        <article class="biz-service"><span>05</span><div><h3>卒業生レビューネットワーク</h3><p>卒業した高専生や経験者を、品質レビュー・PM・技術メンターとして活用します。</p></div><ul><li>納品前コードレビュー</li><li>顧客との技術説明・高難度案件支援</li><li>学生チームの相談役・新メンバー教育</li></ul></article>
+      </div>
+    </section>
 
-    <!-- Pitch Deck -->
-    <section id="pitch-deck" class="pitch-deck"><div class="container"><div class="section__header"><span class="section__label">Pitch Deck</span><h2 class="section__title">発表資料</h2><p class="section__description">隣の高専生の最新の事業紹介資料をご覧いただけます。</p></div><div class="pitch-deck__viewer"><iframe src="assets/pitch-deck.pdf?v=pitch-deck-20260829" title="隣の高専生 ピッチ資料" class="pitch-deck__embed" loading="lazy"></iframe><p class="pitch-deck__fallback">PDFが表示されない場合は<a href="assets/pitch-deck.pdf?v=pitch-deck-20260829" target="_blank" rel="noopener noreferrer">こちらからダウンロード</a>してください。</p></div></div></section>
+    <section class="works" id="works" aria-labelledby="works-title">
+      <div class="bg-art" aria-hidden="true"><img class="bg-art__c" src="assets/lp/flow-infinity.png" alt=""><img class="bg-art__d" src="assets/lp/flow-arrow.png" alt=""></div>
+      <div class="works__sticky">
+      <div class="works__head">
+        <p class="eyebrow-en">Project Portfolio</p>
+        <h2 id="works-title">プロジェクト実績</h2>
+      </div>
+      <div class="works__viewport">
+      <div class="works__list">
+        <a class="work-card" href="portfolio-kidssafe.html">
+          <span class="work-card__img work-card__img--kids"><img src="assets/lp/case-code4fukui.png" alt="Code for FUKUI" loading="lazy"></span>
+          <span class="work-card__tag">案件</span>
+          <h3 class="work-card__title">神山町の地域安全マップ「kidssafe」</h3>
+          <p class="work-card__desc">code for fukuiの福野泰介様から依頼を受け、<br>地域安全マップの事業検証に取り組みました。</p>
+          <span class="work-card__more">View More<img src="assets/lp/arrow-orange.png" alt="" width="30" height="11"></span>
+        </a>
+        <a class="work-card" href="portfolio-paravellum.html">
+          <span class="work-card__img work-card__img--para"><img src="assets/lp/case-paravellum.png" alt="Paravellum" loading="lazy"></span>
+          <span class="work-card__tag">案件</span>
+          <h3 class="work-card__title">AIアプリケーション開発プロジェクト</h3>
+          <p class="work-card__desc">合同会社Paravellumの開発パートナーとして、AIアプリケーション開発に参画しました。</p>
+          <span class="work-card__more">View More<img src="assets/lp/arrow-orange.png" alt="" width="30" height="11"></span>
+        </a>
+        <a class="work-card" href="portfolio-sora-no-tokei.html">
+          <span class="work-card__img work-card__img--convex"><img src="assets/lp/case-convex.png" alt="コンベックスコーポレーション" loading="lazy"></span>
+          <span class="work-card__tag">案件</span>
+          <h3 class="work-card__title">ソラのトケイ</h3>
+          <p class="work-card__desc">コンベックスコーポレーションとの研究開発として、ソラのトケイを開発しました。</p>
+          <span class="work-card__more">View More<img src="assets/lp/arrow-orange.png" alt="" width="30" height="11"></span>
+        </a>
+      </div>
+      </div>
+      </div>
+    </section>
 
-    <!-- Company Information -->
-    <section id="company-info" class="company-info"><div class="container"><div class="section__header"><span class="section__label">Company Profile</span><h2 class="section__title">会社情報</h2></div><dl class="company-info__list"><div class="company-info__item"><dt>会社名</dt><dd>株式会社Ｙｕｕｔｈ</dd></div><div class="company-info__item"><dt>代表</dt><dd>中本怜祐</dd></div><div class="company-info__item"><dt>設立日</dt><dd>2026年06月22日</dd></div><div class="company-info__item"><dt>法人番号</dt><dd>7480001013211</dd></div><div class="company-info__item"><dt>資本金</dt><dd>100万円</dd></div><div class="company-info__item company-info__item--address"><dt>所在地</dt><dd>〒771-3310<br>徳島県名西郡神山町神領字大埜地299番1<br>神山まるごと高専ROOMS・Base</dd></div></dl></div></section>
+    <section class="biz-inquiry" id="inquiry">
+      <div class="hero__panel biz-inquiry__panel">
+        <img class="biz-hero__bg" src="assets/lp/hero-shapes.svg" alt="" aria-hidden="true">
+        <div class="biz-inquiry__copy"><p class="biz-hero__eyebrow">CONTACT</p><h2>開発の進め方を相談する。</h2><p>Googleカレンダーの予約フォームから日程を選択してください。予約後、必要に応じて相談内容をメールでお送りください。</p></div>
+        <div class="biz-inquiry__card"><p class="biz-inquiry__label">GOOGLE CALENDAR</p><h3>相談日時を予約する</h3><p>課題の概要、希望時期、検討中のツールなどを分かる範囲でご用意ください。</p><a class="btn-brand magnetic" href="https://calendar.app.google/i56oNKzchSic3Di78" target="_blank" rel="noopener noreferrer">予約フォームを開く ↗</a></div>
+      </div>
+    </section>
+
+    <section class="biz-founder" id="founder">
+      <img src="assets/lp/representative.jpg" alt="代表 中本怜祐" loading="lazy">
+      <div>
+        <p class="eyebrow-en">Founder</p>
+        <h2>中本 怜祐</h2>
+        <p class="biz-founder__school">神山まるごと高専 デザインエンジニアリング学科1年</p>
+        <p>「隣の高専生」代表。岡山県出身の16歳。ミライノピッチ3部門受賞、なんチャレ2025最優秀賞、Akatsukiプロジェクト採択など、高専生として積極的に事業開発・技術開発に取り組む。</p>
+        <a class="btn-brand magnetic" href="https://ryo.nakamoto.ac/" target="_blank" rel="noopener noreferrer">ポートフォリオサイトを見る ↗</a>
+      </div>
+    </section>
+
+    <section class="members" id="members">
+      <p class="members__eyebrow">PARTICIPATING MEMBERS</p>
+      <h2 class="members__title">全国から集まる高専生メンバー</h2>
+      <div class="members__scroller" tabindex="0" aria-label="メンバー一覧（横にスクロール）">
+        <ul class="members__track">
+          <li class="member-card tilt"><span class="member-card__school">弓削商船高専</span><span class="member-card__name">奥河董馬</span></li>
+          <li class="member-card tilt"><span class="member-card__school">東京都立産業技術高専</span><span class="member-card__name">中山亮佑</span></li>
+          <li class="member-card tilt"><span class="member-card__school">釧路高専</span><span class="member-card__name">小田空音</span></li>
+          <li class="member-card tilt"><span class="member-card__school">長岡高専</span><span class="member-card__name">中野楽士</span></li>
+          <li class="member-card tilt"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本慧思</span></li>
+          <li class="member-card tilt"><span class="member-card__school">長岡高専</span><span class="member-card__name">眞野航輔</span></li>
+          <li class="member-card tilt"><span class="member-card__school">神山まるごと高専</span><span class="member-card__name">中本怜祐</span></li>
+          <li class="member-card tilt"><span class="member-card__school">香川高専 詫間キャンパス</span><span class="member-card__name">岡崎春一</span></li>
+          <li class="member-card tilt"><span class="member-card__school">香川高専 高松キャンパス</span><span class="member-card__name">宮武幸人</span></li>
+          <li class="member-card tilt"><span class="member-card__school">広島商船高専</span><span class="member-card__name">坂口拓海</span></li>
+          <li class="member-card tilt"><span class="member-card__school">鳥羽商船高専</span><span class="member-card__name">阪本拓海</span></li>
+          <li class="member-card tilt"><span class="member-card__school">大島商船高専</span><span class="member-card__name">縄田嵐</span></li>
+          <li class="member-card tilt"><span class="member-card__school">呉高専</span><span class="member-card__name">西岡丈</span></li>
+          <li class="member-card tilt"><span class="member-card__school">高知高専</span><span class="member-card__name">片岡勇登</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="pitch" id="pitch-deck">
+      <div class="pitch__head">
+        <p class="pitch__eyebrow">Pitch Deck</p>
+        <h2 class="pitch__title">発表資料</h2>
+        <p class="pitch__lead">隣の高専生の最新の事業紹介資料をご覧いただけます。</p>
+      </div>
+      <div class="pitch__viewer">
+        <iframe src="assets/pitch-deck.pdf?v=pitch-deck-20260829" title="隣の高専生 ピッチ資料" loading="lazy"></iframe>
+        <p class="pitch__fallback">PDFが表示されない場合は<a href="assets/pitch-deck.pdf?v=pitch-deck-20260829" target="_blank" rel="noopener noreferrer">こちらからダウンロード</a>してください。</p>
+      </div>
+      <div class="skyline" aria-hidden="true"></div>
+    </section>
+
+    <section class="company" id="company-info">
+      <div class="company__card">
+        <h2>会社概要</h2>
+        <dl class="company__list">
+          <div class="company__row"><dt>社名</dt><dd>株式会社Ｙｕｕｔｈ</dd></div>
+          <div class="company__row"><dt>代表取締役</dt><dd>中本怜祐</dd></div>
+          <div class="company__row"><dt>設立</dt><dd>2026年06月22日</dd></div>
+          <div class="company__row"><dt>所在地</dt><dd>徳島県名西郡神山町神領字大埜地299番1 神山まるごと高専ROOMS・Base</dd></div>
+          <div class="company__row"><dt>資本金</dt><dd>1,000,000円</dd></div>
+          <div class="company__row"><dt>連絡先</dt><dd><a href="mailto:nakamotoryoke@gmail.com">nakamotoryoke@gmail.com</a></dd></div>
+          <div class="company__row"><dt>事業内容</dt><dd>高専生と企業・地域をつなぐプラットフォームの運営、案件受託・開発支援</dd></div>
+        </dl>
+      </div>
+    </section>
   </main>
 
-  <footer class="company-page__footer"><span>© 2026 株式会社Ｙｕｕｔｈ</span><a href="privacy.html">プライバシーポリシー</a></footer>
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <p class="footer__tagline">想いと技術を持つ若者が、社会で挑戦できる機会をつくる</p>
+          <img class="footer__logo" src="assets/lp/yuuth-logo.svg" alt="Yuuth" width="168" height="52">
+          <address class="footer__address">〒771-3310<br>徳島県名西郡神山町神領字大埜地299番1<br>神山まるごと高専 ROOMS・Base</address>
+        </div>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+          <a href="index.html">トップ</a>
+          <a href="about.html">Yuuthについて</a>
+          <a href="index.html#services">事業内容</a>
+          <a href="projects.html">事例紹介</a>
+          <a href="faq.html">よくある質問</a>
+          <a href="about.html">会社案内</a>
+          <a href="company.html#inquiry">お問い合わせ</a>
+          <a href="privacy.html">プライバシーポリシー</a>
+        </nav>
+      </div>
+      <div class="footer__sns">
+        <span aria-disabled="true" title="X（準備中）">𝕏</span>
+        <span aria-disabled="true" title="note（準備中）">n</span>
+      </div>
+      <div class="footer__bottom">
+        <small>© 2026 Yuuth Inc.</small>
+        <a href="#top">Back to Top</a>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>
