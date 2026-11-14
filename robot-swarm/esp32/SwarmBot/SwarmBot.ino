@@ -10,6 +10,7 @@
  * 安全機能: 500ms 以上コマンドが来なければ自動停止 / 切断時も停止
  *
  * Arduino-ESP32 core 2.x / 3.x 両対応
+ * 対応ボード: ESP32 Dev Module / XIAO_ESP32S3 (Sense 含む)
  */
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -22,10 +23,22 @@
 const bool INVERT_A = false;
 const bool INVERT_B = false;
 
-// ---- ピン配置 ----
+// ---- ピン配置 (ボード選択で自動切替) ----
+#if defined(ARDUINO_XIAO_ESP32S3)
+// Seeed XIAO ESP32S3 / Sense  (D8〜D10 は SDカードと共用なので未使用)
+const int AIN1 = D0;   // GPIO1
+const int AIN2 = D1;   // GPIO2
+const int PWMA = D2;   // GPIO3
+const int BIN1 = D3;   // GPIO4
+const int BIN2 = D4;   // GPIO5
+const int PWMB = D5;   // GPIO6
+const int STBY = D6;   // GPIO43
+#else
+// ESP32 DevKit
 const int AIN1 = 18, AIN2 = 19, PWMA = 25;
 const int BIN1 = 16, BIN2 = 17, PWMB = 26;
 const int STBY = 23;
+#endif
 
 const int PWM_FREQ = 20000;   // 20kHz (可聴域外)
 const int PWM_RES  = 8;       // 0-255
