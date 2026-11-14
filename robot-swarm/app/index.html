@@ -99,8 +99,10 @@ class Robot {
     if (this.ok) { this.dev.gatt.disconnect(); return; }
     try {
       this.dev = await navigator.bluetooth.requestDevice({
-        filters: [{ name: 'SwarmBot-' + this.id }, { namePrefix: 'SwarmBot' }],
+        filters: [{ name: 'SwarmBot-' + this.id }],
         optionalServices: [SVC] });
+      const other = robots[this.id === 1 ? 2 : 1];
+      if (other.dev && other.dev.id === this.dev.id) { alert('その機体は既に' + other.id + '号機として接続済みです'); this.dev = null; return; }
       this.dev.addEventListener('gattserverdisconnected', () => this.onDisc());
       const gatt = await this.dev.gatt.connect();
       const s = await gatt.getPrimaryService(SVC);
