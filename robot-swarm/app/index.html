@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>SwarmBot Controller</title>
+<style>
+  :root { --bg:#12141a; --panel:#1d2029; --line:#2e3240; --text:#e8eaf0; --sub:#8a90a2;
+          --r1:#ff6b5a; --r2:#3fa9ff; --all:#9b7bff; --ok:#3ddc84; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
+              font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; touch-action:none; overflow:hidden; }
+  header { display:flex; gap:8px; align-items:center; padding:8px 12px; flex-wrap:wrap; }
+  h1 { font-size:15px; margin:0 8px 0 0; letter-spacing:.05em; }
+  button { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--line);
+           border-radius:10px; padding:8px 12px; cursor:pointer; }
+  button:active { filter:brightness(1.4); }
+  .bot { display:flex; align-items:center; gap:6px; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#555; }
+  .dot.on { background:var(--ok); box-shadow:0 0 8px var(--ok); }
+  .modes { display:flex; gap:4px; margin-left:auto; }
+  .modes button.active { border-color:currentColor; }
+  .modes [data-m=all].active { color:var(--all); } .modes [data-m=r1].active { color:var(--r1); }
+  .modes [data-m=r2].active { color:var(--r2); } .modes [data-m=split].active { color:#ffc94a; }
+  main { display:flex; justify-content:space-around; align-items:center; height:calc(100% - 110px); gap:12px; padding:0 12px; }
+  .pad { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .pad .label { font-size:13px; font-weight:600; }
+  .ctrl { display:flex; gap:18px; align-items:center; }
+  .stick { position:relative; width:min(42vw,200px); aspect-ratio:1; border-radius:50%;
+           background:radial-gradient(circle,#262a36 0,#1a1d25 70%); border:2px solid var(--line); }
+  .knob { position:absolute; left:50%; top:50%; width:38%; aspect-ratio:1; border-radius:50%;
+          transform:translate(-50%,-50%); background:var(--c,#888); opacity:.9; box-shadow:0 4px 14px #0008; }
+  .dpad { display:grid; grid-template-columns:repeat(3,48px); grid-template-rows:repeat(3,48px); gap:4px; }
+  .dpad button { padding:0; font-size:20px; border-radius:8px; }
+  .dpad button.held { background:var(--c,#555); }
+  .dpad .stop { font-size:12px; color:#ff8080; }
+  footer { display:flex; gap:16px; align-items:center; justify-content:center; padding:6px 12px; font-size:12px; color:var(--sub); flex-wrap:wrap; }
+  input[type=range] { width:140px; }
+  #estop { background:#b3261e; border-color:#b3261e; font-weight:700; }
+  .hidden { display:none !important; }
+  .warn { background:#5a2a00; color:#ffd7a8; padding:8px 12px; font-size:13px; }
+  @media (max-width:700px) and (orientation:portrait) { main { flex-direction:column; height:auto; padding-top:8px; } }
+</style>
+</head>
+<body>
+<div id="nobt" class="warn hidden">このブラウザは Web Bluetooth 非対応です。Android / PC の Chrome または Edge で開いてください（iPhoneは「Bluefy」アプリで可）。</div>
+<header>
+  <h1>SwarmBot</h1>
+  <div class="bot"><span class="dot" id="dot1"></span><button id="con1" style="color:var(--r1)">1号機 接続</button></div>
+  <div class="bot"><span class="dot" id="dot2"></span><button id="con2" style="color:var(--r2)">2号機 接続</button></div>
+  <div class="modes">
+    <button data-m="all" class="active">同時</button>
+    <button data-m="r1">1号機</button>
+    <button data-m="r2">2号機</button>
+    <button data-m="split">個別</button>
+  </div>
+</header>
+
+<main>
+  <div class="pad" id="padA">
+    <div class="label" id="labelA">2台同時</div>
+    <div class="ctrl"><div class="stick" id="stickA"><div class="knob"></div></div>
+      <div class="dpad" id="dpadA"></div></div>
+  </div>
+  <div class="pad hidden" id="padB">
+    <div class="label" style="color:var(--r2)">2号機</div>
+    <div class="ctrl"><div class="dpad" id="dpadB"></div>
+      <div class="stick" id="stickB"><div class="knob"></div></div></div>
+  </div>
+</main>
+
+<footer>
+  <label>速度 <input type="range" id="speed" min="20" max="100" value="70"> <span id="speedv">70%</span></label>
+  <label><input type="checkbox" id="mirror"> 2号機を左右反転（向かい合わせ用）</label>
+  <button id="estop">■ 全停止</button>
+  <span>キーボード: 矢印 / WASD・Space=停止</span>
+</footer>
+
+<script>
+const SVC = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+const RX  = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+const TX  = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+const COLORS = { all:'var(--all)', r1:'var(--r1)', r2:'var(--r2)' };
+
+if (!navigator.bluetooth) document.getElementById('nobt').classList.remove('hidden');
+
+// ---------- BLE ----------
+class Robot {
+  constructor(id) { this.id = id; this.dev = null; this.rx = null; this.busy = false;
+                    this.last = ''; this.lastSent = 0; this.dot = document.getElementById('dot'+id);
+                    this.btn = document.getElementById('con'+id); }
+  get ok() { return !!this.rx && this.dev?.gatt.connected; }
+  async connect() {
+    if (this.ok) { this.dev.gatt.disconnect(); return; }
+    try {
+      this.dev = await navigator.bluetooth.requestDevice({
+        filters: [{ name: 'SwarmBot-' + this.id }, { namePrefix: 'SwarmBot' }],
+        optionalServices: [SVC] });
+      this.dev.addEventListener('gattserverdisconnected', () => this.onDisc());
+      const gatt = await this.dev.gatt.connect();
+      const s = await gatt.getPrimaryService(SVC);
+      this.rx = await s.getCharacteristic(RX);
+      try { const tx = await s.getCharacteristic(TX); await tx.startNotifications();
+            tx.addEventListener('characteristicvaluechanged', e =>
+              this.btn.title = new TextDecoder().decode(e.target.value)); } catch {}
+      this.dot.classList.add('on');
+      this.btn.textContent = this.id + '号機 切断 (' + this.dev.name + ')';
+    } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
+  }
+  onDisc() { this.rx = null; this.dot.classList.remove('on'); this.btn.textContent = this.id + '号機 接続'; }
+  async send(l, r, force = false) {
+    if (!this.ok || this.busy) return;
+    const msg = (l === 0 && r === 0) ? 'S\n' : `M,${l},${r}\n`;
+    const now = performance.now();
+    if (!force && msg === this.last && now - this.lastSent < 200) return; // 200ms毎にキープアライブ
+    this.busy = true;
+    try {
+      const data = new TextEncoder().encode(msg);
+      if (this.rx.writeValueWithoutResponse) await this.rx.writeValueWithoutResponse(data);
+      else await this.rx.writeValue(data);
+      this.last = msg; this.lastSent = now;
+    } catch (e) { console.warn(e); }
+    this.busy = false;
+  }
+}
+const robots = { 1: new Robot(1), 2: new Robot(2) };
+document.getElementById('con1').onclick = () => robots[1].connect();
+document.getElementById('con2').onclick = () => robots[2].connect();
+
+// ---------- 入力 ----------
+// 各パッド: stick(x,y) と dpad(x,y) -> 合成
+const input = { A: { sx:0, sy:0, dx:0, dy:0 }, B: { sx:0, sy:0, dx:0, dy:0 } };
+
+function setupStick(el, pad) {
+  const knob = el.querySelector('.knob'); let pid = null;
+  const move = e => {
+    const r = el.getBoundingClientRect(), R = r.width / 2;
+    let x = (e.clientX - r.left - R) / R, y = (e.clientY - r.top - R) / R;
+    const m = Math.hypot(x, y); if (m > 1) { x /= m; y /= m; }
+    input[pad].sx = x; input[pad].sy = -y;
+    knob.style.transform = `translate(calc(-50% + ${x*R*0.7}px), calc(-50% + ${y*R*0.7}px))`;
+  };
+  const end = () => { pid = null; input[pad].sx = input[pad].sy = 0; knob.style.transform = 'translate(-50%,-50%)'; };
+  el.addEventListener('pointerdown', e => { pid = e.pointerId; el.setPointerCapture(pid); move(e); });
+  el.addEventListener('pointermove', e => { if (e.pointerId === pid) move(e); });
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+}
+
+function setupDpad(el, pad) {
+  const layout = [null,['▲',0,1],null, ['◀',-1,0],['STOP',0,0],['▶',1,0], null,['▼',0,-1],null];
+  for (const b of layout) {
+    if (!b) { el.appendChild(document.createElement('span')); continue; }
+    const [t, x, y] = b, btn = document.createElement('button'); btn.textContent = t;
+    if (t === 'STOP') { btn.className = 'stop'; btn.onpointerdown = stopAll; el.appendChild(btn); continue; }
+    const on = e => { e.preventDefault(); btn.setPointerCapture?.(e.pointerId); btn.classList.add('held');
+                      input[pad].dx = x; input[pad].dy = y; };
+    const off = () => { btn.classList.remove('held');
+                        if (input[pad].dx === x && input[pad].dy === y) { input[pad].dx = input[pad].dy = 0; } };
+    btn.addEventListener('pointerdown', on); btn.addEventListener('pointerup', off);
+    btn.addEventListener('pointercancel', off); btn.addEventListener('pointerleave', off);
+    el.appendChild(btn);
+  }
+}
+setupStick(document.getElementById('stickA'), 'A'); setupStick(document.getElementById('stickB'), 'B');
+setupDpad(document.getElementById('dpadA'), 'A');   setupDpad(document.getElementById('dpadB'), 'B');
+
+// キーボード (パッドA)
+const keys = new Set();
+const KEYMAP = { ArrowUp:[0,1], w:[0,1], ArrowDown:[0,-1], s:[0,-1], ArrowLeft:[-1,0], a:[-1,0], ArrowRight:[1,0], d:[1,0] };
+addEventListener('keydown', e => { if (e.key === ' ') { stopAll(); return; }
+  if (KEYMAP[e.key] || KEYMAP[e.key.toLowerCase()]) { keys.add(e.key.length === 1 ? e.key.toLowerCase() : e.key); e.preventDefault(); } });
+addEventListener('keyup', e => keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key));
+addEventListener('blur', () => keys.clear());
+function keyVec() { let x = 0, y = 0; for (const k of keys) { const v = KEYMAP[k]; if (v) { x += v[0]; y += v[1]; } }
+  return [Math.sign(x), Math.sign(y)]; }
+
+// ---------- モード ----------
+let mode = 'all';
+document.querySelectorAll('.modes button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.modes button').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); mode = b.dataset.m; applyMode(); stopAll(); });
+function applyMode() {
+  const split = mode === 'split', key = split ? 'r1' : mode;
+  document.getElementById('padB').classList.toggle('hidden', !split);
+  document.getElementById('padA').style.setProperty('--c', COLORS[key]);
+  document.getElementById('padB').style.setProperty('--c', COLORS.r2);
+  const lab = document.getElementById('labelA');
+  lab.textContent = { all:'2台同時', r1:'1号機', r2:'2号機', split:'1号機' }[mode];
+  lab.style.color = COLORS[key];
+}
+applyMode();
+
+const speed = document.getElementById('speed');
+speed.oninput = () => document.getElementById('speedv').textContent = speed.value + '%';
+const mirror = document.getElementById('mirror');
+
+// ---------- 差動二輪ミキシング ----------
+function mix(x, y) {
+  if (Math.hypot(x, y) < 0.12) return [0, 0];          // デッドゾーン
+  let l = y + x, r = y - x;
+  const m = Math.max(1, Math.abs(l), Math.abs(r)); l /= m; r /= m;
+  const k = 255 * speed.value / 100;
+  return [Math.round(l * k), Math.round(r * k)];
+}
+function padVec(p) {
+  let x = input[p].sx, y = input[p].sy;
+  if (input[p].dx || input[p].dy) { x = input[p].dx; y = input[p].dy; }
+  if (p === 'A') { const [kx, ky] = keyVec(); if (kx || ky) { x = kx; y = ky; } }
+  if (x && y && Math.abs(x) === 1 && Math.abs(y) === 1) { x *= 0.5; } // 斜め=カーブ
+  return [x, y];
+}
+
+function tick() {
+  const a = mix(...padVec('A'));
+  let cmd1 = [0, 0], cmd2 = [0, 0];
+  if (mode === 'all')   { cmd1 = a; cmd2 = a; }
+  if (mode === 'r1')    { cmd1 = a; }
+  if (mode === 'r2')    { cmd2 = a; }
+  if (mode === 'split') { cmd1 = a; cmd2 = mix(...padVec('B')); }
+  if (mirror.checked && mode === 'all') cmd2 = [cmd2[1], cmd2[0]];
+  robots[1].send(...cmd1); robots[2].send(...cmd2);
+}
+setInterval(tick, 50);   // 20Hz
+
+function stopAll() {
+  for (const p of ['A','B']) Object.assign(input[p], { sx:0, sy:0, dx:0, dy:0 });
+  keys.clear(); robots[1].send(0, 0, true); robots[2].send(0, 0, true);
+}
+document.getElementById('estop').onclick = stopAll;
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopAll(); });
+</script>
+</body>
+</html>
