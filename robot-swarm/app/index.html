@@ -10,6 +10,7 @@
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
               font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; touch-action:none; overflow:hidden; }
+  body { display:flex; flex-direction:column; }
   header { display:flex; gap:8px; align-items:center; padding:8px 12px; flex-wrap:wrap; }
   h1 { font-size:15px; margin:0 8px 0 0; letter-spacing:.05em; }
   button { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--line);
@@ -22,7 +23,7 @@
   .modes button.active { border-color:currentColor; }
   .modes [data-m=all].active { color:var(--all); } .modes [data-m=r1].active { color:var(--r1); }
   .modes [data-m=r2].active { color:var(--r2); } .modes [data-m=split].active { color:#ffc94a; }
-  main { display:flex; justify-content:space-around; align-items:center; height:calc(100% - 110px); gap:12px; padding:0 12px; }
+  main { display:flex; justify-content:space-around; align-items:center; flex:1; min-height:0; gap:12px; padding:0 12px; }
   .pad { display:flex; flex-direction:column; align-items:center; gap:10px; }
   .pad .label { font-size:13px; font-weight:600; }
   .ctrl { display:flex; gap:18px; align-items:center; }
@@ -82,7 +83,11 @@ const RX  = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
 const TX  = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
 const COLORS = { all:'var(--all)', r1:'var(--r1)', r2:'var(--r2)' };
 
-if (!navigator.bluetooth) document.getElementById('nobt').classList.remove('hidden');
+if (!window.isSecureContext) {
+  const w = document.getElementById('nobt');
+  w.textContent = 'この URL では Bluetooth が使えません。アドレスバーに http://localhost:' + (location.port || '8000') + ' と入力して開き直してください（https か localhost が必要）。';
+  w.classList.remove('hidden');
+} else if (!navigator.bluetooth) document.getElementById('nobt').classList.remove('hidden');
 
 // ---------- BLE ----------
 class Robot {
