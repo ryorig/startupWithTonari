@@ -94,7 +94,7 @@ class Robot {
     if (this.ok) { this.dev.gatt.disconnect(); return; }
     try {
       const dev = await navigator.bluetooth.requestDevice({
-        filters: [{ name: 'SwarmBot-' + this.id }], optionalServices: [SVC] });
+        filters: [{ services: [SVC] }, { namePrefix: 'SwarmBot' }], optionalServices: [SVC] });
       const dup = robots.find(r => r !== this && r.dev && r.dev.id === dev.id);
       if (dup) { alert('その機体は既に' + dup.id + '号機として接続済みです'); return; }
       this.dev = dev;
@@ -102,8 +102,11 @@ class Robot {
       const s = await (await dev.gatt.connect()).getPrimaryService(SVC);
       this.rx = await s.getCharacteristic(RX);
       try { const tx = await s.getCharacteristic(TX); await tx.startNotifications();
-            tx.addEventListener('characteristicvaluechanged', e =>
-              this.btn.title = new TextDecoder().decode(e.target.value)); } catch {}
+            tx.addEventListener('characteristicvaluechanged', e => {
+              const t = new TextDecoder().decode(e.target.value); this.btn.title = t;
+              const m = t.match(/^ID(\d+)/);   // 機体が名乗るIDを表示 (Macの名前キャッシュ対策)
+              if (m) this.btn.textContent = this.id + '号機 切断 (実機ID ' + m[1] + ')';
+            }); } catch {}
       this.dot.classList.add('on');
       this.btn.textContent = this.id + '号機 切断 (' + dev.name + ')';
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
