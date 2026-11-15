@@ -6,7 +6,7 @@
 <title>SwarmBot Controller</title>
 <style>
   :root { --bg:#12141a; --panel:#1d2029; --line:#2e3240; --text:#e8eaf0; --sub:#8a90a2;
-          --r1:#ff6b5a; --r2:#3fa9ff; --all:#9b7bff; --ok:#3ddc84; }
+          --all:#9b7bff; --ok:#3ddc84; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
               font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; touch-action:none; overflow:hidden; }
@@ -16,72 +16,62 @@
   button { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--line);
            border-radius:10px; padding:8px 12px; cursor:pointer; }
   button:active { filter:brightness(1.4); }
+  #bots { display:flex; gap:8px; flex-wrap:wrap; }
   .bot { display:flex; align-items:center; gap:6px; }
   .dot { width:10px; height:10px; border-radius:50%; background:#555; }
   .dot.on { background:var(--ok); box-shadow:0 0 8px var(--ok); }
-  .modes { display:flex; gap:4px; margin-left:auto; }
-  .modes button.active { border-color:currentColor; }
-  .modes [data-m=all].active { color:var(--all); } .modes [data-m=r1].active { color:var(--r1); }
-  .modes [data-m=r2].active { color:var(--r2); } .modes [data-m=split].active { color:#ffc94a; }
+  .modes { display:flex; gap:4px; margin-left:auto; flex-wrap:wrap; }
+  .modes button.active { border-color:currentColor; color:var(--mc); }
   main { display:flex; justify-content:space-around; align-items:center; flex:1; min-height:0; gap:12px; padding:0 12px; }
   .pad { display:flex; flex-direction:column; align-items:center; gap:10px; }
-  .pad .label { font-size:13px; font-weight:600; }
+  .pad .label { font-size:13px; font-weight:600; color:var(--c); }
+  .pad .hint { font-size:11px; color:var(--sub); }
   .ctrl { display:flex; gap:18px; align-items:center; }
-  .stick { position:relative; width:min(42vw,200px); aspect-ratio:1; border-radius:50%;
+  .stick { position:relative; width:var(--size,200px); aspect-ratio:1; border-radius:50%;
            background:radial-gradient(circle,#262a36 0,#1a1d25 70%); border:2px solid var(--line); }
   .knob { position:absolute; left:50%; top:50%; width:38%; aspect-ratio:1; border-radius:50%;
           transform:translate(-50%,-50%); background:var(--c,#888); opacity:.9; box-shadow:0 4px 14px #0008; }
-  .dpad { display:grid; grid-template-columns:repeat(3,48px); grid-template-rows:repeat(3,48px); gap:4px; }
-  .dpad button { padding:0; font-size:20px; border-radius:8px; }
+  .dpad { display:grid; grid-template-columns:repeat(3,var(--k,48px)); grid-template-rows:repeat(3,var(--k,48px)); gap:4px; }
+  .dpad button { padding:0; font-size:18px; border-radius:8px; }
   .dpad button.held { background:var(--c,#555); }
-  .dpad .stop { font-size:12px; color:#ff8080; }
-  footer { display:flex; gap:16px; align-items:center; justify-content:center; padding:6px 12px; font-size:12px; color:var(--sub); flex-wrap:wrap; }
+  .dpad .stop { font-size:11px; color:#ff8080; }
+  footer { display:flex; gap:16px; align-items:center; justify-content:center; padding:6px 12px 10px; font-size:12px; color:var(--sub); flex-wrap:wrap; }
   input[type=range] { width:140px; }
-  #estop { background:#b3261e; border-color:#b3261e; font-weight:700; }
+  #estop { background:#b3261e; border-color:#b3261e; font-weight:700; color:#fff; }
   .hidden { display:none !important; }
   .warn { background:#5a2a00; color:#ffd7a8; padding:8px 12px; font-size:13px; }
-  @media (max-width:700px) and (orientation:portrait) { main { flex-direction:column; height:auto; padding-top:8px; } }
+  @media (max-width:800px) { main { flex-wrap:wrap; overflow:auto; } }
 </style>
 </head>
 <body>
 <div id="nobt" class="warn hidden">このブラウザは Web Bluetooth 非対応です。Android / PC の Chrome または Edge で開いてください（iPhoneは「Bluefy」アプリで可）。</div>
 <header>
   <h1>SwarmBot</h1>
-  <div class="bot"><span class="dot" id="dot1"></span><button id="con1" style="color:var(--r1)">1号機 接続</button></div>
-  <div class="bot"><span class="dot" id="dot2"></span><button id="con2" style="color:var(--r2)">2号機 接続</button></div>
-  <div class="modes">
-    <button data-m="all" class="active">同時</button>
-    <button data-m="r1">1号機</button>
-    <button data-m="r2">2号機</button>
-    <button data-m="split">個別</button>
-  </div>
+  <div id="bots"></div>
+  <div class="modes" id="modes"></div>
 </header>
-
-<main>
-  <div class="pad" id="padA">
-    <div class="label" id="labelA">2台同時</div>
-    <div class="ctrl"><div class="stick" id="stickA"><div class="knob"></div></div>
-      <div class="dpad" id="dpadA"></div></div>
-  </div>
-  <div class="pad hidden" id="padB">
-    <div class="label" style="color:var(--r2)">2号機</div>
-    <div class="ctrl"><div class="dpad" id="dpadB"></div>
-      <div class="stick" id="stickB"><div class="knob"></div></div></div>
-  </div>
-</main>
-
+<main id="main"></main>
 <footer>
   <label>速度 <input type="range" id="speed" min="20" max="100" value="70"> <span id="speedv">70%</span></label>
-  <label><input type="checkbox" id="mirror"> 2号機を左右反転（向かい合わせ用）</label>
   <button id="estop">■ 全停止</button>
-  <span>キーボード: 矢印 / WASD・Space=停止</span>
+  <span id="keyhint"></span>
 </footer>
 
 <script>
+// ===== 台数はここで変更 =====
+const N = 3;
+const COLORS = ['#ff6b5a', '#3fa9ff', '#3ddc84', '#ffc94a', '#ff7ad9', '#4ae0e0'];
+// 個別モードのキーボード割当 (1号機, 2号機, 3号機 ...)
+const KEYSETS = [
+  { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', name:'矢印' },
+  { up:'w', down:'s', left:'a', right:'d', name:'WASD' },
+  { up:'i', down:'k', left:'j', right:'l', name:'IJKL' },
+  { up:'t', down:'g', left:'f', right:'h', name:'TFGH' },
+];
+
 const SVC = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const RX  = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
 const TX  = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
-const COLORS = { all:'var(--all)', r1:'var(--r1)', r2:'var(--r2)' };
 
 if (!window.isSecureContext) {
   const w = document.getElementById('nobt');
@@ -91,27 +81,31 @@ if (!window.isSecureContext) {
 
 // ---------- BLE ----------
 class Robot {
-  constructor(id) { this.id = id; this.dev = null; this.rx = null; this.busy = false;
-                    this.last = ''; this.lastSent = 0; this.dot = document.getElementById('dot'+id);
-                    this.btn = document.getElementById('con'+id); }
+  constructor(id) {
+    this.id = id; this.dev = null; this.rx = null; this.busy = false; this.last = ''; this.lastSent = 0;
+    const wrap = document.createElement('div'); wrap.className = 'bot';
+    this.dot = document.createElement('span'); this.dot.className = 'dot';
+    this.btn = document.createElement('button'); this.btn.style.color = COLORS[id - 1];
+    this.btn.textContent = id + '号機 接続'; this.btn.onclick = () => this.connect();
+    wrap.append(this.dot, this.btn); document.getElementById('bots').appendChild(wrap);
+  }
   get ok() { return !!this.rx && this.dev?.gatt.connected; }
   async connect() {
     if (this.ok) { this.dev.gatt.disconnect(); return; }
     try {
-      this.dev = await navigator.bluetooth.requestDevice({
-        filters: [{ name: 'SwarmBot-' + this.id }],
-        optionalServices: [SVC] });
-      const other = robots[this.id === 1 ? 2 : 1];
-      if (other.dev && other.dev.id === this.dev.id) { alert('その機体は既に' + other.id + '号機として接続済みです'); this.dev = null; return; }
-      this.dev.addEventListener('gattserverdisconnected', () => this.onDisc());
-      const gatt = await this.dev.gatt.connect();
-      const s = await gatt.getPrimaryService(SVC);
+      const dev = await navigator.bluetooth.requestDevice({
+        filters: [{ name: 'SwarmBot-' + this.id }], optionalServices: [SVC] });
+      const dup = robots.find(r => r !== this && r.dev && r.dev.id === dev.id);
+      if (dup) { alert('その機体は既に' + dup.id + '号機として接続済みです'); return; }
+      this.dev = dev;
+      dev.addEventListener('gattserverdisconnected', () => this.onDisc());
+      const s = await (await dev.gatt.connect()).getPrimaryService(SVC);
       this.rx = await s.getCharacteristic(RX);
       try { const tx = await s.getCharacteristic(TX); await tx.startNotifications();
             tx.addEventListener('characteristicvaluechanged', e =>
               this.btn.title = new TextDecoder().decode(e.target.value)); } catch {}
       this.dot.classList.add('on');
-      this.btn.textContent = this.id + '号機 切断 (' + this.dev.name + ')';
+      this.btn.textContent = this.id + '号機 切断 (' + dev.name + ')';
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
   }
   onDisc() { this.rx = null; this.dot.classList.remove('on'); this.btn.textContent = this.id + '号機 接続'; }
@@ -130,76 +124,95 @@ class Robot {
     this.busy = false;
   }
 }
-const robots = { 1: new Robot(1), 2: new Robot(2) };
-document.getElementById('con1').onclick = () => robots[1].connect();
-document.getElementById('con2').onclick = () => robots[2].connect();
+const robots = Array.from({ length: N }, (_, i) => new Robot(i + 1));
 
 // ---------- 入力 ----------
-// 各パッド: stick(x,y) と dpad(x,y) -> 合成
-const input = { A: { sx:0, sy:0, dx:0, dy:0 }, B: { sx:0, sy:0, dx:0, dy:0 } };
+// pads[i] = { sx, sy, dx, dy }   個別モードでは pads[i] が i+1号機、それ以外は pads[0] のみ使用
+const pads = Array.from({ length: N }, () => ({ sx:0, sy:0, dx:0, dy:0 }));
+const keys = new Set();
 
-function setupStick(el, pad) {
-  const knob = el.querySelector('.knob'); let pid = null;
+function makePad(i, title, color, compact) {
+  const p = pads[i];
+  const el = document.createElement('div'); el.className = 'pad'; el.style.setProperty('--c', color);
+  el.innerHTML = `<div class="label">${title}</div><div class="ctrl"><div class="stick"><div class="knob"></div></div><div class="dpad"></div></div><div class="hint"></div>`;
+  const stick = el.querySelector('.stick'), knob = el.querySelector('.knob'), dpad = el.querySelector('.dpad');
+  stick.style.setProperty('--size', compact ? 'min(26vw,170px)' : 'min(42vw,220px)');
+  dpad.style.setProperty('--k', compact ? '40px' : '50px');
+
+  let pid = null;
   const move = e => {
-    const r = el.getBoundingClientRect(), R = r.width / 2;
+    const r = stick.getBoundingClientRect(), R = r.width / 2;
     let x = (e.clientX - r.left - R) / R, y = (e.clientY - r.top - R) / R;
     const m = Math.hypot(x, y); if (m > 1) { x /= m; y /= m; }
-    input[pad].sx = x; input[pad].sy = -y;
+    p.sx = x; p.sy = -y;
     knob.style.transform = `translate(calc(-50% + ${x*R*0.7}px), calc(-50% + ${y*R*0.7}px))`;
   };
-  const end = () => { pid = null; input[pad].sx = input[pad].sy = 0; knob.style.transform = 'translate(-50%,-50%)'; };
-  el.addEventListener('pointerdown', e => { pid = e.pointerId; el.setPointerCapture(pid); move(e); });
-  el.addEventListener('pointermove', e => { if (e.pointerId === pid) move(e); });
-  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
-}
+  const end = () => { pid = null; p.sx = p.sy = 0; knob.style.transform = 'translate(-50%,-50%)'; };
+  stick.addEventListener('pointerdown', e => { pid = e.pointerId; stick.setPointerCapture(pid); move(e); });
+  stick.addEventListener('pointermove', e => { if (e.pointerId === pid) move(e); });
+  stick.addEventListener('pointerup', end); stick.addEventListener('pointercancel', end);
 
-function setupDpad(el, pad) {
-  const layout = [null,['▲',0,1],null, ['◀',-1,0],['STOP',0,0],['▶',1,0], null,['▼',0,-1],null];
+  const layout = [null,['▲',0,1],null, ['◀',-1,0],['STOP'],['▶',1,0], null,['▼',0,-1],null];
   for (const b of layout) {
-    if (!b) { el.appendChild(document.createElement('span')); continue; }
+    if (!b) { dpad.appendChild(document.createElement('span')); continue; }
     const [t, x, y] = b, btn = document.createElement('button'); btn.textContent = t;
-    if (t === 'STOP') { btn.className = 'stop'; btn.onpointerdown = stopAll; el.appendChild(btn); continue; }
-    const on = e => { e.preventDefault(); btn.setPointerCapture?.(e.pointerId); btn.classList.add('held');
-                      input[pad].dx = x; input[pad].dy = y; };
-    const off = () => { btn.classList.remove('held');
-                        if (input[pad].dx === x && input[pad].dy === y) { input[pad].dx = input[pad].dy = 0; } };
+    if (t === 'STOP') { btn.className = 'stop'; btn.onpointerdown = stopAll; dpad.appendChild(btn); continue; }
+    const on = e => { e.preventDefault(); btn.setPointerCapture?.(e.pointerId); btn.classList.add('held'); p.dx = x; p.dy = y; };
+    const off = () => { btn.classList.remove('held'); if (p.dx === x && p.dy === y) p.dx = p.dy = 0; };
     btn.addEventListener('pointerdown', on); btn.addEventListener('pointerup', off);
     btn.addEventListener('pointercancel', off); btn.addEventListener('pointerleave', off);
-    el.appendChild(btn);
+    dpad.appendChild(btn);
   }
+  return el;
 }
-setupStick(document.getElementById('stickA'), 'A'); setupStick(document.getElementById('stickB'), 'B');
-setupDpad(document.getElementById('dpadA'), 'A');   setupDpad(document.getElementById('dpadB'), 'B');
 
-// キーボード (パッドA)
-const keys = new Set();
-const KEYMAP = { ArrowUp:[0,1], w:[0,1], ArrowDown:[0,-1], s:[0,-1], ArrowLeft:[-1,0], a:[-1,0], ArrowRight:[1,0], d:[1,0] };
-addEventListener('keydown', e => { if (e.key === ' ') { stopAll(); return; }
-  if (KEYMAP[e.key] || KEYMAP[e.key.toLowerCase()]) { keys.add(e.key.length === 1 ? e.key.toLowerCase() : e.key); e.preventDefault(); } });
+addEventListener('keydown', e => {
+  if (e.key === ' ') { stopAll(); e.preventDefault(); return; }
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  if (KEYSETS.some(s => Object.values(s).includes(k))) { keys.add(k); e.preventDefault(); }
+});
 addEventListener('keyup', e => keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key));
 addEventListener('blur', () => keys.clear());
-function keyVec() { let x = 0, y = 0; for (const k of keys) { const v = KEYMAP[k]; if (v) { x += v[0]; y += v[1]; } }
-  return [Math.sign(x), Math.sign(y)]; }
+function keyVec(set) {
+  return [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 : 0),
+          (keys.has(set.up) ? 1 : 0) - (keys.has(set.down) ? 1 : 0)];
+}
 
 // ---------- モード ----------
+// 'all' = 全台同時, 数字 = その号機のみ, 'split' = 個別
+const MODES = [['all', N + '台同時', 'var(--all)'],
+  ...robots.map(r => [String(r.id), r.id + '号機', COLORS[r.id - 1]]),
+  ['split', '個別', '#ffc94a']];
 let mode = 'all';
-document.querySelectorAll('.modes button').forEach(b => b.onclick = () => {
-  document.querySelectorAll('.modes button').forEach(x => x.classList.remove('active'));
-  b.classList.add('active'); mode = b.dataset.m; applyMode(); stopAll(); });
-function applyMode() {
-  const split = mode === 'split', key = split ? 'r1' : mode;
-  document.getElementById('padB').classList.toggle('hidden', !split);
-  document.getElementById('padA').style.setProperty('--c', COLORS[key]);
-  document.getElementById('padB').style.setProperty('--c', COLORS.r2);
-  const lab = document.getElementById('labelA');
-  lab.textContent = { all:'2台同時', r1:'1号機', r2:'2号機', split:'1号機' }[mode];
-  lab.style.color = COLORS[key];
+const modesEl = document.getElementById('modes');
+for (const [m, label, color] of MODES) {
+  const b = document.createElement('button'); b.textContent = label; b.dataset.m = m; b.style.setProperty('--mc', color);
+  if (m === mode) b.classList.add('active');
+  b.onclick = () => { modesEl.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+                      b.classList.add('active'); mode = m; stopAll(); render(); };
+  modesEl.appendChild(b);
 }
-applyMode();
+
+function render() {
+  const main = document.getElementById('main'); main.innerHTML = '';
+  if (mode === 'split') {
+    robots.forEach((r, i) => {
+      const el = makePad(i, r.id + '号機', COLORS[i], true);
+      if (KEYSETS[i]) el.querySelector('.hint').textContent = 'キー: ' + KEYSETS[i].name;
+      main.appendChild(el);
+    });
+    document.getElementById('keyhint').textContent = 'Space=全停止';
+  } else {
+    const label = mode === 'all' ? N + '台同時' : mode + '号機';
+    const color = mode === 'all' ? 'var(--all)' : COLORS[+mode - 1];
+    main.appendChild(makePad(0, label, color, false));
+    document.getElementById('keyhint').textContent = 'キーボード: 矢印 / WASD・Space=全停止';
+  }
+}
+render();
 
 const speed = document.getElementById('speed');
 speed.oninput = () => document.getElementById('speedv').textContent = speed.value + '%';
-const mirror = document.getElementById('mirror');
 
 // ---------- 差動二輪ミキシング ----------
 function mix(x, y) {
@@ -209,29 +222,28 @@ function mix(x, y) {
   const k = 255 * speed.value / 100;
   return [Math.round(l * k), Math.round(r * k)];
 }
-function padVec(p) {
-  let x = input[p].sx, y = input[p].sy;
-  if (input[p].dx || input[p].dy) { x = input[p].dx; y = input[p].dy; }
-  if (p === 'A') { const [kx, ky] = keyVec(); if (kx || ky) { x = kx; y = ky; } }
-  if (x && y && Math.abs(x) === 1 && Math.abs(y) === 1) { x *= 0.5; } // 斜め=カーブ
+function padVec(i, keyVecs) {
+  const p = pads[i];
+  let x = p.sx, y = p.sy;
+  if (p.dx || p.dy) { x = p.dx; y = p.dy; }
+  for (const [kx, ky] of keyVecs) if (kx || ky) { x = kx; y = ky; }
+  if (Math.abs(x) === 1 && Math.abs(y) === 1) x *= 0.5;  // 斜め=カーブ
   return [x, y];
 }
 
 function tick() {
-  const a = mix(...padVec('A'));
-  let cmd1 = [0, 0], cmd2 = [0, 0];
-  if (mode === 'all')   { cmd1 = a; cmd2 = a; }
-  if (mode === 'r1')    { cmd1 = a; }
-  if (mode === 'r2')    { cmd2 = a; }
-  if (mode === 'split') { cmd1 = a; cmd2 = mix(...padVec('B')); }
-  if (mirror.checked && mode === 'all') cmd2 = [cmd2[1], cmd2[0]];
-  robots[1].send(...cmd1); robots[2].send(...cmd2);
+  if (mode === 'split') {
+    robots.forEach((r, i) => r.send(...mix(...padVec(i, KEYSETS[i] ? [keyVec(KEYSETS[i])] : []))));
+  } else {
+    const cmd = mix(...padVec(0, [keyVec(KEYSETS[0]), keyVec(KEYSETS[1])]));
+    robots.forEach(r => (mode === 'all' || +mode === r.id) ? r.send(...cmd) : r.send(0, 0));
+  }
 }
 setInterval(tick, 50);   // 20Hz
 
 function stopAll() {
-  for (const p of ['A','B']) Object.assign(input[p], { sx:0, sy:0, dx:0, dy:0 });
-  keys.clear(); robots[1].send(0, 0, true); robots[2].send(0, 0, true);
+  pads.forEach(p => Object.assign(p, { sx:0, sy:0, dx:0, dy:0 }));
+  keys.clear(); robots.forEach(r => r.send(0, 0, true));
 }
 document.getElementById('estop').onclick = stopAll;
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopAll(); });
