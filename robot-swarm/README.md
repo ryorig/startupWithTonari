@@ -1,15 +1,27 @@
-# SwarmBot（2台 BLE 群制御プロトタイプ）
+# SwarmBot（3台 BLE 群制御プロトタイプ）
 
-## ESP32 側
-1. Arduino IDE で `esp32/SwarmBot/SwarmBot.ino` を開く（ボード: ESP32 Dev Module、追加ライブラリ不要）
-2. 1台目は `#define ROBOT_ID 1`、2台目は `2` にして書き込み → BLE名 `SwarmBot-1` / `SwarmBot-2`
-3. 前進でタイヤが逆回転する側があれば `INVERT_A` / `INVERT_B` を `true` に（モーターA=左, B=右）
+| 号機 | ボード | スケッチ | 備考 |
+|---|---|---|---|
+| 1号機 | XIAO ESP32S3 Sense | `esp32/SwarmBot_XIAO_Cam/` | カメラ映像 (Wi-Fi MJPEG) |
+| 2号機 | ESP32 DevKit | `esp32/SwarmBot_ESP32/` | |
+| 3号機 | ESP32 DevKit | `esp32/SwarmBot_ESP32_ToF/` | VL53L1X 距離センサー（PWMA→GPIO32, PWMB→GPIO33 に配線変更） |
 
-## アプリ
-- `app/index.html` を **Android / PC の Chrome・Edge** で開く（Web Bluetooth は https か localhost が必要。GitHub Pages なら `/robot-swarm/app/` でOK。iPhone は Bluefy アプリ）
-- 「1号機 接続」「2号機 接続」でそれぞれペアリング
-- モード: **同時**（1つのスティックで2台）/ **1号機** / **2号機** / **個別**（左右2スティックで別々に操作）
-- スティック・十字キー・キーボード（矢印/WASD、Space で停止）
+## 書き込み設定
+- 1号機: ボード `XIAO_ESP32S3` / PSRAM `OPI PSRAM` / Partition `Huge APP` / USB CDC On Boot `Enabled`
+- 2・3号機: ボード `ESP32 Dev Module`
+- 3号機: ライブラリマネージャで「VL53L1X」(Pololu) をインストール
+
+## アプリ起動 (Mac)
+```
+cd ~/startupWithTonari/robot-swarm/app
+git pull
+python3 -m http.server 8000
+```
+Chrome で `http://localhost:8000`（⌘+Shift+R で再読み込み）
+
+- 操作タブ: 手動操作 + 1号機カメラ映像 + 3号機の距離表示
+- パスタブ: 隊形を並べて、各区間の移動時間・待機時間を設定 → パス実行（時間制御・センサーなし）
 
 ## 通信仕様
-`M,<左>,<右>\n`（-255〜255）、`S\n` で停止。アプリは 20Hz 送信、ESP32 は 500ms 無通信または切断で自動停止。
+App→Robot: `M,<左>,<右>\n`（-255〜255）/ `S\n`
+Robot→App: `ID<n> L.. R..` / `IP<アドレス>`（1号機）/ `D<mm>`（3号機）

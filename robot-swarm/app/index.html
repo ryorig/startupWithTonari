@@ -5,89 +5,261 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>SwarmBot Controller</title>
 <style>
-  :root { --bg:#12141a; --panel:#1d2029; --line:#2e3240; --text:#e8eaf0; --sub:#8a90a2;
-          --all:#9b7bff; --ok:#3ddc84; }
-  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
+  :root { --bg:#12141a; --panel:#1d2029; --panel2:#171a21; --line:#2e3240; --text:#e8eaf0; --sub:#8a90a2;
+          --all:#9b7bff; --ok:#3ddc84; --warn:#ffb347; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
-              font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; touch-action:none; overflow:hidden; }
+              font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; overflow:hidden; }
   body { display:flex; flex-direction:column; }
-  header { display:flex; gap:8px; align-items:center; padding:8px 12px; flex-wrap:wrap; }
-  h1 { font-size:15px; margin:0 8px 0 0; letter-spacing:.05em; }
-  button { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--line);
-           border-radius:10px; padding:8px 12px; cursor:pointer; }
+  button, input, select { font:inherit; color:var(--text); }
+  button { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:7px 12px; cursor:pointer; user-select:none; }
   button:active { filter:brightness(1.4); }
+  button:disabled { opacity:.4; cursor:default; }
+  button.primary { background:#3b5bdb; border-color:#3b5bdb; font-weight:600; }
+  input[type=number], input[type=text] { background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:4px 6px; width:64px; }
+  input[type=text] { width:100%; }
+  header { display:flex; gap:8px; align-items:center; padding:8px 12px; flex-wrap:wrap; border-bottom:1px solid var(--line); }
+  h1 { font-size:15px; margin:0 6px 0 0; letter-spacing:.05em; }
   #bots { display:flex; gap:8px; flex-wrap:wrap; }
   .bot { display:flex; align-items:center; gap:6px; }
-  .dot { width:10px; height:10px; border-radius:50%; background:#555; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#555; flex:none; }
   .dot.on { background:var(--ok); box-shadow:0 0 8px var(--ok); }
-  .modes { display:flex; gap:4px; margin-left:auto; flex-wrap:wrap; }
+  .pill { font-size:12px; padding:3px 8px; border-radius:99px; background:var(--panel); border:1px solid var(--line); color:var(--sub); }
+  .pill.near { color:#fff; background:#b3261e; border-color:#b3261e; }
+  .tabs { display:flex; gap:4px; margin-left:auto; }
+  .tabs button.active { background:#e8eaf0; color:#12141a; font-weight:700; }
+  .view { flex:1; min-height:0; display:none; }
+  .view.active { display:flex; }
+  .hidden { display:none !important; }
+  .warn { background:#5a2a00; color:#ffd7a8; padding:8px 12px; font-size:13px; }
+
+  /* ---------- 操作画面 ---------- */
+  #drive { gap:12px; padding:10px 12px; }
+  #camPanel { flex:1.2; min-width:0; display:flex; flex-direction:column; gap:8px; }
+  #camBox { flex:1; min-height:0; background:#000; border-radius:12px; border:1px solid var(--line);
+            display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+  #cam { max-width:100%; max-height:100%; object-fit:contain; }
+  #camMsg { position:absolute; color:var(--sub); font-size:13px; text-align:center; padding:20px; line-height:1.7; }
+  #camBar { display:flex; gap:6px; align-items:center; font-size:12px; }
+  #camBar input { flex:1; }
+  #driveRight { flex:1; min-width:0; display:flex; flex-direction:column; gap:10px; }
+  .modes { display:flex; gap:4px; flex-wrap:wrap; justify-content:center; }
   .modes button.active { border-color:currentColor; color:var(--mc); }
-  main { display:flex; justify-content:space-around; align-items:center; flex:1; min-height:0; gap:12px; padding:0 12px; }
-  .pad { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  #padArea { flex:1; min-height:0; display:flex; justify-content:space-around; align-items:center; gap:10px; flex-wrap:wrap; overflow:auto; touch-action:none; user-select:none; }
+  .pad { display:flex; flex-direction:column; align-items:center; gap:8px; }
   .pad .label { font-size:13px; font-weight:600; color:var(--c); }
   .pad .hint { font-size:11px; color:var(--sub); }
-  .ctrl { display:flex; gap:18px; align-items:center; }
-  .stick { position:relative; width:var(--size,200px); aspect-ratio:1; border-radius:50%;
+  .ctrl { display:flex; gap:14px; align-items:center; }
+  .stick { position:relative; width:var(--size,200px); aspect-ratio:1; border-radius:50%; flex:none;
            background:radial-gradient(circle,#262a36 0,#1a1d25 70%); border:2px solid var(--line); }
   .knob { position:absolute; left:50%; top:50%; width:38%; aspect-ratio:1; border-radius:50%;
           transform:translate(-50%,-50%); background:var(--c,#888); opacity:.9; box-shadow:0 4px 14px #0008; }
   .dpad { display:grid; grid-template-columns:repeat(3,var(--k,48px)); grid-template-rows:repeat(3,var(--k,48px)); gap:4px; }
-  .dpad button { padding:0; font-size:18px; border-radius:8px; }
+  .dpad button { padding:0; font-size:16px; border-radius:8px; }
   .dpad button.held { background:var(--c,#555); }
-  .dpad .stop { font-size:11px; color:#ff8080; }
-  footer { display:flex; gap:16px; align-items:center; justify-content:center; padding:6px 12px 10px; font-size:12px; color:var(--sub); flex-wrap:wrap; }
-  input[type=range] { width:140px; }
-  #estop { background:#b3261e; border-color:#b3261e; font-weight:700; color:#fff; }
-  .hidden { display:none !important; }
-  .warn { background:#5a2a00; color:#ffd7a8; padding:8px 12px; font-size:13px; }
-  @media (max-width:800px) { main { flex-wrap:wrap; overflow:auto; } }
+  .dpad .stop { font-size:10px; color:#ff8080; }
+  .driveFoot { display:flex; gap:14px; align-items:center; justify-content:center; font-size:12px; color:var(--sub); flex-wrap:wrap; }
+  #estop, #pStop { background:#b3261e; border-color:#b3261e; font-weight:700; color:#fff; }
+
+  /* ---------- パス画面 ---------- */
+  #path { gap:10px; padding:10px 12px; }
+  #fieldWrap { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+  #fieldBox { flex:1; min-height:0; position:relative; }
+  #field { position:absolute; inset:0; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+  #timeline { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--sub); }
+  #timeline input[type=range] { flex:1; }
+  #side { width:370px; flex:none; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding-right:4px; }
+  .card { background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:10px; font-size:13px; }
+  .card h3 { margin:0 0 8px; font-size:13px; display:flex; justify-content:space-between; align-items:center; gap:6px; }
+  .row { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:4px 0; }
+  .muted { color:var(--sub); font-size:11px; line-height:1.6; }
+  #frames { display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; }
+  .frame { display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
+  .frame:hover { background:var(--panel); }
+  .frame.sel { border-color:#9b7bff; background:#231f36; }
+  .frame.run { box-shadow:inset 3px 0 0 var(--ok); }
+  table { width:100%; border-collapse:collapse; }
+  td, th { padding:3px 2px; text-align:left; font-weight:normal; }
+  th { color:var(--sub); font-size:11px; }
+  td input[type=number] { width:58px; }
+  .warnText { color:var(--warn); font-size:12px; line-height:1.6; }
+  .small { padding:4px 8px; font-size:12px; border-radius:8px; }
+
+  @media (max-width:900px) {
+    .view.active { flex-direction:column; overflow:auto; }
+    #camPanel { min-height:240px; }
+    #side { width:auto; }
+    #fieldBox { min-height:320px; }
+  }
 </style>
 </head>
 <body>
-<div id="nobt" class="warn hidden">このブラウザは Web Bluetooth 非対応です。Android / PC の Chrome または Edge で開いてください（iPhoneは「Bluefy」アプリで可）。</div>
+<div id="nobt" class="warn hidden">このブラウザは Web Bluetooth 非対応です。Android / PC の Chrome または Edge で開いてください。</div>
 <header>
   <h1>SwarmBot</h1>
   <div id="bots"></div>
-  <div class="modes" id="modes"></div>
+  <span id="distPill" class="pill hidden">距離 --</span>
+  <div class="tabs">
+    <button data-tab="drive" class="active">🎮 操作</button>
+    <button data-tab="path">🗺 パス</button>
+  </div>
 </header>
-<main id="main"></main>
-<footer>
-  <label>速度 <input type="range" id="speed" min="20" max="100" value="70"> <span id="speedv">70%</span></label>
-  <button id="estop">■ 全停止</button>
-  <span id="keyhint"></span>
-</footer>
+
+<!-- ================= 操作画面 ================= -->
+<section class="view active" id="drive">
+  <div id="camPanel">
+    <div id="camBox">
+      <img id="cam" alt="">
+      <div id="camMsg">1号機カメラ<br>Mac の Wi-Fi を「SwarmBot-1-CAM」に接続して「映像を表示」を押してください<br>(パスワード swarmbot123)</div>
+    </div>
+    <div id="camBar">
+      <span>映像URL</span>
+      <input type="text" id="camUrl" value="http://192.168.4.1:81/stream">
+      <button id="camBtn" class="small">映像を表示</button>
+    </div>
+  </div>
+  <div id="driveRight">
+    <div class="modes" id="modes"></div>
+    <div id="padArea"></div>
+    <div class="driveFoot">
+      <label>速度 <input type="range" id="speed" min="20" max="100" value="70"> <span id="speedv">70%</span></label>
+      <button id="estop">■ 全停止</button>
+      <span id="keyhint"></span>
+      <label><input type="checkbox" id="camShow" checked> カメラ表示</label>
+    </div>
+  </div>
+</section>
+
+<!-- ================= パス画面 ================= -->
+<section class="view" id="path">
+  <div id="fieldWrap">
+    <div id="fieldBox"><canvas id="field"></canvas></div>
+    <div id="timeline">
+      <button id="pPreview" class="small">▶ プレビュー</button>
+      <input type="range" id="scrub" min="0" max="1000" value="0">
+      <span id="tLabel">0.0 / 0.0 秒</span>
+    </div>
+    <div class="muted">ロボットをドラッグで移動・先端の白い点をドラッグで向きを変更。半透明 = 1つ前の隊形、線 = 移動経路。</div>
+  </div>
+
+  <div id="side">
+    <div class="card">
+      <h3>実行
+        <span>
+          <button id="pRun" class="primary small">▶ パス実行</button>
+          <button id="pStop" class="small">■ 停止</button>
+        </span>
+      </h3>
+      <div id="runInfo" class="muted">ロボットを「隊形1 (初期位置)」の位置・向きに置いてから実行してください。</div>
+      <div id="planWarn" class="warnText"></div>
+    </div>
+
+    <div class="card">
+      <h3>隊形の流れ
+        <span>
+          <button id="fAdd" class="small">＋ 追加</button>
+          <button id="fDel" class="small">削除</button>
+        </span>
+      </h3>
+      <div id="frames"></div>
+    </div>
+
+    <div class="card">
+      <h3 id="selTitle">隊形</h3>
+      <div class="row" id="timeRow">
+        移動時間 <input type="number" id="fDur" min="0.1" step="0.1"> 秒
+        &nbsp;到着後の待機 <input type="number" id="fWait" min="0" step="0.1"> 秒
+      </div>
+      <table>
+        <thead><tr><th>機体</th><th>X (cm)</th><th>Y (cm)</th><th>向き (°)</th><th></th></tr></thead>
+        <tbody id="poseTable"></tbody>
+      </table>
+      <div class="row" style="margin-top:8px">
+        隊列テンプレート 間隔 <input type="number" id="spacing" value="30" min="5" step="5"> cm
+      </div>
+      <div class="row">
+        <button class="small" data-preset="row">横一列</button>
+        <button class="small" data-preset="col">縦一列</button>
+        <button class="small" data-preset="tri">三角 ▲</button>
+        <button class="small" data-preset="vee">逆三角 ▼</button>
+      </div>
+      <div class="row">
+        <button class="small" id="faceUp">全員 上向き</button>
+        <button class="small" id="faceMove">全員 進行方向へ</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>フィールド / キャリブレーション</h3>
+      <div class="row">
+        広さ <input type="number" id="fieldW" min="50" step="10"> × <input type="number" id="fieldH" min="50" step="10"> cm
+        <label><input type="checkbox" id="snap" checked> 5cmスナップ</label>
+      </div>
+      <table>
+        <thead><tr><th>機体</th><th>直進 cm/秒<br>(100%時)</th><th>旋回 °/秒<br>(旋回出力時)</th><th>テスト</th></tr></thead>
+        <tbody id="calTable"></tbody>
+      </table>
+      <div class="row">
+        旋回出力 <input type="number" id="turnPct" min="20" max="100" step="5"> %
+        &nbsp;最低出力 <input type="number" id="minPct" min="0" max="100" step="5"> %
+      </div>
+      <div class="muted">
+        テスト「直進1秒」で100%出力のまま1秒走らせ、進んだ距離(cm)を「直進」に入力。<br>
+        「旋回1秒」で回った角度(°)を「旋回」に入力。床や電池残量で変わるので本番の場所で測ってください。<br>
+        ※ センサーなしの時間制御なので、誤差は少しずつ溜まります。
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>保存</h3>
+      <div class="row">
+        <button class="small" id="pExport">ファイルに保存</button>
+        <button class="small" id="pImport">ファイルを読込</button>
+        <button class="small" id="pLastToStart">最後の隊形 → 初期位置</button>
+        <button class="small" id="pReset">リセット</button>
+        <input type="file" id="pFile" accept=".json" class="hidden">
+      </div>
+      <div class="muted">編集内容はこのブラウザに自動保存されます。</div>
+    </div>
+  </div>
+</section>
 
 <script>
-// ===== 台数はここで変更 =====
+// =====================================================================
+//  設定
+// =====================================================================
 const N = 3;
 const COLORS = ['#ff6b5a', '#3fa9ff', '#3ddc84', '#ffc94a', '#ff7ad9', '#4ae0e0'];
-// 個別モードのキーボード割当 (1号機, 2号機, 3号機 ...)
 const KEYSETS = [
   { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', name:'矢印' },
   { up:'w', down:'s', left:'a', right:'d', name:'WASD' },
   { up:'i', down:'k', left:'j', right:'l', name:'IJKL' },
   { up:'t', down:'g', left:'f', right:'h', name:'TFGH' },
 ];
-
 const SVC = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const RX  = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
 const TX  = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+const NEAR_MM = 200;   // 距離表示を赤くするしきい値
+
+const $ = id => document.getElementById(id);
 
 if (!window.isSecureContext) {
-  const w = document.getElementById('nobt');
-  w.textContent = 'この URL では Bluetooth が使えません。アドレスバーに http://localhost:' + (location.port || '8000') + ' と入力して開き直してください（https か localhost が必要）。';
-  w.classList.remove('hidden');
-} else if (!navigator.bluetooth) document.getElementById('nobt').classList.remove('hidden');
+  $('nobt').textContent = 'この URL では Bluetooth が使えません。アドレスバーに http://localhost:' + (location.port || '8000') + ' と入力して開き直してください。';
+  $('nobt').classList.remove('hidden');
+} else if (!navigator.bluetooth) $('nobt').classList.remove('hidden');
 
-// ---------- BLE ----------
+// =====================================================================
+//  BLE
+// =====================================================================
 class Robot {
   constructor(id) {
     this.id = id; this.dev = null; this.rx = null; this.busy = false; this.last = ''; this.lastSent = 0;
+    this.realId = null; this.dist = null;
     const wrap = document.createElement('div'); wrap.className = 'bot';
     this.dot = document.createElement('span'); this.dot.className = 'dot';
     this.btn = document.createElement('button'); this.btn.style.color = COLORS[id - 1];
     this.btn.textContent = id + '号機 接続'; this.btn.onclick = () => this.connect();
-    wrap.append(this.dot, this.btn); document.getElementById('bots').appendChild(wrap);
+    wrap.append(this.dot, this.btn); $('bots').appendChild(wrap);
   }
   get ok() { return !!this.rx && this.dev?.gatt.connected; }
   async connect() {
@@ -101,22 +273,30 @@ class Robot {
       dev.addEventListener('gattserverdisconnected', () => this.onDisc());
       const s = await (await dev.gatt.connect()).getPrimaryService(SVC);
       this.rx = await s.getCharacteristic(RX);
-      try { const tx = await s.getCharacteristic(TX); await tx.startNotifications();
-            tx.addEventListener('characteristicvaluechanged', e => {
-              const t = new TextDecoder().decode(e.target.value); this.btn.title = t;
-              const m = t.match(/^ID(\d+)/);   // 機体が名乗るIDを表示 (Macの名前キャッシュ対策)
-              if (m) this.btn.textContent = this.id + '号機 切断 (実機ID ' + m[1] + ')';
-            }); } catch {}
+      try {
+        const tx = await s.getCharacteristic(TX); await tx.startNotifications();
+        tx.addEventListener('characteristicvaluechanged', e => this.onMsg(new TextDecoder().decode(e.target.value)));
+      } catch {}
       this.dot.classList.add('on');
-      this.btn.textContent = this.id + '号機 切断 (' + dev.name + ')';
+      this.updateLabel();
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
   }
-  onDisc() { this.rx = null; this.dot.classList.remove('on'); this.btn.textContent = this.id + '号機 接続'; }
+  updateLabel() {
+    if (!this.ok) { this.btn.textContent = this.id + '号機 接続'; return; }
+    this.btn.textContent = this.id + '号機 切断' + (this.realId ? ' (実機ID ' + this.realId + ')' : '');
+  }
+  onMsg(t) {
+    let m;
+    if ((m = t.match(/^ID(\d+)/))) { this.realId = m[1]; this.updateLabel(); this.btn.title = t; }
+    else if ((m = t.match(/^IP(\S+)/))) { onCameraIP(m[1]); }
+    else if (t.startsWith('D')) { this.dist = t === 'D-' ? -1 : parseInt(t.slice(1)); updateDist(this); }
+  }
+  onDisc() { this.rx = null; this.realId = null; this.dot.classList.remove('on'); this.updateLabel(); }
   async send(l, r, force = false) {
     if (!this.ok || this.busy) return;
     const msg = (l === 0 && r === 0) ? 'S\n' : `M,${l},${r}\n`;
     const now = performance.now();
-    if (!force && msg === this.last && now - this.lastSent < 200) return; // 200ms毎にキープアライブ
+    if (!force && msg === this.last && now - this.lastSent < 200) return;   // 200ms毎にキープアライブ
     this.busy = true;
     try {
       const data = new TextEncoder().encode(msg);
@@ -129,8 +309,51 @@ class Robot {
 }
 const robots = Array.from({ length: N }, (_, i) => new Robot(i + 1));
 
-// ---------- 入力 ----------
-// pads[i] = { sx, sy, dx, dy }   個別モードでは pads[i] が i+1号機、それ以外は pads[0] のみ使用
+function updateDist(r) {
+  const p = $('distPill'); p.classList.remove('hidden');
+  p.textContent = r.id + '号機 距離 ' + (r.dist < 0 ? '測定外' : (r.dist / 10).toFixed(1) + ' cm');
+  p.classList.toggle('near', r.dist >= 0 && r.dist < NEAR_MM);
+}
+
+// =====================================================================
+//  タブ
+// =====================================================================
+let view = 'drive';
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  if (run) stopRun();
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('active', x === b));
+  view = b.dataset.tab;
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === view));
+  stopAll();
+  if (view === 'path') { resizeField(); refreshPath(); }
+});
+
+// =====================================================================
+//  カメラ
+// =====================================================================
+const cam = $('cam');
+let camUserEdited = false;
+$('camUrl').addEventListener('input', () => camUserEdited = true);
+$('camBtn').onclick = () => startCam();
+$('camShow').onchange = () => $('camPanel').style.display = $('camShow').checked ? '' : 'none';
+function startCam() {
+  $('camMsg').textContent = '接続中…';
+  $('camMsg').style.display = '';
+  cam.src = $('camUrl').value.trim();
+}
+cam.onload = () => $('camMsg').style.display = 'none';
+cam.onerror = () => {
+  $('camMsg').innerHTML = '映像を取得できません。<br>Mac とカメラ(1号機)が同じ Wi-Fi にいるか、URL を確認してください。';
+  $('camMsg').style.display = '';
+};
+function onCameraIP(ip) {
+  const url = 'http://' + ip + ':81/stream';
+  if (!camUserEdited && $('camUrl').value !== url) $('camUrl').value = url;
+}
+
+// =====================================================================
+//  手動操作
+// =====================================================================
 const pads = Array.from({ length: N }, () => ({ sx:0, sy:0, dx:0, dy:0 }));
 const keys = new Set();
 
@@ -139,8 +362,8 @@ function makePad(i, title, color, compact) {
   const el = document.createElement('div'); el.className = 'pad'; el.style.setProperty('--c', color);
   el.innerHTML = `<div class="label">${title}</div><div class="ctrl"><div class="stick"><div class="knob"></div></div><div class="dpad"></div></div><div class="hint"></div>`;
   const stick = el.querySelector('.stick'), knob = el.querySelector('.knob'), dpad = el.querySelector('.dpad');
-  stick.style.setProperty('--size', compact ? 'min(26vw,170px)' : 'min(42vw,220px)');
-  dpad.style.setProperty('--k', compact ? '40px' : '50px');
+  stick.style.setProperty('--size', compact ? 'min(16vw,140px)' : 'min(30vw,220px)');
+  dpad.style.setProperty('--k', compact ? '36px' : '48px');
 
   let pid = null;
   const move = e => {
@@ -170,59 +393,51 @@ function makePad(i, title, color, compact) {
 }
 
 addEventListener('keydown', e => {
-  if (e.key === ' ') { stopAll(); e.preventDefault(); return; }
+  if (e.target.tagName === 'INPUT' && e.target.type !== 'range' && e.target.type !== 'checkbox') return;
+  if (e.key === ' ') { stopAll(); if (run) stopRun(); e.preventDefault(); return; }
+  if (view !== 'drive') return;
   const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   if (KEYSETS.some(s => Object.values(s).includes(k))) { keys.add(k); e.preventDefault(); }
 });
 addEventListener('keyup', e => keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key));
 addEventListener('blur', () => keys.clear());
-function keyVec(set) {
-  return [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 : 0),
-          (keys.has(set.up) ? 1 : 0) - (keys.has(set.down) ? 1 : 0)];
-}
+const keyVec = set => [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 : 0),
+                       (keys.has(set.up) ? 1 : 0) - (keys.has(set.down) ? 1 : 0)];
 
-// ---------- モード ----------
-// 'all' = 全台同時, 数字 = その号機のみ, 'split' = 個別
 const MODES = [['all', N + '台同時', 'var(--all)'],
   ...robots.map(r => [String(r.id), r.id + '号機', COLORS[r.id - 1]]),
   ['split', '個別', '#ffc94a']];
 let mode = 'all';
-const modesEl = document.getElementById('modes');
 for (const [m, label, color] of MODES) {
-  const b = document.createElement('button'); b.textContent = label; b.dataset.m = m; b.style.setProperty('--mc', color);
+  const b = document.createElement('button'); b.textContent = label; b.style.setProperty('--mc', color);
   if (m === mode) b.classList.add('active');
-  b.onclick = () => { modesEl.querySelectorAll('button').forEach(x => x.classList.remove('active'));
-                      b.classList.add('active'); mode = m; stopAll(); render(); };
-  modesEl.appendChild(b);
+  b.onclick = () => { $('modes').querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+                      mode = m; stopAll(); renderPads(); };
+  $('modes').appendChild(b);
 }
-
-function render() {
-  const main = document.getElementById('main'); main.innerHTML = '';
+function renderPads() {
+  const area = $('padArea'); area.innerHTML = '';
   if (mode === 'split') {
     robots.forEach((r, i) => {
       const el = makePad(i, r.id + '号機', COLORS[i], true);
       if (KEYSETS[i]) el.querySelector('.hint').textContent = 'キー: ' + KEYSETS[i].name;
-      main.appendChild(el);
+      area.appendChild(el);
     });
-    document.getElementById('keyhint').textContent = 'Space=全停止';
+    $('keyhint').textContent = 'Space=全停止';
   } else {
     const label = mode === 'all' ? N + '台同時' : mode + '号機';
-    const color = mode === 'all' ? 'var(--all)' : COLORS[+mode - 1];
-    main.appendChild(makePad(0, label, color, false));
-    document.getElementById('keyhint').textContent = 'キーボード: 矢印 / WASD・Space=全停止';
+    area.appendChild(makePad(0, label, mode === 'all' ? 'var(--all)' : COLORS[+mode - 1], false));
+    $('keyhint').textContent = 'キー: 矢印 / WASD・Space=全停止';
   }
 }
-render();
+renderPads();
+$('speed').oninput = () => $('speedv').textContent = $('speed').value + '%';
 
-const speed = document.getElementById('speed');
-speed.oninput = () => document.getElementById('speedv').textContent = speed.value + '%';
-
-// ---------- 差動二輪ミキシング ----------
 function mix(x, y) {
-  if (Math.hypot(x, y) < 0.12) return [0, 0];          // デッドゾーン
+  if (Math.hypot(x, y) < 0.12) return [0, 0];
   let l = y + x, r = y - x;
   const m = Math.max(1, Math.abs(l), Math.abs(r)); l /= m; r /= m;
-  const k = 255 * speed.value / 100;
+  const k = 255 * $('speed').value / 100;
   return [Math.round(l * k), Math.round(r * k)];
 }
 function padVec(i, keyVecs) {
@@ -230,26 +445,442 @@ function padVec(i, keyVecs) {
   let x = p.sx, y = p.sy;
   if (p.dx || p.dy) { x = p.dx; y = p.dy; }
   for (const [kx, ky] of keyVecs) if (kx || ky) { x = kx; y = ky; }
-  if (Math.abs(x) === 1 && Math.abs(y) === 1) x *= 0.5;  // 斜め=カーブ
+  if (Math.abs(x) === 1 && Math.abs(y) === 1) x *= 0.5;
   return [x, y];
 }
+function stopAll() {
+  pads.forEach(p => Object.assign(p, { sx:0, sy:0, dx:0, dy:0 }));
+  keys.clear(); testCmd = null;
+  robots.forEach(r => r.send(0, 0, true));
+}
+$('estop').onclick = stopAll;
+document.addEventListener('visibilitychange', () => { if (document.hidden) { if (run) stopRun(); stopAll(); } });
 
-function tick() {
+// =====================================================================
+//  パス (隊形) データ
+// =====================================================================
+// 座標: cm、原点=フィールド左上、X→右, Y→下。向き: 0°=上、時計回り+
+const STORE_KEY = 'swarmbot-path-v1';
+function defaultPath() {
+  const W = 200, H = 150;
+  const start = robots.map((_, i) => ({ x: W/2 + (i - (N-1)/2) * 30, y: H - 30, h: 0 }));
+  const tri   = start.map((p, i) => ({ ...p, y: H/2 + (i === 1 ? -26 : 0) }));
+  return {
+    field: { w: W, h: H },
+    calib: robots.map(() => ({ v: 30, w: 180 })),
+    turnPct: 60, minPct: 35,
+    frames: [ { dur: 0, wait: 0, pos: start }, { dur: 4, wait: 1, pos: tri } ],
+  };
+}
+let P;
+try { P = JSON.parse(localStorage.getItem(STORE_KEY)); } catch {}
+if (!validPath(P)) P = defaultPath();
+function validPath(p) {
+  return p && p.frames?.length && p.frames.every(f => f.pos?.length === N) && p.calib?.length === N && p.field;
+}
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(P)); } catch {} }
+
+let sel = 1 < P.frames.length ? 1 : 0;   // 選択中の隊形
+const norm = a => { a = ((a + 180) % 360 + 360) % 360 - 180; return a; };
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+const round1 = v => Math.round(v * 10) / 10;
+
+// ---------- 計画: 各隊形の間を「その場旋回 → 直進 → その場旋回」で移動 ----------
+function planMove(A, B, dur, cal) {
+  const tp = P.turnPct / 100, wr = Math.max(1, cal.w), turnPwm = Math.round(255 * tp);
+  const segs = []; let h = A.h, used = 0;
+  const turn = a => {
+    a = norm(a); if (Math.abs(a) < 1) return;
+    const dt = Math.abs(a) / wr, s = Math.sign(a);
+    segs.push({ type:'turn', dt, a, l: s * turnPwm, r: -s * turnPwm }); h += a; used += dt;
+  };
+  const dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy);
+  let tooFast = false;
+  if (d >= 0.5) {
+    const b = deg(Math.atan2(dx, -dy));
+    turn(b - h);
+    const after = Math.abs(norm(B.h - b)) / wr;
+    const avail = dur - used - after;
+    let pct = avail > 0 ? d / avail / Math.max(1, cal.v) * 100 : Infinity;
+    if (pct > 100) { tooFast = true; pct = 100; }
+    pct = Math.max(pct, P.minPct, 1);
+    const v = cal.v * pct / 100, pwm = Math.round(255 * pct / 100);
+    segs.push({ type:'drive', dt: d / v, d, hd: b, l: pwm, r: pwm, pct }); used += d / v; h = b;
+  }
+  turn(B.h - h);
+  return { segs, total: used, tooFast };
+}
+
+function buildPlan() {
+  const tl = robots.map(() => []), frameStart = [0], warnings = [];
+  let T = 0;
+  for (let f = 1; f < P.frames.length; f++) {
+    const A = P.frames[f - 1], B = P.frames[f];
+    const moves = robots.map((_, i) => planMove(A.pos[i], B.pos[i], B.dur, P.calib[i]));
+    const need = Math.max(...moves.map(m => m.total));
+    moves.forEach((m, i) => {
+      if (m.tooFast || m.total > B.dur + 0.05)
+        warnings.push(`隊形${f + 1}: ${i + 1}号機は ${B.dur}秒では間に合いません (約${round1(m.total)}秒必要)`);
+      let t = T;
+      for (const s of m.segs) { tl[i].push({ ...s, t0: t, t1: t + s.dt, frame: f }); t += s.dt; }
+    });
+    T += Math.max(B.dur, need) + (B.wait || 0);
+    frameStart.push(T);
+  }
+  return { tl, total: T, frameStart, warnings };
+}
+
+// 時刻 t の各ロボットの姿勢 (計画上の理想値)
+function poseAt(i, plan, t) {
+  const p = { ...P.frames[0].pos[i] };
+  for (const s of plan.tl[i]) {
+    if (t <= s.t0) break;
+    const k = Math.min(1, (t - s.t0) / s.dt);
+    if (s.type === 'turn') p.h += s.a * k;
+    else { p.x += Math.sin(rad(s.hd)) * s.d * k; p.y -= Math.cos(rad(s.hd)) * s.d * k; p.h = s.hd; }
+    if (k < 1) break;
+  }
+  return p;
+}
+function cmdAt(i, plan, t) {
+  for (const s of plan.tl[i]) if (t >= s.t0 && t < s.t1) return [s.l, s.r];
+  return [0, 0];
+}
+
+// =====================================================================
+//  パス画面 UI
+// =====================================================================
+const cv = $('field'), ctx = cv.getContext('2d');
+let plan = buildPlan();
+let view2 = { s: 1, ox: 0, oy: 0 };   // cm → px
+let previewT = null;                  // プレビュー中の時刻
+let run = null;                       // 実行中 {t0, plan}
+let testCmd = null;                   // キャリブレーションテスト {i, l, r, until}
+
+function resizeField() {
+  const box = $('fieldBox').getBoundingClientRect(), dpr = devicePixelRatio || 1;
+  cv.width = box.width * dpr; cv.height = box.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const pad = 24, s = Math.min((box.width - pad * 2) / P.field.w, (box.height - pad * 2) / P.field.h);
+  view2 = { s, ox: (box.width - P.field.w * s) / 2, oy: (box.height - P.field.h * s) / 2 };
+  drawField();
+}
+addEventListener('resize', () => { if (view === 'path') resizeField(); });
+const toPx = (x, y) => [view2.ox + x * view2.s, view2.oy + y * view2.s];
+const toCm = (px, py) => [(px - view2.ox) / view2.s, (py - view2.oy) / view2.s];
+
+function drawRobot(p, color, label, alpha = 1, handle = false) {
+  const [x, y] = toPx(p.x, p.y), R = Math.max(10, 7 * view2.s);
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(rad(p.h));
+  ctx.fillStyle = color; ctx.strokeStyle = '#0008'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.roundRect(-R * 0.8, -R * 0.9, R * 1.6, R * 1.8, R * 0.35); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.moveTo(0, -R * 0.75); ctx.lineTo(R * 0.4, -R * 0.15); ctx.lineTo(-R * 0.4, -R * 0.15); ctx.fill();
+  if (handle) {
+    ctx.strokeStyle = '#fff8'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(0, -R); ctx.lineTo(0, -R * 1.8); ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -R * 1.8, 5, 0, 7); ctx.fill();
+  }
+  ctx.restore();
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = '#fff'; ctx.font = 'bold 12px system-ui'; ctx.textAlign = 'center';
+  ctx.fillText(label, x, y + R * 1.3 + 12); ctx.restore();
+}
+
+function drawField() {
+  const box = $('fieldBox').getBoundingClientRect();
+  ctx.clearRect(0, 0, box.width, box.height);
+  const [x0, y0] = toPx(0, 0), [x1, y1] = toPx(P.field.w, P.field.h);
+  ctx.fillStyle = '#1a1d25'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+  ctx.strokeStyle = '#ffffff10'; ctx.lineWidth = 1;
+  for (let x = 0; x <= P.field.w; x += 10) { const [a] = toPx(x, 0); ctx.beginPath(); ctx.moveTo(a, y0); ctx.lineTo(a, y1); ctx.stroke(); }
+  for (let y = 0; y <= P.field.h; y += 10) { const [, b] = toPx(0, y); ctx.beginPath(); ctx.moveTo(x0, b); ctx.lineTo(x1, b); ctx.stroke(); }
+  ctx.strokeStyle = '#ffffff22';
+  for (let x = 0; x <= P.field.w; x += 50) { const [a] = toPx(x, 0); ctx.beginPath(); ctx.moveTo(a, y0); ctx.lineTo(a, y1); ctx.stroke(); }
+  for (let y = 0; y <= P.field.h; y += 50) { const [, b] = toPx(0, y); ctx.beginPath(); ctx.moveTo(x0, b); ctx.lineTo(x1, b); ctx.stroke(); }
+  ctx.strokeStyle = '#555'; ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+  ctx.fillStyle = '#8a90a2'; ctx.font = '11px system-ui';
+  ctx.fillText(`${P.field.w} × ${P.field.h} cm  (マス=10cm)`, x0, y0 - 6);
+
+  // 全体の経路
+  robots.forEach((_, i) => {
+    ctx.strokeStyle = COLORS[i] + '55'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    P.frames.forEach((f, k) => { const [x, y] = toPx(f.pos[i].x, f.pos[i].y); k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.stroke(); ctx.setLineDash([]);
+  });
+  // 選択中の区間を強調
+  if (sel > 0) robots.forEach((_, i) => {
+    const a = P.frames[sel - 1].pos[i], b = P.frames[sel].pos[i];
+    const [ax, ay] = toPx(a.x, a.y), [bx, by] = toPx(b.x, b.y);
+    ctx.strokeStyle = COLORS[i]; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+  });
+
+  const t = run ? (performance.now() - run.t0) / 1000 : previewT;
+  if (t != null) {
+    const pl = run ? run.plan : plan;
+    robots.forEach((_, i) => drawRobot(poseAt(i, pl, t), COLORS[i], String(i + 1)));
+  } else {
+    if (sel > 0) robots.forEach((_, i) => drawRobot(P.frames[sel - 1].pos[i], COLORS[i], '', 0.3));
+    robots.forEach((_, i) => drawRobot(P.frames[sel].pos[i], COLORS[i], String(i + 1), 1, true));
+  }
+}
+
+// ---------- ドラッグ編集 ----------
+let drag = null;
+cv.addEventListener('pointerdown', e => {
+  if (run || previewT != null) return;
+  const r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+  const R = Math.max(10, 7 * view2.s);
+  const pos = P.frames[sel].pos;
+  for (let i = N - 1; i >= 0; i--) {   // 向きハンドル
+    const [x, y] = toPx(pos[i].x, pos[i].y);
+    const hx = x + Math.sin(rad(pos[i].h)) * R * 1.8, hy = y - Math.cos(rad(pos[i].h)) * R * 1.8;
+    if (Math.hypot(px - hx, py - hy) < 10) { drag = { i, kind: 'rot' }; break; }
+  }
+  if (!drag) for (let i = N - 1; i >= 0; i--) {
+    const [x, y] = toPx(pos[i].x, pos[i].y);
+    if (Math.hypot(px - x, py - y) < R * 1.1) { drag = { i, kind: 'move', ox: x - px, oy: y - py }; break; }
+  }
+  if (drag) cv.setPointerCapture(e.pointerId);
+});
+cv.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+  const p = P.frames[sel].pos[drag.i], snap = $('snap').checked;
+  if (drag.kind === 'move') {
+    let [x, y] = toCm(px + drag.ox, py + drag.oy);
+    if (snap) { x = Math.round(x / 5) * 5; y = Math.round(y / 5) * 5; }
+    p.x = Math.max(0, Math.min(P.field.w, round1(x))); p.y = Math.max(0, Math.min(P.field.h, round1(y)));
+  } else {
+    const [x, y] = toPx(p.x, p.y);
+    let h = deg(Math.atan2(px - x, -(py - y)));
+    h = snap ? Math.round(h / 15) * 15 : Math.round(h);
+    p.h = norm(h) === -180 ? 180 : norm(h);
+  }
+  refreshPath(false);
+});
+cv.addEventListener('pointerup', () => { if (drag) { drag = null; refreshPath(); } });
+
+// ---------- サイドパネル ----------
+function refreshPath(full = true) {
+  plan = buildPlan(); save();
+  if (full) {
+    // 隊形リスト
+    const list = $('frames'); list.innerHTML = '';
+    P.frames.forEach((f, k) => {
+      const d = document.createElement('div');
+      d.className = 'frame' + (k === sel ? ' sel' : '');
+      d.dataset.k = k;
+      d.innerHTML = k === 0
+        ? `<b>隊形1</b><span class="muted">初期位置</span>`
+        : `<b>隊形${k + 1}</b><span class="muted">${f.dur}秒で移動${f.wait ? ` → ${f.wait}秒待機` : ''} ・ 開始 ${round1(plan.frameStart[k - 1])}秒</span>`;
+      d.onclick = () => { if (run) return; sel = k; previewT = null; refreshPath(); };
+      list.appendChild(d);
+    });
+    $('selTitle').textContent = sel === 0 ? '隊形1 (初期位置)' : `隊形${sel + 1}`;
+    $('timeRow').style.display = sel === 0 ? 'none' : '';
+    setVal('fDur', P.frames[sel].dur); setVal('fWait', P.frames[sel].wait || 0);
+    $('fDel').disabled = P.frames.length <= 1 || sel === 0;
+    setVal('fieldW', P.field.w); setVal('fieldH', P.field.h);
+    setVal('turnPct', P.turnPct); setVal('minPct', P.minPct);
+    if (!document.activeElement?.closest('#calTable')) buildCalTable();
+  }
+  buildPoseTable();
+  $('planWarn').innerHTML = plan.warnings.map(w => '⚠ ' + w).join('<br>');
+  $('scrub').max = Math.round(plan.total * 100);
+  if (!run) $('tLabel').textContent = `${round1(previewT ?? 0)} / ${round1(plan.total)} 秒`;
+  drawField();
+}
+
+function setVal(id, v) { if (document.activeElement !== $(id)) $(id).value = v; }
+
+function buildPoseTable() {
+  const tb = $('poseTable');
+  const pos = P.frames[sel].pos;
+  if (tb.children.length !== N || document.activeElement?.closest('#poseTable') == null) {
+    tb.innerHTML = '';
+    pos.forEach((p, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="color:${COLORS[i]};font-weight:700">${i + 1}号機</td>` +
+        ['x', 'y', 'h'].map(k => `<td><input type="number" step="${k === 'h' ? 15 : 5}" data-i="${i}" data-k="${k}" value="${p[k]}"></td>`).join('') + '<td></td>';
+      tb.appendChild(tr);
+    });
+    tb.querySelectorAll('input').forEach(inp => inp.oninput = () => {
+      const v = parseFloat(inp.value); if (isNaN(v)) return;
+      const p = P.frames[sel].pos[+inp.dataset.i];
+      p[inp.dataset.k] = inp.dataset.k === 'h' ? norm(v) : v;
+      refreshPath(false);
+    });
+  }
+}
+
+function buildCalTable() {
+  const tb = $('calTable'); tb.innerHTML = '';
+  P.calib.forEach((c, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="color:${COLORS[i]};font-weight:700">${i + 1}号機</td>
+      <td><input type="number" min="1" step="1" data-k="v" value="${c.v}"></td>
+      <td><input type="number" min="1" step="5" data-k="w" value="${c.w}"></td>
+      <td><button class="small" data-t="fwd">直進1秒</button> <button class="small" data-t="turn">旋回1秒</button></td>`;
+    tr.querySelectorAll('input').forEach(inp => inp.oninput = () => {
+      const v = parseFloat(inp.value); if (v > 0) { c[inp.dataset.k] = v; refreshPath(); }
+    });
+    tr.querySelectorAll('button').forEach(b => b.onclick = () => {
+      if (run) return;
+      const pw = b.dataset.t === 'fwd' ? 255 : Math.round(255 * P.turnPct / 100);
+      testCmd = { i, l: pw, r: b.dataset.t === 'fwd' ? pw : -pw, until: performance.now() + 1000 };
+    });
+    tb.appendChild(tr);
+  });
+}
+
+$('fDur').oninput = () => { const v = parseFloat($('fDur').value); if (v > 0) { P.frames[sel].dur = v; refreshPath(); } };
+$('fWait').oninput = () => { const v = parseFloat($('fWait').value); if (v >= 0) { P.frames[sel].wait = v; refreshPath(); } };
+$('fieldW').onchange = () => { P.field.w = Math.max(50, +$('fieldW').value || 200); resizeField(); refreshPath(); };
+$('fieldH').onchange = () => { P.field.h = Math.max(50, +$('fieldH').value || 150); resizeField(); refreshPath(); };
+$('turnPct').onchange = () => { P.turnPct = Math.min(100, Math.max(20, +$('turnPct').value)); refreshPath(); };
+$('minPct').onchange = () => { P.minPct = Math.min(100, Math.max(0, +$('minPct').value)); refreshPath(); };
+
+$('fAdd').onclick = () => {
+  if (run) return;
+  const src = P.frames[sel];
+  P.frames.splice(sel + 1, 0, { dur: 3, wait: 0, pos: src.pos.map(p => ({ ...p })) });
+  sel++; previewT = null; refreshPath();
+};
+$('fDel').onclick = () => {
+  if (run || sel === 0 || P.frames.length <= 1) return;
+  P.frames.splice(sel, 1); sel = Math.min(sel, P.frames.length - 1); refreshPath();
+};
+
+// 隊列テンプレート (現在の重心を中心に配置)
+document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
+  if (run) return;
+  const pos = P.frames[sel].pos, sp = +$('spacing').value || 30;
+  const cx = pos.reduce((a, p) => a + p.x, 0) / N, cy = pos.reduce((a, p) => a + p.y, 0) / N;
+  const off = i => (i - (N - 1) / 2) * sp;
+  const type = b.dataset.preset;
+  pos.forEach((p, i) => {
+    let ox = 0, oy = 0;
+    if (type === 'row') ox = off(i);
+    else if (type === 'col') oy = off(i);
+    else {   // 三角/逆三角: 円周上に均等配置 (3台なら正三角形)
+      const R = N > 1 ? sp / (2 * Math.sin(Math.PI / N)) : 0;
+      const a = rad(i * 360 / N + (type === 'vee' ? 180 : 0));
+      ox = Math.sin(a) * R; oy = -Math.cos(a) * R;
+    }
+    p.x = round1(Math.max(0, Math.min(P.field.w, cx + ox)));
+    p.y = round1(Math.max(0, Math.min(P.field.h, cy + oy)));
+  });
+  refreshPath();
+});
+$('faceUp').onclick = () => { P.frames[sel].pos.forEach(p => p.h = 0); refreshPath(); };
+$('faceMove').onclick = () => {
+  if (sel === 0) return;
+  P.frames[sel].pos.forEach((p, i) => {
+    const a = P.frames[sel - 1].pos[i];
+    if (Math.hypot(p.x - a.x, p.y - a.y) > 0.5) p.h = Math.round(deg(Math.atan2(p.x - a.x, -(p.y - a.y))));
+  });
+  refreshPath();
+};
+
+// 保存・読込
+$('pExport').onclick = () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(P, null, 2)], { type: 'application/json' }));
+  a.download = 'swarm-path.json'; a.click();
+};
+$('pImport').onclick = () => $('pFile').click();
+$('pFile').onchange = async () => {
+  try {
+    const d = JSON.parse(await $('pFile').files[0].text());
+    if (!validPath(d)) throw new Error(N + '台用のパスではありません');
+    P = d; sel = Math.min(1, P.frames.length - 1); resizeField(); refreshPath();
+  } catch (e) { alert('読込失敗: ' + e.message); }
+  $('pFile').value = '';
+};
+$('pLastToStart').onclick = () => {
+  if (run) return;
+  P.frames[0].pos = P.frames[P.frames.length - 1].pos.map(p => ({ ...p })); sel = 0; refreshPath();
+};
+$('pReset').onclick = () => { if (confirm('パスを初期状態に戻しますか？')) { P = defaultPath(); sel = 1; resizeField(); refreshPath(); } };
+
+// ---------- プレビュー ----------
+let previewTimer = null;
+$('pPreview').onclick = () => {
+  if (run) return;
+  if (previewTimer) { stopPreview(); return; }
+  const t0 = performance.now() - (previewT && previewT < plan.total ? previewT : 0) * 1000;
+  $('pPreview').textContent = '❚❚ 一時停止';
+  previewTimer = setInterval(() => {
+    previewT = (performance.now() - t0) / 1000;
+    if (previewT >= plan.total) { previewT = plan.total; stopPreview(); }
+    $('scrub').value = Math.round(previewT * 100);
+    $('tLabel').textContent = `${round1(previewT)} / ${round1(plan.total)} 秒`;
+    drawField();
+  }, 33);
+};
+function stopPreview() { clearInterval(previewTimer); previewTimer = null; $('pPreview').textContent = '▶ プレビュー'; }
+$('scrub').oninput = () => {
+  if (run) return; stopPreview();
+  previewT = $('scrub').value / 100;
+  $('tLabel').textContent = `${round1(previewT)} / ${round1(plan.total)} 秒`;
+  drawField();
+};
+
+// ---------- 実行 ----------
+$('pRun').onclick = () => {
+  if (run) return;
+  const conn = robots.filter(r => r.ok).map(r => r.id + '号機');
+  if (!conn.length) { alert('ロボットが接続されていません'); return; }
+  if (conn.length < N && !confirm(`接続中は ${conn.join('・')} だけです。このまま実行しますか？`)) return;
+  if (plan.warnings.length && !confirm('時間が足りない区間があります。そのまま実行しますか？(遅れた分だけ全員が待ちます)')) return;
+  stopPreview(); previewT = null; stopAll();
+  run = { t0: performance.now() + 1000, plan: buildPlan() };   // 1秒後に開始
+  $('pRun').disabled = true;
+};
+$('pStop').onclick = () => { stopRun(); stopAll(); };
+function stopRun() {
+  if (!run) return;
+  run = null; $('pRun').disabled = false;
+  robots.forEach(r => r.send(0, 0, true));
+  document.querySelectorAll('.frame').forEach(d => d.classList.remove('run'));
+  $('runInfo').textContent = 'ロボットを「隊形1 (初期位置)」の位置・向きに置いてから実行してください。';
+  drawField();
+}
+function runFrameAt(t) { let k = 0; while (k < run.plan.frameStart.length - 1 && t >= run.plan.frameStart[k]) k++; return k; }
+
+refreshPath();
+
+// =====================================================================
+//  送信ループ (20Hz)
+// =====================================================================
+setInterval(() => {
+  if (run) {
+    const t = (performance.now() - run.t0) / 1000;
+    if (t < 0) { $('runInfo').textContent = `開始まで ${(-t).toFixed(1)} 秒…`; robots.forEach(r => r.send(0, 0)); return; }
+    if (t >= run.plan.total) { stopRun(); $('runInfo').textContent = '✓ パス完了'; return; }
+    robots.forEach((r, i) => r.send(...cmdAt(i, run.plan, t)));
+    const k = runFrameAt(t);
+    $('runInfo').textContent = `実行中 ${t.toFixed(1)} / ${round1(run.plan.total)} 秒 ・ 隊形${k + 1} へ移動中`;
+    document.querySelectorAll('.frame').forEach(d => d.classList.toggle('run', +d.dataset.k === k));
+    $('scrub').value = Math.round(t * 100);
+    $('tLabel').textContent = `${round1(t)} / ${round1(run.plan.total)} 秒`;
+    drawField();
+    return;
+  }
+  if (testCmd) {
+    const done = performance.now() >= testCmd.until;
+    robots.forEach((r, i) => i === testCmd.i && !done ? r.send(testCmd.l, testCmd.r) : r.send(0, 0));
+    if (done) { robots[testCmd.i].send(0, 0, true); testCmd = null; }
+    return;
+  }
+  if (view !== 'drive') { robots.forEach(r => r.send(0, 0)); return; }
+
   if (mode === 'split') {
     robots.forEach((r, i) => r.send(...mix(...padVec(i, KEYSETS[i] ? [keyVec(KEYSETS[i])] : []))));
   } else {
     const cmd = mix(...padVec(0, [keyVec(KEYSETS[0]), keyVec(KEYSETS[1])]));
     robots.forEach(r => (mode === 'all' || +mode === r.id) ? r.send(...cmd) : r.send(0, 0));
   }
-}
-setInterval(tick, 50);   // 20Hz
-
-function stopAll() {
-  pads.forEach(p => Object.assign(p, { sx:0, sy:0, dx:0, dy:0 }));
-  keys.clear(); robots.forEach(r => r.send(0, 0, true));
-}
-document.getElementById('estop').onclick = stopAll;
-document.addEventListener('visibilitychange', () => { if (document.hidden) stopAll(); });
+}, 50);
 </script>
 </body>
 </html>
