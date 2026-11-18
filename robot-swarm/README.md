@@ -9,7 +9,7 @@
 ## 書き込み設定
 - 1号機: ボード `XIAO_ESP32S3` / PSRAM `OPI PSRAM` / Partition `Huge APP` / USB CDC On Boot `Enabled`
 - 2・3号機: ボード `ESP32 Dev Module`
-- 3号機: ライブラリマネージャで「VL53L1X」(Pololu) をインストール
+- 3号機: ライブラリマネージャで「Adafruit_VL53L1X」(Adafruit) をインストール
 
 ## アプリ起動 (Mac)
 ```

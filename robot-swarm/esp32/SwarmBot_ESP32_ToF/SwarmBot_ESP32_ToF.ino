@@ -1,7 +1,8 @@
 /*
  * SwarmBot 3号機 - ESP32 DevKit + TB6612FNG + VL53L1X 距離センサー
  * Arduino IDE: ボード「ESP32 Dev Module」
- * ライブラリ: ライブラリマネージャで「VL53L1X」(by Pololu) をインストール
+ * ライブラリ: ライブラリマネージャで「Adafruit_VL53L1X」(by Adafruit) をインストール
+ *            (依存ライブラリも聞かれたら「全てをインストール」)
  * BLE名 "SwarmBot-3"
  *
  * ★ GPIO25/26 を I2C (SDA/SCL) に使うため、PWMA/PWMB を GPIO32/33 に移動しています
@@ -17,7 +18,7 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 #include <Wire.h>
-#include <VL53L1X.h>
+#include <Adafruit_VL53L1X.h>
 
 #define ROBOT_ID 3
 
@@ -32,7 +33,7 @@ const int I2C_SDA = 25, I2C_SCL = 26;
 
 const int SAFETY_STOP_MM = 150;   // 前進中この距離以内で停止 (0で無効)
 
-VL53L1X tof;
+Adafruit_VL53L1X tof;
 bool tofOk = false;
 int distMm = -1;
 
@@ -142,12 +143,10 @@ void setup() {
 
   Wire.begin(I2C_SDA, I2C_SCL);
   Wire.setClock(400000);
-  tof.setTimeout(500);
-  tofOk = tof.init();
+  tofOk = tof.begin(0x29, &Wire);
   if (tofOk) {
-    tof.setDistanceMode(VL53L1X::Long);
-    tof.setMeasurementTimingBudget(50000);   // 50ms
-    tof.startContinuous(50);
+    tof.setTimingBudget(50);   // 50ms
+    tof.startRanging();
     Serial.println("VL53L1X OK");
   } else {
     Serial.println("VL53L1X が見つかりません (配線を確認)");
@@ -159,8 +158,9 @@ void loop() {
   static uint32_t lastNotify = 0, lastDist = 0;
 
   if (tofOk && tof.dataReady()) {
-    int d = tof.read(false);
-    distMm = (tof.ranging_data.range_status == VL53L1X::RangeValid) ? d : -1;
+    int d = tof.distance();          // 測定失敗時は -1
+    distMm = (d > 0) ? d : -1;
+    tof.clearInterrupt();
   }
 
   int l = targetL, r = targetR;
