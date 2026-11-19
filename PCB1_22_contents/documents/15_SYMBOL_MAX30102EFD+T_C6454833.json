@@ -1,0 +1,2120 @@
+{
+  "docHead": {
+    "docType": "SYMBOL",
+    "client": "7d4bd0354067ed63",
+    "uuid": "008e95429aa95d8b",
+    "updateTime": 1794840965229,
+    "version": "1696753805000",
+    "editVersion": "3.2.209",
+    "user": {}
+  },
+  "items": [
+    {
+      "header": {
+        "type": "CANVAS",
+        "ticket": 1,
+        "id": "CANVAS"
+      },
+      "body": {
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "header": {
+        "type": "PART",
+        "ticket": 2,
+        "id": "MAX30102EFD+T_C6454833.1"
+      },
+      "body": {
+        "BBOX": [
+          -35,
+          -40,
+          35,
+          40
+        ],
+        "title": "MAX30102EFD+T_C6454833.1"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 3,
+        "id": "e1"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 1,
+        "parentId": "",
+        "key": "Symbol",
+        "value": "MAX30102EFD+T_C6454833",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 4,
+        "id": "e2"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 2,
+        "parentId": "",
+        "key": "Designator",
+        "value": "U?",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 5,
+        "id": "placeholder1"
+      },
+      "body": {
+        "dataType": "ATTR",
+        "max": 58
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 6,
+        "id": "e61"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 61,
+        "parentId": "",
+        "key": "Footprint",
+        "value": "OESIP-14_L5.6-W3.3-P0.80-TL",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 7,
+        "id": "e62"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 62,
+        "parentId": "",
+        "key": "Supplier",
+        "value": "LCSC",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 8,
+        "id": "e63"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 63,
+        "parentId": "",
+        "key": "Supplier Part",
+        "value": "C6454833",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 9,
+        "id": "e64"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 64,
+        "parentId": "",
+        "key": "Manufacturer",
+        "value": "ADI(亚德诺)/MAXIM(美信)",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 10,
+        "id": "e65"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 65,
+        "parentId": "",
+        "key": "Manufacturer Part",
+        "value": "MAX30102EFD+T",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 11,
+        "id": "e66"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 66,
+        "parentId": "",
+        "key": "JLCPCB Part Class",
+        "value": "Extended Part",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": 6.75,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 12,
+        "id": "placeholder2"
+      },
+      "body": {
+        "dataType": "RECT",
+        "max": 2
+      }
+    },
+    {
+      "header": {
+        "type": "RECT",
+        "ticket": 13,
+        "id": "e3"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 3,
+        "dotX1": -35,
+        "dotY1": 40,
+        "dotX2": 35,
+        "dotY2": -40,
+        "radiusX": 0,
+        "radiusY": 0,
+        "rotation": 0,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 14,
+        "id": "placeholder3"
+      },
+      "body": {
+        "dataType": "CIRCLE",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "CIRCLE",
+        "ticket": 15,
+        "id": "e4"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 4,
+        "centerX": -30,
+        "centerY": -35,
+        "radius": 1.5,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 16,
+        "id": "placeholder4"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 4
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 17,
+        "id": "e5"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 5,
+        "display": true,
+        "x": -45,
+        "y": -30,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 18,
+        "id": "e6"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 6,
+        "parentId": "e5",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": -24.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 19,
+        "id": "e7"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 7,
+        "parentId": "e5",
+        "key": "Pin Number",
+        "value": "1",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": -29.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 20,
+        "id": "e8"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 8,
+        "parentId": "e5",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": -30,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 21,
+        "id": "placeholder5"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 22,
+        "id": "e9"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 9,
+        "display": true,
+        "x": -45,
+        "y": -20,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 23,
+        "id": "e10"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 10,
+        "parentId": "e9",
+        "key": "Pin Name",
+        "value": "SCL",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": -14.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 24,
+        "id": "e11"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 11,
+        "parentId": "e9",
+        "key": "Pin Number",
+        "value": "2",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": -19.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 25,
+        "id": "e12"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 12,
+        "parentId": "e9",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": -20,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 26,
+        "id": "placeholder6"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 27,
+        "id": "e13"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 13,
+        "display": true,
+        "x": -45,
+        "y": -10,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 28,
+        "id": "e14"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 14,
+        "parentId": "e13",
+        "key": "Pin Name",
+        "value": "SDA",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": -4.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 29,
+        "id": "e15"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 15,
+        "parentId": "e13",
+        "key": "Pin Number",
+        "value": "3",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": -9.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 30,
+        "id": "e16"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 16,
+        "parentId": "e13",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": -10,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 31,
+        "id": "placeholder7"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 32,
+        "id": "e17"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 17,
+        "display": true,
+        "x": -45,
+        "y": 0,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 33,
+        "id": "e18"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 18,
+        "parentId": "e17",
+        "key": "Pin Name",
+        "value": "PGND",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": 5.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 34,
+        "id": "e19"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 19,
+        "parentId": "e17",
+        "key": "Pin Number",
+        "value": "4",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": 0.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 35,
+        "id": "e20"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 20,
+        "parentId": "e17",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": 0,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 36,
+        "id": "placeholder8"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 37,
+        "id": "e21"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 21,
+        "display": true,
+        "x": -45,
+        "y": 10,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 38,
+        "id": "e22"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 22,
+        "parentId": "e21",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": 15.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 39,
+        "id": "e23"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 23,
+        "parentId": "e21",
+        "key": "Pin Number",
+        "value": "5",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": 10.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 40,
+        "id": "e24"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 24,
+        "parentId": "e21",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": 10,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 41,
+        "id": "placeholder9"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 42,
+        "id": "e25"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 25,
+        "display": true,
+        "x": -45,
+        "y": 20,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 43,
+        "id": "e26"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 26,
+        "parentId": "e25",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": 25.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 44,
+        "id": "e27"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 27,
+        "parentId": "e25",
+        "key": "Pin Number",
+        "value": "6",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": 20.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 45,
+        "id": "e28"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 28,
+        "parentId": "e25",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": 20,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 46,
+        "id": "placeholder10"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 47,
+        "id": "e29"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 29,
+        "display": true,
+        "x": -45,
+        "y": 30,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 48,
+        "id": "e30"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 30,
+        "parentId": "e29",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -31.3,
+        "y": 35.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 49,
+        "id": "e31"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 31,
+        "parentId": "e29",
+        "key": "Pin Number",
+        "value": "7",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": -35.5,
+        "y": 30.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 50,
+        "id": "e32"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 32,
+        "parentId": "e29",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -45,
+        "y": 30,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 51,
+        "id": "placeholder11"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 52,
+        "id": "e33"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 33,
+        "display": true,
+        "x": 45,
+        "y": 30,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 53,
+        "id": "e34"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 34,
+        "parentId": "e33",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": 35.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 54,
+        "id": "e35"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 35,
+        "parentId": "e33",
+        "key": "Pin Number",
+        "value": "8",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": 30.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 55,
+        "id": "e36"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 36,
+        "parentId": "e33",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": 30,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 56,
+        "id": "placeholder12"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 57,
+        "id": "e37"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 37,
+        "display": true,
+        "x": 45,
+        "y": 20,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 58,
+        "id": "e38"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 38,
+        "parentId": "e37",
+        "key": "Pin Name",
+        "value": "VLED+",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": 25.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 59,
+        "id": "e39"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 39,
+        "parentId": "e37",
+        "key": "Pin Number",
+        "value": "9",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": 20.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 60,
+        "id": "e40"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 40,
+        "parentId": "e37",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": 20,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 61,
+        "id": "placeholder13"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 62,
+        "id": "e41"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 41,
+        "display": true,
+        "x": 45,
+        "y": 10,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 63,
+        "id": "e42"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 42,
+        "parentId": "e41",
+        "key": "Pin Name",
+        "value": "VLED+",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": 15.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 64,
+        "id": "e43"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 43,
+        "parentId": "e41",
+        "key": "Pin Number",
+        "value": "10",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": 10.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 65,
+        "id": "e44"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 44,
+        "parentId": "e41",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": 10,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 66,
+        "id": "placeholder14"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 67,
+        "id": "e45"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 45,
+        "display": true,
+        "x": 45,
+        "y": 0,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 68,
+        "id": "e46"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 46,
+        "parentId": "e45",
+        "key": "Pin Name",
+        "value": "VDD",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": 5.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 69,
+        "id": "e47"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 47,
+        "parentId": "e45",
+        "key": "Pin Number",
+        "value": "11",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": 0.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 70,
+        "id": "e48"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 48,
+        "parentId": "e45",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": 0,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 71,
+        "id": "placeholder15"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 72,
+        "id": "e49"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 49,
+        "display": true,
+        "x": 45,
+        "y": -10,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 73,
+        "id": "e50"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 50,
+        "parentId": "e49",
+        "key": "Pin Name",
+        "value": "GND",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": -4.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 74,
+        "id": "e51"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 51,
+        "parentId": "e49",
+        "key": "Pin Number",
+        "value": "12",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": -9.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 75,
+        "id": "e52"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 52,
+        "parentId": "e49",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": -10,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 76,
+        "id": "placeholder16"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 77,
+        "id": "e53"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 53,
+        "display": true,
+        "x": 45,
+        "y": -20,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 78,
+        "id": "e54"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 54,
+        "parentId": "e53",
+        "key": "Pin Name",
+        "value": "INT#",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": -14.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 79,
+        "id": "e55"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 55,
+        "parentId": "e53",
+        "key": "Pin Number",
+        "value": "13",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": -19.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 80,
+        "id": "e56"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 56,
+        "parentId": "e53",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": -20,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 81,
+        "id": "placeholder17"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 82,
+        "id": "e57"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 57,
+        "display": true,
+        "x": 45,
+        "y": -30,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 83,
+        "id": "e58"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 58,
+        "parentId": "e57",
+        "key": "Pin Name",
+        "value": "N.C.",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 31.3,
+        "y": -24.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 84,
+        "id": "e59"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 59,
+        "parentId": "e57",
+        "key": "Pin Number",
+        "value": "14",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 35.5,
+        "y": -29.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 85,
+        "id": "e60"
+      },
+      "body": {
+        "partId": "MAX30102EFD+T_C6454833.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 60,
+        "parentId": "e57",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 45,
+        "y": -30,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "META",
+        "ticket": 876,
+        "id": "META"
+      },
+      "body": {
+        "title": "MAX30102EFD+T_C6454833",
+        "description": "",
+        "tags": [
+          "Sensors",
+          "Heart Rate Sensors"
+        ],
+        "docType": 2,
+        "source": "57297274d86d48cfb23693d4bb1b6abb|0819f05c4eef4c71ace90d822a990e87"
+      }
+    }
+  ]
+}

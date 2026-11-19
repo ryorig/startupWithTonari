@@ -1,0 +1,57 @@
+{
+  "docHead": {
+    "docType": "DEVICE",
+    "client": "7d4bd0354067ed63",
+    "uuid": "5c1d124acc860d21",
+    "updateTime": 1794840966058,
+    "version": "1696754404000",
+    "editVersion": "3.2.209",
+    "user": {}
+  },
+  "items": [
+    {
+      "header": {
+        "type": "META",
+        "ticket": 878,
+        "id": "META"
+      },
+      "body": {
+        "title": "MAX30102EFD+T_C6454833",
+        "tags": [
+          "Sensors",
+          "Heart Rate Sensors"
+        ],
+        "source": "a78ea34b18ae496abd935db192cb7999|0819f05c4eef4c71ace90d822a990e87",
+        "images": [
+          "https://alimg.szlcsc.com/upload/public/product/middle/20230525/9F7A9FDB974D455F8C82E37D253F8CAE.jpg"
+        ],
+        "attributes": {
+          "LCSC Part Name": "高灵敏度脉搏血氧仪和心率传感器",
+          "Supplier Part": "C6454833",
+          "Manufacturer": "ADI(亚德诺)/MAXIM(美信)",
+          "Manufacturer Part": "MAX30102EFD+T",
+          "Supplier Footprint": "OESIP-14",
+          "JLCPCB Part Class": "Extended Part",
+          "Datasheet": "https://item.szlcsc.com/datasheet/MAX30102EFD%252BT/7407610.html",
+          "Supplier": "LCSC",
+          "Add into BOM": "yes",
+          "Convert to PCB": "yes",
+          "Symbol": "008e95429aa95d8b",
+          "Designator": "U?",
+          "Footprint": "2ea6cb579acf7d13",
+          "3D Model": "88fe9d025a084e8984d0c73c82688e2d|0819f05c4eef4c71ace90d822a990e87",
+          "3D Model Title": "OESIP-14_L5.6-W3.3-P0.80-TL",
+          "3D Model Transform": "129.921,220.472,0,0,0,0,0,0.004,0",
+          "Interface": "I2C",
+          "Resolution(Bits)": "18bit",
+          "Voltage - Supply": "1.7V~2V",
+          "Current - Supply": "1.2mA",
+          "Operating Temperature": "-40℃~+85℃",
+          "Features": "Integrated ambient light cancellation (ALC)；Built-in temperature sensor",
+          "Name": "={Manufacturer Part}",
+          "Description": "Interface:I2C Resolution(Bits):18bit Voltage - Supply:1.7V~2V Voltage - Supply:1.7V~2V Current - Supply:1.2mA Operating Temperature:-40℃~+85℃ Operating Temperature:-40℃~+85℃ Features:Integrated ambient light cancellation (ALC)；Built-in temperature sensor "
+        }
+      }
+    }
+  ]
+}

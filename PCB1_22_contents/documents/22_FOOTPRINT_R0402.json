@@ -1,0 +1,962 @@
+{
+  "docHead": {
+    "docType": "FOOTPRINT",
+    "client": "7d4bd0354067ed63",
+    "uuid": "a8b5122e88f16e81",
+    "updateTime": 1794840008257,
+    "version": "1733220397000",
+    "editVersion": "3.2.209",
+    "user": {}
+  },
+  "items": [
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 1,
+        "id": "[\"LAYER\",1]"
+      },
+      "body": {
+        "layerType": "TOP",
+        "layerName": "Top Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FF0000",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F0000",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 2,
+        "id": "[\"LAYER\",2]"
+      },
+      "body": {
+        "layerType": "BOTTOM",
+        "layerName": "Bottom Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#0000FF",
+        "activateTransparency": 1,
+        "inactiveColor": "#00007F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 3,
+        "id": "[\"LAYER\",3]"
+      },
+      "body": {
+        "layerType": "TOP_SILK",
+        "layerName": "Top Silkscreen Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FFCC00",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F6600",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 4,
+        "id": "[\"LAYER\",4]"
+      },
+      "body": {
+        "layerType": "BOT_SILK",
+        "layerName": "Bottom Silkscreen Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#66CC33",
+        "activateTransparency": 1,
+        "inactiveColor": "#336619",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 5,
+        "id": "[\"LAYER\",7]"
+      },
+      "body": {
+        "layerType": "TOP_PASTE_MASK",
+        "layerName": "Top Paste Mask Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#808080",
+        "activateTransparency": 1,
+        "inactiveColor": "#404040",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 6,
+        "id": "[\"LAYER\",8]"
+      },
+      "body": {
+        "layerType": "BOT_PASTE_MASK",
+        "layerName": "Bottom Paste Mask Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#800000",
+        "activateTransparency": 1,
+        "inactiveColor": "#400000",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 7,
+        "id": "[\"LAYER\",5]"
+      },
+      "body": {
+        "layerType": "TOP_SOLDER_MASK",
+        "layerName": "Top Solder Mask Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#800080",
+        "activateTransparency": 1,
+        "inactiveColor": "#400040",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 8,
+        "id": "[\"LAYER\",6]"
+      },
+      "body": {
+        "layerType": "BOT_SOLDER_MASK",
+        "layerName": "Bottom Solder Mask Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#AA00FF",
+        "activateTransparency": 1,
+        "inactiveColor": "#55007F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 9,
+        "id": "[\"LAYER\",13]"
+      },
+      "body": {
+        "layerType": "DOCUMENT",
+        "layerName": "Document Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FFFFFF",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F7F7F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 10,
+        "id": "[\"LAYER\",11]"
+      },
+      "body": {
+        "layerType": "OUTLINE",
+        "layerName": "Board Outline Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FF00FF",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F007F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 11,
+        "id": "[\"LAYER\",12]"
+      },
+      "body": {
+        "layerType": "MULTI",
+        "layerName": "Multi-Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#C0C0C0",
+        "activateTransparency": 1,
+        "inactiveColor": "#606060",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 12,
+        "id": "[\"LAYER\",9]"
+      },
+      "body": {
+        "layerType": "TOP_ASSEMBLY",
+        "layerName": "Top Assembly Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#33CC99",
+        "activateTransparency": 1,
+        "inactiveColor": "#19664C",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 13,
+        "id": "[\"LAYER\",10]"
+      },
+      "body": {
+        "layerType": "BOT_ASSEMBLY",
+        "layerName": "Bottom Assembly Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#5555FF",
+        "activateTransparency": 1,
+        "inactiveColor": "#2A2A7F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 14,
+        "id": "[\"LAYER\",14]"
+      },
+      "body": {
+        "layerType": "MECHANICAL",
+        "layerName": "Mechanical Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#F022F0",
+        "activateTransparency": 1,
+        "inactiveColor": "#781178",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 15,
+        "id": "[\"LAYER\",52]"
+      },
+      "body": {
+        "layerType": "COMPONENT_MODEL",
+        "layerName": "Component Model Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FFFFFF",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F7F7F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 16,
+        "id": "[\"LAYER\",48]"
+      },
+      "body": {
+        "layerType": "COMPONENT_SHAPE",
+        "layerName": "Component Shape Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#00CCCC",
+        "activateTransparency": 1,
+        "inactiveColor": "#006666",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 17,
+        "id": "[\"LAYER\",51]"
+      },
+      "body": {
+        "layerType": "PIN_FLOATING",
+        "layerName": "Pin Floating Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#FF99FF",
+        "activateTransparency": 1,
+        "inactiveColor": "#7F4C7F",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 18,
+        "id": "[\"LAYER\",49]"
+      },
+      "body": {
+        "layerType": "COMPONENT_MARKING",
+        "layerName": "Component Marking Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#66FFCC",
+        "activateTransparency": 1,
+        "inactiveColor": "#337F66",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "LAYER",
+        "ticket": 19,
+        "id": "[\"LAYER\",50]"
+      },
+      "body": {
+        "layerType": "PIN_SOLDERING",
+        "layerName": "Pin Soldering Layer",
+        "use": true,
+        "show": true,
+        "locked": false,
+        "activeColor": "#CC9999",
+        "activateTransparency": 1,
+        "inactiveColor": "#664C4C",
+        "inactiveTransparency": 1
+      }
+    },
+    {
+      "header": {
+        "type": "ACTIVE_LAYER",
+        "ticket": 21,
+        "id": "ACTIVE_LAYER"
+      },
+      "body": {
+        "layerId": 1
+      }
+    },
+    {
+      "header": {
+        "type": "CANVAS",
+        "ticket": 22,
+        "id": "CANVAS"
+      },
+      "body": {
+        "originX": 0,
+        "originY": 0,
+        "unit": "mm",
+        "gridXSize": 10,
+        "gridYSize": 10,
+        "snapXSize": 0.5,
+        "snapYSize": 0.5,
+        "gridType": "NONE",
+        "multiGridType": "NONE",
+        "highlightValue": 0.5
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 23,
+        "id": "placeholder1"
+      },
+      "body": {
+        "dataType": "FILL",
+        "max": 1
+      }
+    },
+    {
+      "header": {
+        "type": "FILL",
+        "ticket": 24,
+        "id": "e1"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 50,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            9.9,
+            -9.842,
+            "L",
+            9.9,
+            9.844,
+            19.742,
+            9.844,
+            19.742,
+            -9.842,
+            9.9,
+            -9.842
+          ]
+        ],
+        "locked": false,
+        "zIndex": 1,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "header": {
+        "type": "FILL",
+        "ticket": 25,
+        "id": "e2"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 50,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            -9.8,
+            9.844,
+            "L",
+            -9.8,
+            -9.842,
+            -19.642,
+            -9.842,
+            -19.642,
+            9.844,
+            -9.8,
+            9.844
+          ]
+        ],
+        "locked": false,
+        "zIndex": 2,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 26,
+        "id": "placeholder2"
+      },
+      "body": {
+        "dataType": "FILL",
+        "max": 1
+      }
+    },
+    {
+      "header": {
+        "type": "FILL",
+        "ticket": 27,
+        "id": "e4"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 7,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            5.315,
+            -9.055,
+            "L",
+            5.315,
+            9.055,
+            6.89,
+            10.63,
+            26.6,
+            10.63,
+            28.175,
+            9.055,
+            28.175,
+            -9.055,
+            26.6,
+            -10.63,
+            6.89,
+            -10.63,
+            5.315,
+            -9.055
+          ]
+        ],
+        "locked": false,
+        "zIndex": 4,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "header": {
+        "type": "FILL",
+        "ticket": 28,
+        "id": "e5"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 7,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            -5.315,
+            -9.055,
+            "L",
+            -5.315,
+            9.055,
+            -6.89,
+            10.63,
+            -26.6,
+            10.63,
+            -28.175,
+            9.055,
+            -28.175,
+            -9.055,
+            -26.6,
+            -10.63,
+            -6.89,
+            -10.63,
+            -5.315,
+            -9.055
+          ]
+        ],
+        "locked": false,
+        "zIndex": 5,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 29,
+        "id": "placeholder3"
+      },
+      "body": {
+        "dataType": "FILL",
+        "max": 8
+      }
+    },
+    {
+      "header": {
+        "type": "FILL",
+        "ticket": 30,
+        "id": "e14"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 49,
+        "width": 0.2,
+        "fillStyle": "SOLID",
+        "path": [
+          [
+            "CIRCLE",
+            -19.68,
+            -9.84,
+            2.361
+          ]
+        ],
+        "locked": false,
+        "zIndex": 14,
+        "isBridgingCopper": false,
+        "networkList": [],
+        "refs": []
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 31,
+        "id": "placeholder4"
+      },
+      "body": {
+        "dataType": "POLY",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 32,
+        "id": "e3"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 48,
+        "width": 2,
+        "path": [
+          -19.685,
+          -9.842,
+          "L",
+          -19.685,
+          9.843,
+          19.685,
+          9.843,
+          19.685,
+          -9.842,
+          -19.685,
+          -9.842
+        ],
+        "locked": false,
+        "zIndex": 3,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 33,
+        "id": "placeholder5"
+      },
+      "body": {
+        "dataType": "POLY",
+        "max": 2
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 34,
+        "id": "e6"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          -8.906,
+          -19.63,
+          "L",
+          -37.175,
+          -19.63
+        ],
+        "locked": false,
+        "zIndex": 6,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 35,
+        "id": "e7"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          -37.175,
+          -19.63,
+          "L",
+          -37.175,
+          19.63
+        ],
+        "locked": false,
+        "zIndex": 7,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 36,
+        "id": "e8"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          -37.175,
+          19.63,
+          "L",
+          -8.906,
+          19.63
+        ],
+        "locked": false,
+        "zIndex": 8,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 37,
+        "id": "e9"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          8.906,
+          -19.63,
+          "L",
+          37.175,
+          -19.63
+        ],
+        "locked": false,
+        "zIndex": 9,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 38,
+        "id": "e10"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          37.175,
+          -19.63,
+          "L",
+          37.175,
+          19.63
+        ],
+        "locked": false,
+        "zIndex": 10,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 39,
+        "id": "e11"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 3,
+        "width": 6,
+        "path": [
+          37.175,
+          19.63,
+          "L",
+          8.906,
+          19.63
+        ],
+        "locked": false,
+        "zIndex": 11,
+        "polyType": "NORMAL"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 40,
+        "id": "placeholder6"
+      },
+      "body": {
+        "dataType": "PAD",
+        "max": 12
+      }
+    },
+    {
+      "header": {
+        "type": "PAD",
+        "ticket": 41,
+        "id": "e12"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 1,
+        "num": "2",
+        "centerX": 17.04,
+        "centerY": 0,
+        "padAngle": 0,
+        "hole": null,
+        "defaultPad": {
+          "padType": "RECT",
+          "width": 22.27,
+          "height": 21.26,
+          "radius": 0
+        },
+        "specialPad": [],
+        "padOffsetX": 0,
+        "padOffsetY": 0,
+        "relativeAngle": 0,
+        "plated": true,
+        "padType": "NORMAL",
+        "topSolderExpansion": 2,
+        "bottomSolderExpansion": 2,
+        "topPasteExpansion": -3937.0080000000003,
+        "bottomPasteExpansion": -3937.0080000000003,
+        "locked": false,
+        "zIndex": 12,
+        "connectMode": null,
+        "spokeSpace": null,
+        "spokeWidth": null,
+        "spokeAngle": null,
+        "padLen": 0
+      }
+    },
+    {
+      "header": {
+        "type": "PAD",
+        "ticket": 42,
+        "id": "e13"
+      },
+      "body": {
+        "groupId": 0,
+        "netName": "",
+        "layerId": 1,
+        "num": "1",
+        "centerX": -17.04,
+        "centerY": 0,
+        "padAngle": 0,
+        "hole": null,
+        "defaultPad": {
+          "padType": "RECT",
+          "width": 22.27,
+          "height": 21.26,
+          "radius": 0
+        },
+        "specialPad": [],
+        "padOffsetX": 0,
+        "padOffsetY": 0,
+        "relativeAngle": 0,
+        "plated": true,
+        "padType": "NORMAL",
+        "topSolderExpansion": 2,
+        "bottomSolderExpansion": 2,
+        "topPasteExpansion": -3937.0080000000003,
+        "bottomPasteExpansion": -3937.0080000000003,
+        "locked": false,
+        "zIndex": 13,
+        "connectMode": null,
+        "spokeSpace": null,
+        "spokeWidth": null,
+        "spokeAngle": null,
+        "padLen": 0
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 43,
+        "id": "placeholder7"
+      },
+      "body": {
+        "dataType": "ATTR",
+        "max": 15
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 44,
+        "id": "e15"
+      },
+      "body": {
+        "groupId": 0,
+        "parentId": "",
+        "layerId": 3,
+        "x": null,
+        "y": null,
+        "key": "Footprint",
+        "value": "R0402",
+        "keyVisible": false,
+        "valueVisible": false,
+        "fontFamily": "default",
+        "fontSize": 67.5,
+        "strokeWidth": 6,
+        "bold": false,
+        "italic": false,
+        "origin": "LEFT_BOTTOM",
+        "angle": 0,
+        "reverse": false,
+        "expansion": 0,
+        "mirror": false,
+        "locked": false,
+        "zIndex": 15
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 45,
+        "id": "e16"
+      },
+      "body": {
+        "groupId": 0,
+        "parentId": "",
+        "layerId": 3,
+        "x": null,
+        "y": null,
+        "key": "Designator",
+        "value": "U?",
+        "keyVisible": false,
+        "valueVisible": false,
+        "fontFamily": "default",
+        "fontSize": 67.5,
+        "strokeWidth": 6,
+        "bold": false,
+        "italic": false,
+        "origin": "LEFT_BOTTOM",
+        "angle": 0,
+        "reverse": false,
+        "expansion": 0,
+        "mirror": false,
+        "locked": false,
+        "zIndex": 16
+      }
+    },
+    {
+      "header": {
+        "type": "META",
+        "ticket": 130,
+        "id": "META"
+      },
+      "body": {
+        "title": "R0402",
+        "description": ";0402;-;0603;SMD;---;0201;TC02;R0402;LC-0402_R;0402R;RES0402;RES-SMD",
+        "tags": [
+          "RES-SMD"
+        ],
+        "source": "b43f879bdccf4af3bada432fe602c7c6|0819f05c4eef4c71ace90d822a990e87"
+      }
+    }
+  ]
+}

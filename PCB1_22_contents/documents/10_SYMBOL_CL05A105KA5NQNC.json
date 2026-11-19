@@ -1,0 +1,516 @@
+{
+  "docHead": {
+    "docType": "SYMBOL",
+    "client": "7d4bd0354067ed63",
+    "uuid": "8580a7e2843383c5",
+    "updateTime": 1794841042910,
+    "version": "1742924723000",
+    "editVersion": "3.2.209",
+    "user": {}
+  },
+  "items": [
+    {
+      "header": {
+        "type": "CANVAS",
+        "ticket": 1,
+        "id": "CANVAS"
+      },
+      "body": {
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "header": {
+        "type": "PART",
+        "ticket": 2,
+        "id": "CL05A105KA5NQNC.1"
+      },
+      "body": {
+        "BBOX": [
+          -10.5,
+          -8.5,
+          10.5,
+          8.5
+        ],
+        "title": "CL05A105KA5NQNC.1"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 3,
+        "id": "e1"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 1,
+        "parentId": "",
+        "key": "Symbol",
+        "value": "CL05A105KA5NQNC",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 4,
+        "id": "e2"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 2,
+        "parentId": "",
+        "key": "Designator",
+        "value": "C?",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 5,
+        "id": "placeholder1"
+      },
+      "body": {
+        "dataType": "POLY",
+        "max": 2
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 6,
+        "id": "e3"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 3,
+        "points": [
+          {
+            "x": -2,
+            "y": 8
+          },
+          {
+            "x": -2,
+            "y": -8
+          }
+        ],
+        "closed": false,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 7,
+        "id": "placeholder2"
+      },
+      "body": {
+        "dataType": "POLY",
+        "max": 4
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 8,
+        "id": "e8"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 8,
+        "points": [
+          {
+            "x": 10,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "closed": false,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 9,
+        "id": "e9"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 9,
+        "points": [
+          {
+            "x": 2,
+            "y": -8
+          },
+          {
+            "x": 2,
+            "y": 8
+          }
+        ],
+        "closed": false,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 10,
+        "id": "placeholder3"
+      },
+      "body": {
+        "dataType": "POLY",
+        "max": 4
+      }
+    },
+    {
+      "header": {
+        "type": "POLY",
+        "ticket": 11,
+        "id": "e14"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 14,
+        "points": [
+          {
+            "x": -2,
+            "y": 0
+          },
+          {
+            "x": -10,
+            "y": 0
+          }
+        ],
+        "closed": false,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 12,
+        "id": "placeholder4"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 13,
+        "id": "e4"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 4,
+        "display": true,
+        "x": -20,
+        "y": 0,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 14,
+        "id": "e5"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 5,
+        "parentId": "e4",
+        "key": "Pin Name",
+        "value": "1",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -6,
+        "y": 1.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 15,
+        "id": "e6"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 6,
+        "parentId": "e4",
+        "key": "Pin Number",
+        "value": "1",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -14,
+        "y": -2.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 16,
+        "id": "e7"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 7,
+        "parentId": "e4",
+        "key": "Pin Type",
+        "value": "Undefined",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -20,
+        "y": 0,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 17,
+        "id": "placeholder5"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 5
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 18,
+        "id": "e10"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 10,
+        "display": true,
+        "x": 20,
+        "y": 0,
+        "length": 10,
+        "rotation": 180,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 19,
+        "id": "e11"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 11,
+        "parentId": "e10",
+        "key": "Pin Name",
+        "value": "2",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 6,
+        "y": 1.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 20,
+        "id": "e12"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 12,
+        "parentId": "e10",
+        "key": "Pin Number",
+        "value": "2",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 14,
+        "y": -2.08502,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 21,
+        "id": "e13"
+      },
+      "body": {
+        "partId": "CL05A105KA5NQNC.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 13,
+        "parentId": "e10",
+        "key": "Pin Type",
+        "value": "Undefined",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": 20,
+        "y": 0,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "META",
+        "ticket": 906,
+        "id": "META"
+      },
+      "body": {
+        "title": "CL05A105KA5NQNC",
+        "description": "1uF (105) ±10% 25V",
+        "tags": [
+          "Capacitors",
+          "Multilayer Ceramic Capacitors MLCC - SMD/SMT"
+        ],
+        "docType": 2,
+        "source": "ba2c4348ba7241bd99a54111a889d74b|0819f05c4eef4c71ace90d822a990e87"
+      }
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "docHead": {
+    "docType": "SYMBOL",
+    "client": "7d4bd0354067ed63",
+    "uuid": "b170bdfe7d7ab44b",
+    "updateTime": 1794842967875,
+    "version": "1741152638000",
+    "editVersion": "3.2.209",
+    "user": {}
+  },
+  "items": [
+    {
+      "header": {
+        "type": "CANVAS",
+        "ticket": 1,
+        "id": "CANVAS"
+      },
+      "body": {
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "header": {
+        "type": "PART",
+        "ticket": 2,
+        "id": "Header-Male-2.54_1x1.1"
+      },
+      "body": {
+        "BBOX": [
+          -5,
+          -5,
+          15,
+          5
+        ],
+        "title": "Header-Male-2.54_1x1.1"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 3,
+        "id": "e1"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 1,
+        "parentId": "",
+        "key": "Symbol",
+        "value": "Header-Male-2.54_1x1",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 4,
+        "id": "e2"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 2,
+        "parentId": "",
+        "key": "Designator",
+        "value": "P?",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": null,
+        "y": null,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 5,
+        "id": "placeholder1"
+      },
+      "body": {
+        "dataType": "RECT",
+        "max": 2
+      }
+    },
+    {
+      "header": {
+        "type": "RECT",
+        "ticket": 6,
+        "id": "e3"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 3,
+        "dotX1": -5,
+        "dotY1": -5,
+        "dotX2": 15,
+        "dotY2": 5,
+        "radiusX": 0,
+        "radiusY": 0,
+        "rotation": 0,
+        "strokeColor": null,
+        "strokeStyle": null,
+        "fillColor": null,
+        "strokeWidth": null,
+        "fillStyle": null
+      }
+    },
+    {
+      "header": {
+        "type": "ELE_PLACEHOLDER",
+        "ticket": 7,
+        "id": "placeholder2"
+      },
+      "body": {
+        "dataType": "PIN",
+        "max": 3
+      }
+    },
+    {
+      "header": {
+        "type": "PIN",
+        "ticket": 8,
+        "id": "e4"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 4,
+        "display": true,
+        "x": -15,
+        "y": 0,
+        "length": 10,
+        "rotation": 0,
+        "color": null,
+        "pinShape": "NONE"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 9,
+        "id": "e5"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 5,
+        "parentId": "e4",
+        "key": "Pin Name",
+        "value": "1",
+        "keyVisible": false,
+        "valueVisible": true,
+        "x": 0,
+        "y": 4.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 10,
+        "id": "e6"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 6,
+        "parentId": "e4",
+        "key": "Pin Number",
+        "value": "1",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -5,
+        "y": 0.91498,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": false,
+        "underline": false,
+        "italic": false,
+        "fontWeight": false,
+        "align": "RIGHT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "ATTR",
+        "ticket": 11,
+        "id": "e7"
+      },
+      "body": {
+        "partId": "Header-Male-2.54_1x1.1",
+        "groupId": "",
+        "locked": false,
+        "zIndex": 7,
+        "parentId": "e4",
+        "key": "Pin Type",
+        "value": "IN",
+        "keyVisible": false,
+        "valueVisible": false,
+        "x": -15,
+        "y": 0,
+        "rotation": 0,
+        "color": null,
+        "fillColor": null,
+        "fontFamily": null,
+        "fontSize": null,
+        "strikeout": null,
+        "underline": null,
+        "italic": null,
+        "fontWeight": null,
+        "align": "LEFT_BOTTOM",
+        "version": "2.0"
+      }
+    },
+    {
+      "header": {
+        "type": "META",
+        "ticket": 1437,
+        "id": "META"
+      },
+      "body": {
+        "title": "Header-Male-2.54_1x1",
+        "description": "1*1P 2.54mm",
+        "tags": [
+          "Connectors",
+          "Pin Headers"
+        ],
+        "docType": 2,
+        "source": "39fcd4d3cc434340ba4971d2dbe83bed|0819f05c4eef4c71ace90d822a990e87"
+      }
+    }
+  ]
+}
