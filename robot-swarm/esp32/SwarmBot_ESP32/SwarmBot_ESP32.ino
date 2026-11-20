@@ -12,8 +12,8 @@
 #define ROBOT_ID 2
 
 // 前進でタイヤが逆回転する側は true に
-const bool INVERT_A = false;   // モーターA = 左
-const bool INVERT_B = false;   // モーターB = 右
+const bool INVERT_A = true;    // モーターA = 左
+const bool INVERT_B = true;    // モーターB = 右
 
 // ---- ピン配置 ----
 const int AIN1 = 18, AIN2 = 19, PWMA = 25;
