@@ -21,6 +21,7 @@ HIDE = {'C2','C3','U3'}
 tmpl_line = tmpl_via = None; maxt = 0; found = set(); out = []
 for ln, hd, bd in recs:
     if hd and 'ticket' in hd: maxt = max(maxt, hd['ticket'])
+    if hd and hd.get('type') == 'POURED': continue
     if hd and bd and hd.get('type') == 'LINE':
         tmpl_line = (hd, bd); k = (bd['netName'], seg(bd))
         if k in DEL_LINES: found.add(k); continue
@@ -39,9 +40,17 @@ for ln, hd, bd in recs:
 need = DEL_LINES | set(WIDTH) | set(MOVE_START) | set(MOVE_END) | {'via','v3'} | HIDE
 assert need <= found, need - found
 new = []
+PTS = []
+for ln, hd, bd in recs:
+    if hd and bd and hd.get('type') == 'LINE': PTS += [(bd['netName'], bd['startX'], bd['startY']), (bd['netName'], bd['endX'], bd['endY'])]
+    if hd and bd and hd.get('type') == 'VIA': PTS.append((bd['netName'], bd['centerX'], bd['centerY']))
+def snap(net, p):
+    c = [(abs(x-p[0])+abs(y-p[1]), x, y) for n, x, y in PTS if n == net and abs(x-p[0]) < 0.3 and abs(y-p[1]) < 0.3]
+    return (min(c)[1], min(c)[2]) if c else p
 def addl(net, w, a, b):
     global maxt; maxt += 1
     hd = dict(tmpl_line[0], ticket=maxt, id=secrets.token_hex(8), firstTicket=maxt)
+    a, b = snap(net, a), snap(net, b)
     bd = dict(tmpl_line[1], netName=net, layerId=1, width=w, startX=a[0], startY=a[1], endX=b[0], endY=b[1])
     new.append(json.dumps(hd, separators=(',',':')) + '||' + json.dumps(bd, separators=(',',':')) + '|')
 def addv(net, x, y):
@@ -51,6 +60,7 @@ def addv(net, x, y):
     new.append(json.dumps(hd, separators=(',',':')) + '||' + json.dumps(bd, separators=(',',':')) + '|')
 addl('3V3', 12, (122,-90), (142,-70)); addl('3V3', 12, (142,-70), (156.36,-70))
 addl('SDA', 8, (156.36,-95.59), (148.36,-103.59)); addl('SDA', 8, (148.36,-103.59), (148.36,-120)); addl('SDA', 8, (148.36,-120), (156.4,-128))
+addl('GND', 12, (86.61,-690), (28,-690)); addl('GND', 12, (307.09,-680), (362,-680))
 addl('3V3', 12, (22,-461.5), (35.5,-475))
 addl('GND', 12, (196.5,-466.4), (224.1,-466.4)); addl('GND', 12, (224.1,-466.4), (240,-482.3)); addv('GND', 240, -482.3)
 addl('SCL', 8, (336.8,-553.2), (374.5,-515.5)); addl('SCL', 8, (374.5,-515.5), (374.5,-379.5)); addl('SCL', 8, (374.5,-379.5), (350,-355))
