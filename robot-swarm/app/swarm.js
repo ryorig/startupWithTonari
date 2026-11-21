@@ -510,6 +510,7 @@
     if (key !== lastFormKey) { lastFormKey = key; assign(points); }
   }
 
-  swarmHook = { active: () => active, tick, stop, show: () => { calibMsg(); drawMap(); } };
+  swarmHook = { active: () => active, tick, stop, show: () => { calibMsg(); drawMap(); },
+    api: { poses, calibrated: () => !!H } };   // 救助ミッション (mission.js) から利用
   addEventListener('resize', () => { if (view === 'swarm') drawMap(); });
 })();
