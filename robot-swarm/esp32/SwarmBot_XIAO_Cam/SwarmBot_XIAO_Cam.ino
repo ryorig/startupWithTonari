@@ -3,11 +3,14 @@
  *
  * Arduino IDE の設定 (ツール):
  *   ボード            : XIAO_ESP32S3
- *   PSRAM             : OPI PSRAM        ← カメラに必須
+ *   PSRAM             : OPI PSRAM        ← 推奨 (無効でも低解像度で動作)
  *   Partition Scheme  : Huge APP (3MB No OTA/1MB SPIFFS)  ← BLE+WiFi+カメラで容量が大きいため
  *   USB CDC On Boot   : Enabled
  *
- * カメラ映像: Wi-Fi で MJPEG 配信  http://<IP>:81/stream
+ * カメラ映像: Wi-Fi で配信
+ *   http://<IP>/          … 動作確認ページ (まずブラウザでここを開く)
+ *   http://<IP>/capture   … 静止画1枚
+ *   http://<IP>:81/stream … 動画 (MJPEG)
  *   WIFI_SSID を空のままにすると、XIAO 自身が Wi-Fi(アクセスポイント) を作ります
  *     → Mac の Wi-Fi で「SwarmBot-1-CAM」(パスワード swarmbot123) に接続
  *     → 映像URL: http://192.168.4.1:81/stream
@@ -63,6 +66,8 @@ const int STBY = D6;   // GPIO43
 #define PCLK_GPIO_NUM  13
 
 String camIP = "";
+bool camOk = false;
+String camErr = "";
 
 const int PWM_FREQ = 20000;   // 20kHz
 const int PWM_RES  = 8;       // 0-255
@@ -171,24 +176,54 @@ bool setupCamera() {
   c.pin_pwdn = PWDN_GPIO_NUM; c.pin_reset = RESET_GPIO_NUM;
   c.xclk_freq_hz = 20000000;
   c.pixel_format = PIXFORMAT_JPEG;
-  c.frame_size   = FRAMESIZE_VGA;      // 640x480 (重ければ FRAMESIZE_QVGA)
-  c.jpeg_quality = 12;                 // 小さいほど高画質
-  c.fb_count     = 2;
-  c.fb_location  = CAMERA_FB_IN_PSRAM;
-  c.grab_mode    = CAMERA_GRAB_LATEST; // 遅延を減らす
+
+  // ★ PSRAM が無効でも動くようにする (以前はPSRAM必須で、無効だと初期化失敗→映像が出なかった)
+  if (psramFound()) {
+    Serial.printf("PSRAM: %u bytes\n", ESP.getPsramSize());
+    c.frame_size  = FRAMESIZE_VGA;          // 640x480
+    c.jpeg_quality = 12;
+    c.fb_count    = 2;
+    c.fb_location = CAMERA_FB_IN_PSRAM;
+    c.grab_mode   = CAMERA_GRAB_LATEST;     // 遅延を減らす
+  } else {
+    Serial.println("PSRAM なし → 低解像度で起動 (ツール > PSRAM を OPI PSRAM にすると高画質)");
+    c.frame_size  = FRAMESIZE_QVGA;         // 320x240
+    c.jpeg_quality = 15;
+    c.fb_count    = 1;
+    c.fb_location = CAMERA_FB_IN_DRAM;
+    c.grab_mode   = CAMERA_GRAB_WHEN_EMPTY;
+  }
+
   esp_err_t err = esp_camera_init(&c);
-  if (err != ESP_OK) { Serial.printf("カメラ初期化失敗 0x%x (PSRAM設定を確認)\n", err); return false; }
+  if (err != ESP_OK) {
+    camErr = "init 0x" + String(err, HEX);
+    Serial.printf("★ カメラ初期化失敗 0x%x : カメラ基板(Sense)の差し込み・PSRAM設定を確認\n", err);
+    return false;
+  }
+  sensor_t* s = esp_camera_sensor_get();
+  if (s) Serial.printf("カメラセンサー PID=0x%x\n", s->id.PID);   // 0x26=OV2640, 0x3660=OV3660
+
+  // 試し撮り (ここで失敗するなら配線/センサーの問題)
+  camera_fb_t* fb = esp_camera_fb_get();
+  if (!fb) { camErr = "no frame"; Serial.println("★ 試し撮り失敗"); return false; }
+  Serial.printf("試し撮りOK %ux%u %u bytes\n", fb->width, fb->height, fb->len);
+  esp_camera_fb_return(fb);
   return true;
 }
 
+// ---- 動画 (MJPEG) : ポート81 ----
 #define PART_BOUNDARY "swarmframe"
 static esp_err_t streamHandler(httpd_req_t* req) {
+  if (!camOk) { httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "camera not ready"); return ESP_FAIL; }
   httpd_resp_set_type(req, "multipart/x-mixed-replace;boundary=" PART_BOUNDARY);
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+  httpd_resp_set_hdr(req, "Cache-Control", "no-store");
   char part[96];
+  int fails = 0;
   while (true) {
     camera_fb_t* fb = esp_camera_fb_get();
-    if (!fb) { delay(10); continue; }
+    if (!fb) { if (++fails > 50) break; delay(20); continue; }
+    fails = 0;
     int hl = snprintf(part, sizeof(part),
         "\r\n--" PART_BOUNDARY "\r\nContent-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n", fb->len);
     esp_err_t r = httpd_resp_send_chunk(req, part, hl);
@@ -199,19 +234,51 @@ static esp_err_t streamHandler(httpd_req_t* req) {
   return ESP_OK;
 }
 
-void startStreamServer() {
-  httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
-  cfg.server_port = 81;
-  cfg.ctrl_port = 32769;
-  httpd_handle_t h = nullptr;
-  if (httpd_start(&h, &cfg) == ESP_OK) {
-    httpd_uri_t uri = {};
-    uri.uri = "/stream";
-    uri.method = HTTP_GET;
-    uri.handler = streamHandler;
-    uri.user_ctx = nullptr;
-    httpd_register_uri_handler(h, &uri);
-  }
+// ---- 静止画 / 確認ページ : ポート80 ----
+static esp_err_t captureHandler(httpd_req_t* req) {
+  httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+  httpd_resp_set_hdr(req, "Cache-Control", "no-store");
+  if (!camOk) { httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "camera not ready"); return ESP_FAIL; }
+  camera_fb_t* fb = esp_camera_fb_get();
+  if (!fb) { httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "no frame"); return ESP_FAIL; }
+  httpd_resp_set_type(req, "image/jpeg");
+  esp_err_t r = httpd_resp_send(req, (const char*)fb->buf, fb->len);
+  esp_camera_fb_return(fb);
+  return r;
+}
+
+static esp_err_t indexHandler(httpd_req_t* req) {
+  String h = "<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width'>"
+             "<body style='font-family:sans-serif;background:#111;color:#eee'>"
+             "<h3>SwarmBot-1 カメラ</h3><p>カメラ: ";
+  h += camOk ? String("OK") : String("NG (") + camErr + ")";
+  h += " / PSRAM: " + String(psramFound() ? "あり" : "なし") + " / IP: " + camIP + "</p>";
+  h += "<p>動画: <a style='color:#8cf' href='http://" + camIP + ":81/stream'>http://" + camIP + ":81/stream</a></p>";
+  h += "<img style='max-width:100%' src='http://" + camIP + ":81/stream'></body>";
+  httpd_resp_set_type(req, "text/html; charset=utf-8");
+  return httpd_resp_send(req, h.c_str(), h.length());
+}
+
+void startServers() {
+  httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();   // ポート80
+  cfg.stack_size = 8192;
+  httpd_handle_t web = nullptr;
+  if (httpd_start(&web, &cfg) == ESP_OK) {
+    httpd_uri_t u1 = {}; u1.uri = "/";        u1.method = HTTP_GET; u1.handler = indexHandler;
+    httpd_uri_t u2 = {}; u2.uri = "/capture"; u2.method = HTTP_GET; u2.handler = captureHandler;
+    httpd_register_uri_handler(web, &u1);
+    httpd_register_uri_handler(web, &u2);
+  } else Serial.println("★ Webサーバー(80)起動失敗");
+
+  httpd_config_t cfg2 = HTTPD_DEFAULT_CONFIG();  // ポート81 (動画専用)
+  cfg2.server_port = 81;
+  cfg2.ctrl_port = 32769;
+  cfg2.stack_size = 8192;
+  httpd_handle_t st = nullptr;
+  if (httpd_start(&st, &cfg2) == ESP_OK) {
+    httpd_uri_t u = {}; u.uri = "/stream"; u.method = HTTP_GET; u.handler = streamHandler;
+    httpd_register_uri_handler(st, &u);
+  } else Serial.println("★ 動画サーバー(81)起動失敗");
 }
 
 void setupWiFi() {
@@ -222,19 +289,21 @@ void setupWiFi() {
     for (int i = 0; i < 30 && WiFi.status() != WL_CONNECTED; i++) { delay(500); Serial.print("."); }
     Serial.println();
     if (WiFi.status() == WL_CONNECTED) { camIP = WiFi.localIP().toString(); }
+    else Serial.println("Wi-Fi 接続失敗 → アクセスポイントで起動");
   }
   if (camIP == "") {   // Wi-Fi未設定 or 接続失敗 → アクセスポイント
     WiFi.mode(WIFI_AP);
     WiFi.softAP(AP_SSID, AP_PASS);
+    delay(200);
     camIP = WiFi.softAPIP().toString();
     Serial.printf("アクセスポイント %s (pass: %s)\n", AP_SSID, AP_PASS);
   }
   WiFi.setSleep(false);
-  Serial.println("カメラ映像: http://" + camIP + ":81/stream");
 }
 
 void setup() {
   Serial.begin(115200);
+  delay(1500);   // USB CDC のシリアルモニタが繋がるのを待つ
   pinMode(AIN1, OUTPUT); pinMode(AIN2, OUTPUT);
   pinMode(BIN1, OUTPUT); pinMode(BIN2, OUTPUT);
   pinMode(STBY, OUTPUT);
@@ -244,25 +313,31 @@ void setup() {
   setMotors(0, 0);
   digitalWrite(STBY, HIGH);
 
-  bool camOk = setupCamera();
+  camOk = setupCamera();
   setupWiFi();
-  if (camOk) startStreamServer();
+  startServers();   // カメラNGでも確認ページは出す
   setupBLE();
+  Serial.println("==============================");
+  Serial.println(" 確認ページ: http://" + camIP + "/");
+  Serial.println(" 動画      : http://" + camIP + ":81/stream");
+  Serial.println(String(" カメラ    : ") + (camOk ? String("OK") : String("NG ") + camErr));
+  Serial.println("==============================");
 }
 
 void loop() {
   static uint32_t lastNotify = 0;
-  static bool sendIP = true;
+  static uint8_t phase = 0;
   int l = targetL, r = targetR;
   if (!connected || millis() - lastCmdMs > TIMEOUT_MS) { l = 0; r = 0; }
   setMotors(l, r);
 
-  if (millis() - lastNotify > 1000) {
+  if (millis() - lastNotify > 700) {
     lastNotify = millis();
-    // ID と IP を交互に送る (1パケット20バイト以内)
-    if (sendIP) notifyText("IP" + camIP);
-    else        notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
-    sendIP = !sendIP;
+    // ID / IP / カメラ状態 を順番に送る (1パケット20バイト以内)
+    if (phase == 0)      notifyText("IP" + camIP);
+    else if (phase == 1) notifyText(camOk ? "CAM OK" : "CAM NG");
+    else                 notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
+    phase = (phase + 1) % 3;
   }
   delay(10);
 }
