@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>PAY.JP 決済</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --text: #172033;
+        --muted: #60708f;
+        --line: #d9e2ef;
+        --accent: #1f4fa8;
+        --accent-strong: #153c83;
+        --error: #b91c1c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          "Noto Sans JP",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, #dbeafe 0, transparent 32%),
+          linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+      }
+
+      .wrap {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: min(100%, 520px);
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 24px 60px rgba(31, 79, 168, 0.12);
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+      }
+
+      h1 {
+        margin: 8px 0 0;
+        font-size: 28px;
+        line-height: 1.25;
+      }
+
+      .description {
+        margin: 12px 0 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .summary {
+        margin-top: 20px;
+        padding: 18px;
+        border-radius: 18px;
+        background: #f8fbff;
+        border: 1px solid #d7e6fb;
+      }
+
+      .summary-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .summary-title {
+        margin-top: 6px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .summary-amount {
+        margin-top: 12px;
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--accent-strong);
+      }
+
+      .notice {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: var(--error);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .checkout-area {
+        margin-top: 24px;
+      }
+
+      .footer {
+        margin-top: 18px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 18px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .loading {
+        margin-top: 20px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="eyebrow">PAY.JP CHECKOUT</div>
+        <h1>カード決済</h1>
+        <p class="description">
+          PAY.JPの安全な決済フォームを開きます。カード情報はこのサービスのサーバーを経由せず、PAY.JPへ直接送信されます。
+        </p>
+
+        <div class="summary">
+          <div class="summary-label">支払い対象</div>
+          <div class="summary-title" id="project-title">読み込み中...</div>
+          <div class="summary-amount" id="payment-amount">-</div>
+        </div>
+
+        <div class="notice" id="error-box" hidden></div>
+
+        <form
+          id="checkout-form"
+          action="/payjp/checkout/submit"
+          method="post"
+          class="checkout-area"
+        >
+          <input type="hidden" name="paymentId" id="payment-id" />
+          <input type="hidden" name="checkoutSecret" id="checkout-secret" />
+          <div id="checkout-button-slot" class="loading">
+            決済フォームを準備しています...
+          </div>
+        </form>
+
+        <div class="footer">
+          3Dセキュア認証が必要な場合は、カード会社の案内に従って本人認証を完了してください。
+        </div>
+
+        <div class="actions">
+          <a id="cancel-link" class="back-link" href="/" hidden>
+            案件管理へ戻る
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const paymentId = params.get("paymentId") || "";
+      const checkoutSecret = params.get("checkoutSecret") || "";
+      const publicKey = params.get("publicKey") || "";
+      const tenantId = params.get("tenantId") || "";
+      const title = params.get("title") || "TonarinoAC payment";
+      const email = params.get("email") || "";
+      const cancelUrl = params.get("cancelUrl") || "";
+      const amount = Number(params.get("amount") || "0");
+      const error = params.get("error");
+
+      const titleEl = document.getElementById("project-title");
+      const amountEl = document.getElementById("payment-amount");
+      const paymentIdInput = document.getElementById("payment-id");
+      const checkoutSecretInput = document.getElementById("checkout-secret");
+      const errorBox = document.getElementById("error-box");
+      const buttonSlot = document.getElementById("checkout-button-slot");
+      const cancelLink = document.getElementById("cancel-link");
+
+      titleEl.textContent = title;
+      amountEl.textContent =
+        amount > 0
+          ? new Intl.NumberFormat("ja-JP", {
+              style: "currency",
+              currency: "JPY",
+              maximumFractionDigits: 0,
+            }).format(amount)
+          : "-";
+      paymentIdInput.value = paymentId;
+      checkoutSecretInput.value = checkoutSecret;
+
+      if (error) {
+        errorBox.hidden = false;
+        errorBox.textContent = error;
+      }
+
+      if (cancelUrl) {
+        cancelLink.hidden = false;
+        cancelLink.href = cancelUrl;
+      }
+
+      if (!paymentId || !checkoutSecret || !publicKey || !tenantId || !amount) {
+        buttonSlot.textContent =
+          "決済ページの初期化に必要な情報が不足しています。アプリに戻ってもう一度お試しください。";
+      } else {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://checkout.pay.jp/";
+        script.className = "payjp-button";
+        script.setAttribute("data-payjp-key", publicKey);
+        script.setAttribute("data-payjp-text", "カード情報を入力する");
+        script.setAttribute("data-payjp-submit-text", "支払う");
+        script.setAttribute("data-payjp-lang", "ja");
+        script.setAttribute("data-payjp-tenant", tenantId);
+        script.setAttribute("data-payjp-extra-attribute-email", email);
+        script.setAttribute("data-payjp-extra-attribute-phone", "");
+        script.setAttribute("data-payjp-extra-attribute-phone-code", "JP");
+        script.setAttribute("data-payjp-three-d-secure", "true");
+        script.setAttribute("data-payjp-three-d-secure-workflow", "iframe");
+        buttonSlot.textContent = "";
+        buttonSlot.appendChild(script);
+      }
+    </script>
+  </body>
+</html>
