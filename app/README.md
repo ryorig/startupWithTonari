@@ -17,7 +17,10 @@ Figma「改善案（To-Be）」のデザインを、そのまま操作できる�
 すべての画面・ボタンと、利用者ごとの操作の流れを自動で確認するテストがあります。
 
 ```bash
-cd app/tests && node e2e.js
+cd app/tests
+node e2e.js      # 全画面・全ボタン・利用者ごとの操作の流れ（170項目）
+node sw.test.js  # オフライン用の仕組み（sw.js）との組み合わせ（11項目）
 ```
 
-Playwright（Chromium）が必要です。
+Playwright（Chromium）が必要です。`sw.test.js` はテストの中で一時的にWebサーバーを起動し、終わると止めます。
+`fixtures/sw-v79.js` は修正前の sw.js で、以前サイトを開いたことがある人の状態を再現するために使います。
