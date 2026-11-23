@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tonari-pwa-v79';
+const CACHE_NAME = 'tonari-pwa-v80';
 
 const APP_SHELL = [
   './',
@@ -68,6 +68,8 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
 
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  // The app prototype under /app/ manages its own files; never cache or rewrite it here.
+  if (url.pathname.includes('/app/')) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(
