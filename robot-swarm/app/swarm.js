@@ -281,6 +281,15 @@
     const sel = $('swTarget').value;
     if (mode === 'orbit') { center = { x, y }; return; }
     if (mode === 'form') { center = { x, y }; return; }
+    if (mode === 'train') {
+      const ts = window.couplerHook?.trains() || [];
+      const pick = sel === 'all' ? ts : ts.filter(t => t.includes(+sel - 1));
+      const hs = pick.map(t => t[0]).filter(i => poses[i]);
+      if (!hs.length) return;
+      const cx = hs.reduce((a, i) => a + poses[i].x, 0) / hs.length, cy = hs.reduce((a, i) => a + poses[i].y, 0) / hs.length;
+      hs.forEach(i => { targets[i] = { x: cx_(poses[i].x + x - cx), y: cy_(poses[i].y + y - cy) }; arrived[i] = false; });
+      return;
+    }
     if (!mode || mode === 'goto' || mode === 'gather' || mode === 'disperse') {
       if (sel === 'all') {
         // 現在の並びを保ったまま、重心がクリック位置に来るように移動
@@ -342,7 +351,7 @@
   // =====================================================================
   //  モード
   // =====================================================================
-  const MODE_NAMES = { goto: 'クリック移動', form: '隊形', follow: 'リーダー追従', orbit: '円周回', gather: '集合', disperse: '分散', path: 'パス閉ループ' };
+  const MODE_NAMES = { dock: '自動ドッキング', train: '連結列で移動', goto: 'クリック移動', form: '隊形', follow: 'リーダー追従', orbit: '円周回', gather: '集合', disperse: '分散', path: 'パス閉ループ' };
   document.querySelectorAll('#swModes button').forEach(b => b.onclick = () => setMode(b.dataset.m, true));
 
   function setMode(m, fresh = false) {
@@ -361,6 +370,7 @@
       if (m === 'disperse') targets.fill(null);
       if (m === 'goto') targets.forEach((t, i) => { if (!t && poses[i]) targets[i] = { x: poses[i].x, y: poses[i].y }; });
       if (m === 'path') { pathState = { k: 0, waitUntil: 0 }; }
+      if (m === 'train') targets.fill(null);
       if (m === 'follow') {
         const el = makePad(0, '1号機 (リーダー) を操作', COLORS[0], true);
         el.querySelector('.hint').textContent = 'キー: 矢印 / WASD';
@@ -401,6 +411,8 @@
     let ax = dx / d * Math.min(d, 40), ay = dy / d * Math.min(d, 40);
     if (avoidR > 0) robots.forEach((_, j) => {
       const q = poses[j]; if (j === i || !q || now - q.t > 1000) return;
+      if (window.couplerHook?.sameTrain(i, j)) return;          // 連結している相手は避けない
+      if (dockPair(i, j)) return;                                 // ドッキング中の相手も避けない
       const vx = p.x - q.x, vy = p.y - q.y, dist = Math.hypot(vx, vy);
       if (dist > 0.1 && dist < avoidR) { const k = 60 * (avoidR - dist) / avoidR; ax += vx / dist * k; ay += vy / dist * k; }
     });
@@ -433,6 +445,7 @@
     let ax = 0, ay = 0;
     robots.forEach((_, j) => {
       const q = poses[j]; if (j === i || !q) return;
+      if (window.couplerHook?.sameTrain(i, j)) return;
       const vx = p.x - q.x, vy = p.y - q.y, dist = Math.hypot(vx, vy) || 0.1;
       if (dist < want) { ax += vx / dist * (want - dist); ay += vy / dist * (want - dist); }
     });
@@ -453,7 +466,13 @@
     const now = performance.now(), cmds = robots.map(() => [0, 0]);
     const align = $('swAlign').checked, ang = num('swAngle');
 
-    if (mode === 'goto' || mode === 'gather') {
+    if (mode === 'dock') return window.couplerHook ? couplerHook.dockTick(dockApi, now) : cmds;
+    if (mode === 'train') {
+      // 各列の先頭だけを目標へ (後ろの機体は adjustSwarm が連結を保って動かす)
+      const heads = new Set((window.couplerHook?.trains() || robots.map((_, i) => [i])).map(t => t[0]));
+      robots.forEach((_, i) => { if (heads.has(i)) cmds[i] = goTo(i, targets[i], now); else targets[i] = null; });
+    }
+    else if (mode === 'goto' || mode === 'gather') {
       robots.forEach((_, i) => cmds[i] = goTo(i, targets[i], now));
     }
     else if (mode === 'form') {
@@ -501,7 +520,8 @@
       }
       $('swModeLabel').textContent = `実行中: パス 隊形${pathState.k + 1} / ${P.frames.length}` + (lost.length ? ` ⚠ ${lost.map(i => i + 1).join('・')}号機を見失い中 (待機)` : '');
     }
-    return cmds;
+    // 連結している列: 先頭の指令から後ろの機体の指令を作り直す (連結部に無理な力がかからないように)
+    return window.couplerHook ? couplerHook.adjustSwarm(cmds, now) : cmds;
   }
   // 隊形の形・向き・間隔が変わったときだけ割当し直す
   let lastFormKey = '';
@@ -510,7 +530,32 @@
     if (key !== lastFormKey) { lastFormKey = key; assign(points); }
   }
 
-  swarmHook = { active: () => active, tick, stop, show: () => { calibMsg(); drawMap(); },
-    api: { poses, calibrated: () => !!H } };   // 救助ミッション (mission.js) から利用
+  // ---------- 🔗 ドッキング / 分離 UI ----------
+  const dockApi = {
+    poses, targets, arrived, goTo, headTo, wheels,
+    label: t => { $('swModeLabel').textContent = t; },
+    done: () => { active = false; mode = null; document.querySelectorAll('#swModes button').forEach(b => b.classList.remove('active')); robots.forEach(r => r.send(0, 0, true)); showTrains(); },
+  };
+  let dockSel = null;
+  const dockPair = (i, j) => mode === 'dock' && dockSel && ((i === dockSel[0] && j === dockSel[1]) || (i === dockSel[1] && j === dockSel[0]));
+  ['swDockF', 'swDockL', 'swDetach'].forEach((id, n) => robots.forEach((r, i) => {
+    const o = document.createElement('option'); o.value = i; o.textContent = r.id + '号機'; $(id).appendChild(o);
+    if (n === 1 && i === 0) o.selected = true; if (n === 0 && i === 1) o.selected = true;
+  }));
+  function showTrains() {
+    const ts = (window.couplerHook?.trains() || []).filter(t => t.length > 1);
+    $('swTrains').textContent = '現在の列: ' + (ts.length ? ts.map(t => t.map(i => i + 1).join('→')).join(' / ') : 'なし');
+  }
+  $('swDock').onclick = () => {
+    const F = +$('swDockF').value, L = +$('swDockL').value;
+    if (!window.couplerHook || !couplerHook.startDock(L, F)) return;
+    dockSel = [F, L]; couplerHook.lockLink(L, F, false);   // この連結のゲートだけ開けて待つ
+    setMode('dock', true);
+  };
+  $('swDetachBtn').onclick = () => { couplerHook?.detach(+$('swDetach').value); showTrains(); };
+  setTimeout(showTrains, 0);
+
+  swarmHook = { active: () => active, tick, stop: () => { window.couplerHook?.cancelDock(); stop(); }, show: () => { calibMsg(); drawMap(); showTrains(); },
+    api: { poses, calibrated: () => !!H, dock: dockApi } };   // 救助ミッション (mission.js) から利用
   addEventListener('resize', () => { if (view === 'swarm') drawMap(); });
 })();

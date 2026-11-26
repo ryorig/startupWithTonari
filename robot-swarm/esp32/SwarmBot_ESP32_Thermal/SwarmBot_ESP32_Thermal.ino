@@ -19,6 +19,7 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#include "SwarmCoupler.h"
 #include <Wire.h>
 #include <Adafruit_MLX90640.h>
 
@@ -79,6 +80,7 @@ void setMotors(int l, int r) {
 
 void handleLine(const String& line) {
   if (line.length() == 0) return;
+  if (coupler::handle(line)) return;   // 連結器 K1/K0/KA..
   if (line[0] == 'S') { targetL = targetR = 0; lastCmdMs = millis(); return; }
   if (line[0] == 'M') {
     int c1 = line.indexOf(',');
@@ -237,6 +239,7 @@ void setup() {
   } else Serial.println("★ MLX90640 が見つかりません (配線 SDA=21 SCL=22 / 電源を確認)");
   frameLock = xSemaphoreCreateMutex();
   xTaskCreatePinnedToCore(thermalTask, "thermal", 8192, nullptr, 1, nullptr, 1);
+  coupler::begin(27);   // 連結器サーボ: GPIO27
   setupBLE();
 }
 
@@ -245,6 +248,8 @@ void loop() {
   int l = targetL, r = targetR;
   if (!connected || millis() - lastCmdMs > TIMEOUT_MS) { l = 0; r = 0; }
   setMotors(l, r);
+  coupler::update();
+  if (coupler::dirty) { coupler::dirty = false; notifyText(coupler::status()); }
 
   if (frameReady && connected) {
     xSemaphoreTake(frameLock, portMAX_DELAY);
@@ -257,6 +262,6 @@ void loop() {
   if (millis() - lastNotify > 1000) {
     lastNotify = millis();
     notifyText(mlxOk ? "ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r) : String("ID2 THERM NG"));
-  }
+      }
   delay(10);
 }

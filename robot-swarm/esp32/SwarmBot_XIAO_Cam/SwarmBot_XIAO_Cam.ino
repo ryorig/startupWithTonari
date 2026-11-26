@@ -23,6 +23,8 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#define COUPLER_LEDC_CH 6   // カメラ(ch0)・モーター(ch4/5)と別タイマー
+#include "SwarmCoupler.h"
 #include <WiFi.h>
 #include "esp_camera.h"
 #include "esp_http_server.h"
@@ -98,6 +100,7 @@ void setMotors(int l, int r) {
 
 void handleLine(const String& line) {
   if (line.length() == 0) return;
+  if (coupler::handle(line)) return;   // 連結器 K1/K0/KA..
   if (line[0] == 'S') { targetL = targetR = 0; lastCmdMs = millis(); return; }
   if (line[0] == 'M') {
     int c1 = line.indexOf(',');
@@ -316,6 +319,7 @@ void setup() {
   camOk = setupCamera();
   setupWiFi();
   startServers();   // カメラNGでも確認ページは出す
+  coupler::begin(D7);   // 連結器サーボ: D7 (GPIO44)
   setupBLE();
   Serial.println("==============================");
   Serial.println(" 確認ページ: http://" + camIP + "/");
@@ -330,6 +334,8 @@ void loop() {
   int l = targetL, r = targetR;
   if (!connected || millis() - lastCmdMs > TIMEOUT_MS) { l = 0; r = 0; }
   setMotors(l, r);
+  coupler::update();
+  if (coupler::dirty) { coupler::dirty = false; notifyText(coupler::status()); }
 
   if (millis() - lastNotify > 700) {
     lastNotify = millis();
@@ -337,7 +343,7 @@ void loop() {
     if (phase == 0)      notifyText("IP" + camIP);
     else if (phase == 1) notifyText(camOk ? "CAM OK" : "CAM NG");
     else                 notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
-    phase = (phase + 1) % 3;
+        phase = (phase + 1) % 3;
   }
   delay(10);
 }

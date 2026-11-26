@@ -332,6 +332,7 @@
         <button data-m="orbit"><b>🔄 円周回</b>中心の周りを等間隔で回る</button>
         <button data-m="gather"><b>🧲 集合</b>みんなの重心に集まる</button>
         <button data-m="disperse"><b>💥 分散</b>互いに離れて広がる</button>
+        <button data-m="train" style="grid-column:span 2"><b>🔗 連結列で移動</b>連結した列を1台のように扱い、クリックした場所へ (先頭が目標へ・後ろは連結を保って追従)</button>
         <button data-m="path" style="grid-column:span 2"><b>🗺 パスを閉ループ実行</b>パス画面の隊形の流れを、カメラで位置補正しながら実行</button>
       </div>
       <div class="row" style="margin-top:8px">
@@ -353,6 +354,21 @@
       </div>
       <div id="swLeaderPad"></div>
       <button id="swStop" style="margin-top:8px">■ 停止 (Space)</button>
+    </div>
+
+    <div class="card">
+      <h3>🔗 自動ドッキング / 分離</h3>
+      <div class="row">
+        <select id="swDockF" style="background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px"></select> を
+        <select id="swDockL" style="background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px"></select> の後ろに
+        <button id="swDock" class="small">連結する</button>
+      </div>
+      <div class="row">
+        <select id="swDetach" style="background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px"></select>
+        <button id="swDetachBtn" class="small">前との連結を外す</button>
+        <span class="muted" id="swTrains"></span>
+      </div>
+      <div class="muted">カメラで両機の位置を見ながら、後ろの機体が前の機体の後ろピンへ真っ直ぐ寄ってロックします。寸法は 操作タブ → 🔗 連結 → 寸法 で設定。</div>
     </div>
 
     <div class="card">
@@ -515,6 +531,7 @@ class Robot {
       } catch {}
       this.dot.classList.add('on');
       this.updateLabel();
+      window.couplerInput?.connected(this.id);   // 連結器の状態を問い合わせ
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
   }
   updateLabel() {
@@ -527,6 +544,7 @@ class Robot {
     else if ((m = t.match(/^IP(\S+)/))) { onCameraIP(m[1]); }
     else if (t.startsWith('CAM')) { onCameraState(t === 'CAM OK'); }
     else if (t.startsWith('H')) { window.missionInput?.hot(this.id, t); }
+    else if (t === 'K1' || t === 'K0') { window.couplerInput?.status(this.id, t); }
     else if (t.startsWith('D')) { this.dist = t === 'D-' ? -1 : parseInt(t.slice(1)); updateDist(this); }
   }
   onDisc() { this.rx = null; this.realId = null; this.dot.classList.remove('on'); this.updateLabel(); }
@@ -672,7 +690,7 @@ const keyVec = set => [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 :
 
 const MODES = [['all', N + '台同時', 'var(--all)'],
   ...robots.map(r => [String(r.id), r.id + '号機', COLORS[r.id - 1]]),
-  ['split', '個別', '#ffc94a']];
+  ['split', '個別', '#ffc94a'], ['link', '🔗 連結', '#c792ff']];
 let mode = 'all';
 for (const [m, label, color] of MODES) {
   const b = document.createElement('button'); b.textContent = label; b.style.setProperty('--mc', color);
@@ -683,7 +701,10 @@ for (const [m, label, color] of MODES) {
 }
 function renderPads() {
   const area = $('padArea'); area.innerHTML = '';
-  if (mode === 'split') {
+  if (mode === 'link') {
+    if (window.couplerHook) couplerHook.render(area);
+    $('keyhint').textContent = 'Space=全停止';
+  } else if (mode === 'split') {
     robots.forEach((r, i) => {
       const el = makePad(i, r.id + '号機', COLORS[i], true);
       if (KEYSETS[i]) el.querySelector('.hint').textContent = 'キー: ' + KEYSETS[i].name;
@@ -1150,7 +1171,10 @@ setInterval(() => {
   }
   if (view !== 'drive') { robots.forEach(r => r.send(0, 0)); return; }
 
-  if (mode === 'split') {
+  if (mode === 'link' && window.couplerHook) {
+    const cmds = couplerHook.driveCmds();
+    robots.forEach((r, i) => r.send(...cmds[i]));
+  } else if (mode === 'split') {
     robots.forEach((r, i) => r.send(...mix(...padVec(i, KEYSETS[i] ? [keyVec(KEYSETS[i])] : []))));
   } else {
     const cmd = mix(...padVec(0, [keyVec(KEYSETS[0]), keyVec(KEYSETS[1])]));
@@ -1158,7 +1182,9 @@ setInterval(() => {
   }
 }, 50);
 </script>
+<script src="coupler-core.js"></script>
 <script src="swarm.js"></script>
+<script src="coupler.js"></script>
 <script src="mission.js"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#include "SwarmCoupler.h"
 #include <Wire.h>
 #include <Adafruit_VL53L1X.h>
 
@@ -66,6 +67,7 @@ void setMotors(int l, int r) {
 
 void handleLine(const String& line) {
   if (line.length() == 0) return;
+  if (coupler::handle(line)) return;   // 連結器 K1/K0/KA..
   if (line[0] == 'S') { targetL = targetR = 0; lastCmdMs = millis(); return; }
   if (line[0] == 'M') {
     int c1 = line.indexOf(',');
@@ -151,6 +153,7 @@ void setup() {
   } else {
     Serial.println("VL53L1X が見つかりません (配線を確認)");
   }
+  coupler::begin(27);   // 連結器サーボ: GPIO27
   setupBLE();
 }
 
@@ -168,6 +171,8 @@ void loop() {
   // 前進中の障害物停止 (後退・旋回はOK)
   if (SAFETY_STOP_MM > 0 && distMm >= 0 && distMm < SAFETY_STOP_MM && l > 0 && r > 0) { l = 0; r = 0; }
   setMotors(l, r);
+  coupler::update();
+  if (coupler::dirty) { coupler::dirty = false; notifyText(coupler::status()); }
 
   if (millis() - lastDist > 100) {          // 距離は 10Hz で送信
     lastDist = millis();
@@ -176,6 +181,6 @@ void loop() {
   if (millis() - lastNotify > 1000) {
     lastNotify = millis();
     notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
-  }
+      }
   delay(5);
 }
