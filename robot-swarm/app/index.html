@@ -219,7 +219,78 @@
   .modeGrid button { font-weight:300; color:#ddd; }
   .pad .label { font-size:15px; font-weight:600; letter-spacing:.06em; }
   #toast { font-weight:600; letter-spacing:.06em; }
-  #estop { display:none; }   /* 右上の STOP に一本化 */
+  #estop { display:none; }
+  /* ===== v5: 実機コントローラーの質感 =====
+     参考: Switch Pro / DualSense / Xbox Elite / DJI RC の実物の造形
+     ・スティック = すり鉢状の台座 + 凹んだゴムキャップ + 縁のローレット
+     ・十字キー = 一体成形の十字 (押した方向だけ沈む)
+     ・ボタン = 上面ハイライト + 下の影で「押せる」厚み。押すと沈む
+     ・色は増やさない: 黒系の素材感 + 状態色 (緑/黄/赤/青) と号機色だけ */
+  :root { --bg:#1c1d1f; --panel:#2a2b2e; --line:#3d3f44; }
+  body { background:radial-gradient(1200px 700px at 50% -10%, #2a2b2e 0, #1c1d1f 60%) fixed, #1c1d1f; }
+  header { background:linear-gradient(#26272a, #1e1f21); border-bottom:1px solid #000; box-shadow:0 1px 0 #ffffff0d, 0 6px 16px #0006; position:relative; z-index:5; }
+  .card { background:linear-gradient(#2e2f33, #28292c); border:1px solid #000; box-shadow:inset 0 1px 0 #ffffff12, 0 6px 18px #0005; }
+  .card h3 { border-bottom:1px solid #00000080; box-shadow:0 1px 0 #ffffff0d; }
+
+  /* 普通のボタン: 樹脂キーの厚み */
+  button { background:linear-gradient(#45474c, #36383c); border:1px solid #111; color:#f2f2f2;
+           box-shadow:inset 0 1px 0 #ffffff26, 0 2px 0 #0a0a0a, 0 3px 6px #0006; transition:transform .05s, box-shadow .05s, background .1s; }
+  button:hover { background:linear-gradient(#505258, #3e4045); border-color:#111; }
+  button:active { transform:translateY(2px); box-shadow:inset 0 1px 2px #0008, 0 0 0 #000; filter:none; }
+  .tabs button.active, .modes button.active, .modeGrid button.active, .seg button.active, .dpad button.held {
+    background:linear-gradient(#2f8cf0, #0b62c4); border-color:#06325f; color:#fff; box-shadow:inset 0 1px 0 #ffffff55, 0 2px 0 #031a33, 0 0 0 1px #0b62c4; }
+  .modes button { border-left:5px solid var(--mc); }
+  .modes button.active { border-left-color:var(--mc); }
+  input[type=number], input[type=text], select { background:#141517; border:1px solid #000; box-shadow:inset 0 2px 3px #0009, 0 1px 0 #ffffff12; border-radius:6px; }
+  input[type=range] { accent-color:#2f8cf0; }
+
+  /* 接続ボタン: 号機色の LED */
+  .dot { background:#3a3a3a; box-shadow:inset 0 1px 2px #000, 0 1px 0 #ffffff1a; }
+  .dot.on { background:radial-gradient(circle at 40% 35%, #b9ffcb, #2ecc40 55%, #178a28); box-shadow:0 0 8px #2ecc40aa, inset 0 -1px 2px #0005; }
+  .bot button { background:linear-gradient(#2b2c30, #1f2023) !important; border:1px solid #000 !important; box-shadow:inset 0 1px 0 #ffffff14, inset 3px 0 0 currentColor, 0 2px 0 #0a0a0a; }
+
+  /* 非常停止: 赤いキノコ型ボタン */
+  #hdrStop, .dpad .stop {
+    background:radial-gradient(circle at 50% 30%, #ff6a5e 0, #e21b12 45%, #9c0b05 100%); border:2px solid #4d0400; color:#fff;
+    text-shadow:0 1px 1px #0008; box-shadow:inset 0 2px 0 #ffffff55, inset 0 -3px 6px #0006, 0 3px 0 #3a0300, 0 6px 14px #e21b1255; }
+  #hdrStop:hover { background:radial-gradient(circle at 50% 30%, #ff7d72 0, #f0261c 45%, #a80d06 100%); }
+  #hdrStop:active, .dpad .stop:active { transform:translateY(3px); box-shadow:inset 0 2px 6px #0008, 0 0 0 #000; }
+  #hdrStop { border-radius:12px; }
+
+  /* アナログスティック */
+  .ctrl { gap:28px; }
+  .stick { background:
+             radial-gradient(circle at 50% 50%, #0d0e10 0, #17181b 55%, #24262a 70%, #0e0f11 72%, #2e3035 74%, #1a1b1e 100%);
+           border:none; box-shadow:0 0 0 2px #000, 0 0 0 3px #ffffff14, 0 10px 24px #000a, inset 0 6px 14px #000c; }
+  .stick::before { content:''; position:absolute; inset:-7px; border-radius:50%; z-index:-1;
+                  background:conic-gradient(from 200deg, #55585e, #2a2c30 25%, #1a1b1e 50%, #2a2c30 75%, #55585e);
+                  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px)); mask:radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px)); }
+  .stick { isolation:isolate; }
+  .stick::after { content:''; position:absolute; inset:14%; border-radius:50%; border:1px dashed #ffffff14; pointer-events:none; }
+  .knob { width:42%; border:none; opacity:1;
+          background:
+            radial-gradient(circle at 50% 50%, #1b1c1f 0, #2a2c30 38%, #3a3c41 40%, transparent 41%),
+            repeating-conic-gradient(#3b3d42 0 6deg, #2a2c30 6deg 12deg),
+            #2f3135;
+          box-shadow:0 0 0 3px var(--c,#888), 0 0 0 4px #000, inset 0 2px 2px #ffffff33, inset 0 -4px 8px #0009, 0 8px 14px #000c; }
+  .knob::after { content:''; position:absolute; inset:30%; border-radius:50%;
+                 background:radial-gradient(circle at 50% 35%, #2a2c30, #121315 70%); box-shadow:inset 0 3px 5px #000c, 0 1px 0 #ffffff1a; }
+
+  /* 十字キー: 一体の十字 */
+  .dpad { gap:0; filter:drop-shadow(0 6px 10px #000a);
+          background:linear-gradient(#303236,#303236) center / var(--k,48px) 100% no-repeat,
+                     linear-gradient(#303236,#303236) center / 100% var(--k,48px) no-repeat; border-radius:8px; }
+  .dpad button { border-radius:0; border:none; font-size:15px; color:#b8bcc4;
+                 background:linear-gradient(#3b3d42, #2a2c30); box-shadow:inset 0 1px 0 #ffffff1f, inset 0 -2px 0 #0007; }
+  .dpad button:nth-child(2) { border-radius:8px 8px 0 0; }
+  .dpad button:nth-child(4) { border-radius:8px 0 0 8px; }
+  .dpad button:nth-child(6) { border-radius:0 8px 8px 0; }
+  .dpad button:nth-child(8) { border-radius:0 0 8px 8px; }
+  .dpad button:active, .dpad button.held { transform:none; background:linear-gradient(#2a2c30, #3b3d42); color:#fff;
+                                           box-shadow:inset 0 3px 6px #000c; }
+  .dpad .stop { border-radius:50% !important; margin:4px; font-size:10px; letter-spacing:.06em; }
+  .pad .label { color:#e6e6e6; text-transform:none; }
+   /* 右上の STOP に一本化 */
   #speedv { font-size:20px; font-weight:700; min-width:52px; display:inline-block; color:#fff; }
   .driveFoot { font-size:14px; color:#ddd; }
   .ev-victim, .ev-hot, .ev-false, .ev-info { padding-left:8px; border-left:4px solid currentColor; }
