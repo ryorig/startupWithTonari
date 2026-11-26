@@ -195,6 +195,9 @@
   #gpHelp .key { display:inline-block; min-width:34px; text-align:center; padding:2px 8px; border-radius:6px; background:#fff; color:#000; font-weight:900; }
   #gpHelp .hot td { background:var(--accent); }
   .tabs button { white-space:nowrap; }
+  #hdrStop { flex:none; }
+  @media (min-width:701px) and (max-width:1050px) { h1 { display:none; } .bot button { padding:6px 8px; font-size:12px; } #gpPill { font-size:11px; padding:3px 6px; } .tabs button { padding:8px 10px; } #hdrStop { min-width:90px; } }
+  @media (min-width:701px) { header { flex-wrap:nowrap; } #bots { flex-wrap:nowrap; } .bot button { white-space:nowrap; } #gpPill { white-space:nowrap; } }
   /* ===== 文字 (v4) =====
      和文: ヒラギノ角ゴ (W3 本文 / W6 見出し) — 駅・空港サインと同系統の読みやすさ
      数字・英字: DIN (道路標識・計器と同じ書体)。数字は等幅で桁がぶれない
@@ -244,7 +247,6 @@
     <button data-tab="drive" class="active">操作</button>
     <button data-tab="path">パス</button>
     <button data-tab="swarm">群制御</button>
-    <button data-tab="mission">救助ミッション</button>
   </div>
   <button id="hdrStop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)">STOP</button>
 </header>
@@ -1291,11 +1293,11 @@ setInterval(() => {
 <script src="coupler-core.js"></script>
 <script src="swarm.js"></script>
 <script src="coupler.js"></script>
-<script src="mission.js"></script>
+<!-- 救助ミッション (mission.js) は使わないため読み込まない -->
 <script>
 // ---------- コントローラーのボタン → 動作 ----------
 (() => {
-  const TABS = ['drive', 'path', 'swarm', 'mission'];
+  const TABS = ['drive', 'path', 'swarm'];
   const tabBtn = t => document.querySelector(`.tabs button[data-tab="${t}"]`);
   function cycleMode(d) {
     const bs = [...$('modes').querySelectorAll('button')], k = bs.findIndex(b => b.classList.contains('active'));
