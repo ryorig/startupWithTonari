@@ -759,8 +759,8 @@
           mctx.strokeStyle = '#888'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(x - 7, y - 7); mctx.lineTo(x + 7, y + 7); mctx.moveTo(x + 7, y - 7); mctx.lineTo(x - 7, y + 7); mctx.stroke();
           mctx.fillStyle = '#999'; mctx.font = '11px system-ui'; mctx.fillText(`#${c.id} 人ではない`, x + 10, y + 4);
         } else {
-          mctx.strokeStyle = '#ffc94a'; mctx.lineWidth = 2; mctx.setLineDash([4, 3]); mctx.beginPath(); mctx.arc(x, y, 14 * pulse, 0, 7); mctx.stroke(); mctx.setLineDash([]);
-          mctx.fillStyle = '#ffc94a'; mctx.font = 'bold 12px system-ui'; mctx.fillText(`? 熱源 #${c.id}`, x + 16, y - 8);
+          mctx.strokeStyle = '#ffb000'; mctx.lineWidth = 2; mctx.setLineDash([4, 3]); mctx.beginPath(); mctx.arc(x, y, 14 * pulse, 0, 7); mctx.stroke(); mctx.setLineDash([]);
+          mctx.fillStyle = '#ffb000'; mctx.font = 'bold 12px system-ui'; mctx.fillText(`? 熱源 #${c.id}`, x + 16, y - 8);
         }
         mctx.lineWidth = 1;
       });
@@ -775,7 +775,7 @@
       if (i === R_CONF) wedge(mctx, x, y, p.h, CAM_FOV, CAM_RANGE * s, mission?.phase === 'verify' ? 'rgba(63,169,255,0.28)' : 'rgba(63,169,255,0.10)');
       if (i === R_SCOUT) {
         const d = mode === 'sim' ? sim?.tof : tofReal();
-        if (d != null) { const [hx, hy] = T(p.x + Math.sin(rad(p.h)) * d, p.y - Math.cos(rad(p.h)) * d); mctx.strokeStyle = d < 20 ? '#ff6b5a' : '#3ddc84aa'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(x, y); mctx.lineTo(hx, hy); mctx.stroke(); mctx.lineWidth = 1; }
+        if (d != null) { const [hx, hy] = T(p.x + Math.sin(rad(p.h)) * d, p.y - Math.cos(rad(p.h)) * d); mctx.strokeStyle = d < 20 ? '#ff6b5a' : '#2ecc40aa'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(x, y); mctx.lineTo(hx, hy); mctx.stroke(); mctx.lineWidth = 1; }
       }
       const R = Math.max(9, ROBOT_R * s);
       mctx.save(); mctx.translate(x, y); mctx.rotate(rad(p.h));
@@ -785,14 +785,14 @@
       mctx.font = 'bold 11px system-ui'; mctx.fillStyle = '#fff'; mctx.textAlign = 'center'; mctx.fillText(`${ROLE_ICON[i]}${i + 1}`, x, y + R + 13); mctx.textAlign = 'left';
     });
     if (mode === 'real' && !swarmHook?.api?.calibrated()) {
-      mctx.fillStyle = '#8a90a2'; mctx.font = '13px system-ui';
+      mctx.fillStyle = '#cccccc'; mctx.font = '13px system-ui';
       mctx.fillText('実機の位置表示・自動移動には、群制御タブで俯瞰カメラとフィールド校正が必要です', x0 + 10, y0 + 22);
     }
     drawBanner(); drawThermal(); drawCam(); drawRoles();
   }
 
   const PHASE = {
-    idle: ['待機中', '#8a90a2'], explore: ['🔍 捜索中', '#3ddc84'], hotspot: ['🎯 熱源を検知', '#ffc94a'], dispatch: ['🚀 確認機を派遣中', '#3fa9ff'],
+    idle: ['待機中', '#cccccc'], explore: ['🔍 捜索中', '#2ecc40'], hotspot: ['🎯 熱源を検知', '#ffb000'], dispatch: ['🚀 確認機を派遣中', '#0074d9'],
     verify: ['🧠 AI判定中', '#b18cff'], rescue: ['🆘 要救助者を発見 — 救助隊形', '#ff3b30'], complete: ['🏁 捜索完了', '#e8eaf0'],
   };
   function drawBanner() {
@@ -814,7 +814,7 @@
   function drawThermal() {
     const b = fitCanvas(thc, tctx);
     tctx.fillStyle = '#000'; tctx.fillRect(0, 0, b.width, b.height);
-    if (!thermalThumb) { tctx.fillStyle = '#8a90a2'; tctx.font = '12px system-ui'; tctx.fillText(mode === 'sim' ? 'ミッション開始で表示' : '2号機 (MLX90640) の接続待ち', 10, 20); return; }
+    if (!thermalThumb) { tctx.fillStyle = '#cccccc'; tctx.font = '12px system-ui'; tctx.fillText(mode === 'sim' ? 'ミッション開始で表示' : '2号機 (MLX90640) の接続待ち', 10, 20); return; }
     let mn = 255, mx = 0; thermalThumb.forEach(v => { mn = Math.min(mn, v); mx = Math.max(mx, v); });
     mx = Math.max(mx, mn + 24);                                 // 最低 6℃ のレンジ
     const sc = thSmall.getContext('2d'), img = sc.createImageData(16, 12);
@@ -827,7 +827,7 @@
     tctx.fillText(`${(mn / 4 + 15).toFixed(1)}〜${(mx / 4 + 15).toFixed(1)}℃`, 6, oy + h - 6);
     if (hi) {
       const x = (hi.bearing / T_FOV + 0.5) * w;
-      tctx.strokeStyle = hi.conf >= (+$('mMinConf').value || 50) ? '#3ddc84' : '#ffc94a'; tctx.lineWidth = 2;
+      tctx.strokeStyle = hi.conf >= (+$('mMinConf').value || 50) ? '#2ecc40' : '#ffb000'; tctx.lineWidth = 2;
       tctx.strokeRect(x - 18, oy + h * 0.25, 36, h * 0.5);
       tctx.fillStyle = '#fff'; tctx.font = 'bold 13px system-ui';
       tctx.fillText(`人らしき熱源 ${hi.tmax.toFixed(1)}℃ 確度${hi.conf}% 方位${hi.bearing > 0 ? '+' : ''}${hi.bearing}°`, 6, oy + 34);
@@ -854,16 +854,16 @@
           });
         if (lastAI?.person && mission?.phase === 'verify') {
           const x = w / 2 + lastAI.bx * w / 2, bw = lastAI.bw * w;
-          cctx.strokeStyle = '#3ddc84'; cctx.lineWidth = 3; cctx.strokeRect(x - bw / 2, h * 0.25, bw, h * 0.6);
-          cctx.fillStyle = '#3ddc84'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, x - bw / 2, h * 0.25 - 5);
+          cctx.strokeStyle = '#2ecc40'; cctx.lineWidth = 3; cctx.strokeRect(x - bw / 2, h * 0.25, bw, h * 0.6);
+          cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, x - bw / 2, h * 0.25 - 5);
         }
       }
       cctx.fillStyle = '#ffffffaa'; cctx.font = '11px system-ui'; cctx.fillText('(仮想映像)', w - 70, 14);
     } else if (lastAI?.person && lastAI.box && mImg.naturalWidth) {
       const r = mImg.getBoundingClientRect(), pr = camc.getBoundingClientRect();
       const sx = r.width / lastAI.w, sy = r.height / lastAI.h, [bx, by, bw, bh] = lastAI.box;
-      cctx.strokeStyle = '#3ddc84'; cctx.lineWidth = 3; cctx.strokeRect(r.left - pr.left + bx * sx, r.top - pr.top + by * sy, bw * sx, bh * sy);
-      cctx.fillStyle = '#3ddc84'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, r.left - pr.left + bx * sx, r.top - pr.top + by * sy - 5);
+      cctx.strokeStyle = '#2ecc40'; cctx.lineWidth = 3; cctx.strokeRect(r.left - pr.left + bx * sx, r.top - pr.top + by * sy, bw * sx, bh * sy);
+      cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, r.left - pr.left + bx * sx, r.top - pr.top + by * sy - 5);
     }
     const ph = mission?.phase;
     if (ph === 'verify') { const yes = mission.votes.filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length; cctx.fillStyle = '#b18cff'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`AI判定中… 人の検出 ${mission.votes.slice(-6).filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length}/3 (直近6フレーム)`, 6, h - 8); }

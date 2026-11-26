@@ -106,7 +106,7 @@
     const [x, y] = padVec(0, [keyVec(KEYSETS[0]), keyVec(KEYSETS[1])]);
     const cmds = robots.map(() => [0, 0]), now = performance.now();
     if (Math.hypot(x, y) < 0.12) { sim.step(cmds); return cmds; }
-    const { V, W } = CC.stickToVW(x, y, st.geom, $('speed').value / 100);
+    const { V, W } = CC.stickToVW(x, y, st.geom, Math.min(1, $('speed').value / 100 * (window.gp?.mul || 1)));
     for (const t of trains) trainPWM(t, V, W, now).forEach((c, k) => cmds[t[k]] = c);
     sim.step(cmds); drawInfo();
     return cmds;
@@ -228,9 +228,9 @@
     const g = st.geom;
     for (const t of trains) for (let k = 1; k < t.length; k++) {   // 連結バー
       const a = T(CC.hitchPt(ps[t[k - 1]], -g.hitchR)), b = T(CC.hitchPt(ps[t[k]], g.hitchF));
-      c.strokeStyle = locked[t[k]] === false ? '#ff6b5a' : '#c792ff'; c.lineWidth = 3;
+      c.strokeStyle = locked[t[k]] === false ? '#e00000' : '#ffffff'; c.lineWidth = 3;
       c.beginPath(); c.moveTo(...T(ps[t[k - 1]])); c.lineTo(...a); c.lineTo(...b); c.lineTo(...T(ps[t[k]])); c.stroke();
-      c.fillStyle = '#c792ff'; c.beginPath(); c.arc(...a, 3, 0, 7); c.fill();
+      c.fillStyle = '#ffffff'; c.beginPath(); c.arc(...a, 3, 0, 7); c.fill();
     }
     ps.forEach((p, i) => {
       const [u, v] = T(p);
@@ -269,7 +269,7 @@
     drawInfo();
   }
   function render(area) {
-    const pad = makePad(0, '🔗 連結走行', '#c792ff', false);
+    const pad = makePad(0, '🔗 連結走行', '#ffffff', false);
     pad.querySelector('.hint').textContent = 'キー: 矢印 / WASD ・ 列ごとに連結を保って走る';
     const panel = document.createElement('div'); panel.className = 'card'; panel.id = 'cpPanel';
     panel.style.cssText = 'max-width:440px;flex:1;min-width:280px';

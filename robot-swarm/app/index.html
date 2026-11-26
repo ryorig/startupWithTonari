@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>SwarmBot Controller</title>
 <style>
-  :root { --bg:#0a0c11; --panel:#232a3a; --panel2:#151a24; --line:#3b4459; --text:#f4f6fb; --sub:#b4bccf;
-          --all:#a98bff; --ok:#2ee87a; --warn:#ffb020; --accent:#4d8dff; --danger:#e5322d; }
+  /* 配色ルール (ISA-101 産業用HMI + FRC Driver Station 流):
+     背景はグレー無彩色。色は「状態」と「号機」にだけ使う。グラデーション・発光・中間色は使わない */
+  :root { --bg:#2b2b2b; --panel:#3a3a3a; --panel2:#333333; --line:#555555; --text:#ffffff; --sub:#cccccc;
+          --all:#ffffff; --ok:#2ecc40; --warn:#ffb000; --accent:#0074d9; --danger:#e00000; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
               font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; overflow:hidden; }
@@ -81,7 +83,7 @@
   #frames { display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto; }
   .frame { display:flex; justify-content:space-between; align-items:center; padding:6px 8px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
   .frame:hover { background:var(--panel); }
-  .frame.sel { border-color:#9b7bff; background:#231f36; }
+  .frame.sel { border-color:#0074d9; background:#1e3a5c; }
   .frame.run { box-shadow:inset 3px 0 0 var(--ok); }
   table { width:100%; border-collapse:collapse; }
   td, th { padding:3px 2px; text-align:left; font-weight:normal; }
@@ -113,7 +115,7 @@
 
   /* ---------- 救助ミッション ---------- */
   #mission { flex-direction:column; gap:8px; padding:8px 12px; }
-  #mBanner { display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:linear-gradient(90deg,#1d1418,#14161d); border:1px solid #3a2a30; border-radius:12px; padding:8px 14px; }
+  #mBanner { display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:#1e1e1e; border:2px solid #555; border-radius:12px; padding:8px 14px; }
   #mBanner.alert { animation:mAlert 0.5s ease-in-out 6; }
   @keyframes mAlert { 50% { background:#7a1010; border-color:#ff3b30; } }
   #mPhase { font-size:20px; font-weight:800; letter-spacing:.03em; }
@@ -122,7 +124,7 @@
   #mStats b { color:#fff; font-size:16px; }
   #mBody { flex:1; min-height:0; display:flex; gap:10px; }
   #mLeft { flex:1.4; min-width:0; display:flex; flex-direction:column; gap:8px; }
-  #mMapBox { flex:1; min-height:260px; position:relative; background:#0f1115; border:1px solid var(--line); border-radius:12px; }
+  #mMapBox { flex:1; min-height:260px; position:relative; background:#1e1e1e; border:1px solid var(--line); border-radius:12px; }
   #mMap { position:absolute; inset:0; width:100%; height:100%; }
   #mRoles { display:flex; gap:8px; }
   .role { flex:1; border:1px solid; border-left-width:4px; border-radius:8px; padding:6px 8px; font-size:12px; display:flex; flex-direction:column; gap:2px; background:var(--panel2); }
@@ -135,10 +137,10 @@
   #mCamImg { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
   #mLog { flex:1; min-height:120px; overflow-y:auto; background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:6px 8px; font-size:12px; }
   .ev { padding:3px 0; border-bottom:1px solid #ffffff08; } .evt { color:var(--sub); font-family:ui-monospace,monospace; }
-  .ev-victim { color:#ff6b6b; font-weight:700; } .ev-hot { color:#ffc94a; } .ev-false { color:#999; }
+  .ev-victim { color:#ff6b6b; font-weight:700; } .ev-hot { color:#ffb000; } .ev-false { color:#999; }
   #mSide { width:300px; flex:none; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding-right:4px; }
   .seg { display:flex; gap:4px; flex-wrap:wrap; } .seg button.active { background:#fff; color:#0a0c11; font-weight:800; }
-  #mStart { width:100%; padding:10px; font-size:15px; font-weight:700; background:#c62828; border-color:#c62828; color:#fff; }
+  #mStart { width:100%; padding:12px; font-size:16px; font-weight:900; background:var(--ok); border-color:var(--ok); color:#000; }
   #mBatchOut table td, #mBatchOut table th { border-bottom:1px solid var(--line); padding:4px; font-size:12px; }
 
   @media (max-width:900px) {
@@ -150,6 +152,59 @@
     #side { width:auto; }
     #fieldBox { min-height:320px; }
   }
+
+  /* ===== v3: シンプル配色・大きな停止・状態は文字+色 ===== */
+  button { background:#4a4a4a; border:2px solid #4a4a4a; color:#fff; font-weight:700; border-radius:8px; }
+  button:hover { background:#5a5a5a; border-color:#5a5a5a; }
+  input[type=number], input[type=text], select { background:#1e1e1e; border:1px solid #666; color:#fff; }
+  header { background:#1e1e1e; border-bottom:2px solid #000; min-height:56px; }
+  h1 { font-size:18px; }
+  .bot button { background:#1e1e1e !important; border-width:2px; border-color:currentColor; }
+  .dot { width:14px; height:14px; border:none; box-shadow:none; background:#777; }
+  .dot.on { background:var(--ok); box-shadow:none; }
+  .tabs button { background:#4a4a4a; border-color:#4a4a4a; }
+  .tabs button.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  #hdrStop { background:var(--danger); border:3px solid #fff; color:#fff; font-size:20px; font-weight:900; letter-spacing:.08em;
+             min-width:110px; height:48px; border-radius:10px; }
+  #hdrStop:hover { background:#ff1a1a; }
+  #gpPill { cursor:pointer; font-size:13px; font-weight:700; background:#1e1e1e; color:#ccc; border:2px solid #666; }
+  #gpPill.on { color:#fff; border-color:var(--ok); }
+  .modes button { color:#fff; background:#4a4a4a; border-color:#4a4a4a; border-left:6px solid var(--mc); min-height:44px; font-size:14px; }
+  .modes button.active { background:var(--accent); border-color:var(--accent); border-left-color:var(--mc); color:#fff; }
+  .card { background:var(--panel); border:none; border-radius:10px; }
+  .card h3 { color:#fff; border-bottom:2px solid #555; font-size:15px; }
+  .muted { color:#cccccc; font-size:12px; }
+  .stick { background:#1e1e1e; border:3px solid #666; }
+  .knob { background:var(--c,#fff); border:3px solid #fff; box-shadow:none; opacity:1; }
+  .dpad button { background:#4a4a4a; font-size:18px; }
+  .dpad button.held { background:var(--accent); }
+  .dpad .stop { background:var(--danger); border-color:var(--danger); }
+  .modeGrid button { background:#4a4a4a; border-color:#4a4a4a; }
+  .modeGrid button.active { background:var(--accent); border-color:var(--accent); box-shadow:none; }
+  .ok { color:var(--ok); } .ng { color:#ff4040; }
+  .pill.near { background:var(--danger); border-color:var(--danger); }
+  #camBox, #swVidBox { border:2px solid #000; }
+  /* トースト (操作の結果をすぐ見せる) */
+  #toast { position:fixed; left:50%; bottom:90px; transform:translateX(-50%); background:#000; color:#fff; border:2px solid #fff;
+           padding:10px 22px; border-radius:10px; font-size:18px; font-weight:800; z-index:50; display:none; }
+  /* コントローラー割り当て */
+  #gpHelp { position:fixed; inset:0; background:#000c; z-index:60; display:none; align-items:center; justify-content:center; }
+  #gpHelp.show { display:flex; }
+  #gpHelp .box { background:#2b2b2b; border:2px solid #fff; border-radius:12px; padding:16px 20px; max-width:880px; width:94vw; max-height:92vh; overflow:auto; }
+  #gpHelp table td { padding:5px 8px; border-bottom:1px solid #444; font-size:14px; }
+  #gpHelp .key { display:inline-block; min-width:34px; text-align:center; padding:2px 8px; border-radius:6px; background:#fff; color:#000; font-weight:900; }
+  #gpHelp .hot td { background:var(--accent); }
+  .tabs button { white-space:nowrap; }
+  @media (max-width:700px) {
+    header { gap:6px; padding:6px 8px; }
+    h1 { display:none; }
+    .bot button { padding:5px 8px; font-size:13px; }
+    #gpPill { display:none; }
+    .tabs { width:100%; margin:0; } .tabs button { flex:1; padding:8px 2px; font-size:13px; }
+    /* 停止は画面右下に固定 (親指で届く・どの画面でも見える) */
+    .view.active { padding-bottom:110px; }
+    #hdrStop { position:fixed; right:12px; bottom:12px; z-index:40; width:88px; height:88px; border-radius:50%; min-width:0; font-size:20px; }
+  }
 </style>
 </head>
 <body>
@@ -158,12 +213,14 @@
   <h1>SwarmBot</h1>
   <div id="bots"></div>
   <span id="distPill" class="pill hidden">距離 --</span>
+  <button id="gpPill" class="pill" title="コントローラーの割り当てを表示">🎮 コントローラー未接続</button>
   <div class="tabs">
     <button data-tab="drive" class="active">🎮 操作</button>
     <button data-tab="path">🗺 パス</button>
     <button data-tab="swarm">🛰 群制御</button>
     <button data-tab="mission">🚨 救助ミッション</button>
   </div>
+  <button id="hdrStop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)">STOP</button>
 </header>
 
 <!-- ================= 操作画面 ================= -->
@@ -482,7 +539,7 @@
 //  設定
 // =====================================================================
 const N = 3;
-const COLORS = ['#ff6b5a', '#3fa9ff', '#3ddc84', '#ffc94a', '#ff7ad9', '#4ae0e0'];
+const COLORS = ['#f58231', '#3cb44b', '#5a8cff', '#ffe119', '#f032e6', '#42d4f4'];   // 1号機=オレンジ 2号機=緑 3号機=青 (赤は停止・警告専用)
 const KEYSETS = [
   { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', name:'矢印' },
   { up:'w', down:'s', left:'a', right:'d', name:'WASD' },
@@ -511,7 +568,7 @@ class Robot {
     const wrap = document.createElement('div'); wrap.className = 'bot';
     this.dot = document.createElement('span'); this.dot.className = 'dot';
     this.btn = document.createElement('button'); this.btn.style.color = COLORS[id - 1];
-    this.btn.textContent = id + '号機 接続'; this.btn.onclick = () => this.connect();
+    this.btn.textContent = id + '号機: 未接続'; this.btn.title = 'クリックで接続 / 切断'; this.btn.onclick = () => this.connect();
     wrap.append(this.dot, this.btn); $('bots').appendChild(wrap);
   }
   get ok() { return !!this.rx && this.dev?.gatt.connected; }
@@ -540,8 +597,8 @@ class Robot {
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
   }
   updateLabel() {
-    if (!this.ok) { this.btn.textContent = this.id + '号機 接続'; return; }
-    this.btn.textContent = this.id + '号機 切断' + (this.realId ? ' (実機ID ' + this.realId + ')' : '');
+    if (!this.ok) { this.btn.textContent = this.id + '号機: 未接続'; return; }
+    this.btn.textContent = this.id + '号機: 接続中' + (this.realId ? ' (実機ID ' + this.realId + ')' : '');
   }
   onMsg(t) {
     let m;
@@ -683,7 +740,8 @@ function makePad(i, title, color, compact) {
 
 addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT' && e.target.type !== 'range' && e.target.type !== 'checkbox') return;
-  if (e.key === ' ') { stopAll(); if (run) stopRun(); if (swarmHook) swarmHook.stop(); if (missionHook) missionHook.stop(); e.preventDefault(); return; }
+  if (e.key === ' ') { emergencyStop(); e.preventDefault(); return; }
+  if (e.key === '?' ) { $('gpHelp').classList.toggle('show'); return; }
   if (view !== 'drive' && view !== 'swarm') return;
   const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   if (KEYSETS.some(s => Object.values(s).includes(k))) { keys.add(k); e.preventDefault(); }
@@ -695,7 +753,7 @@ const keyVec = set => [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 :
 
 const MODES = [['all', N + '台同時', 'var(--all)'],
   ...robots.map(r => [String(r.id), r.id + '号機', COLORS[r.id - 1]]),
-  ['split', '個別', '#ffc94a'], ['link', '🔗 連結', '#c792ff']];
+  ['split', '個別', '#ffffff'], ['link', '🔗 連結', '#ffffff']];
 let mode = 'all';
 for (const [m, label, color] of MODES) {
   const b = document.createElement('button'); b.textContent = label; b.style.setProperty('--mc', color);
@@ -729,7 +787,7 @@ function mix(x, y) {
   if (Math.hypot(x, y) < 0.12) return [0, 0];
   let l = y + x, r = y - x;
   const m = Math.max(1, Math.abs(l), Math.abs(r)); l /= m; r /= m;
-  const k = 255 * $('speed').value / 100;
+  const k = 255 * Math.min(1, $('speed').value / 100 * (window.gp?.mul || 1));
   return [Math.round(l * k), Math.round(r * k)];
 }
 function padVec(i, keyVecs) {
@@ -737,8 +795,17 @@ function padVec(i, keyVecs) {
   let x = p.sx, y = p.sy;
   if (p.dx || p.dy) { x = p.dx; y = p.dy; }
   for (const [kx, ky] of keyVecs) if (kx || ky) { x = kx; y = ky; }
+  if (window.gp?.active && (mode !== 'split' || i === 0)) return [gp.x, gp.y];   // コントローラー (個別モードでは1号機)
   if (Math.abs(x) === 1 && Math.abs(y) === 1) x *= 0.5;
   return [x, y];
+}
+function emergencyStop() {
+  stopAll(); if (run) stopRun(); swarmHook?.stop(); missionHook?.stop(); toast('■ 全停止');
+}
+let toastT = 0;
+function toast(t) {
+  let el = $('toast'); if (!el) { el = document.createElement('div'); el.id = 'toast'; document.body.appendChild(el); }
+  el.textContent = t; el.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => el.style.display = 'none', 1200);
 }
 function stopAll() {
   pads.forEach(p => Object.assign(p, { sx:0, sy:0, dx:0, dy:0 }));
@@ -880,7 +947,7 @@ function drawField() {
   const box = $('fieldBox').getBoundingClientRect();
   ctx.clearRect(0, 0, box.width, box.height);
   const [x0, y0] = toPx(0, 0), [x1, y1] = toPx(P.field.w, P.field.h);
-  ctx.fillStyle = '#1a1d25'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+  ctx.fillStyle = '#1e1e1e'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
   ctx.strokeStyle = '#ffffff10'; ctx.lineWidth = 1;
   for (let x = 0; x <= P.field.w; x += 10) { const [a] = toPx(x, 0); ctx.beginPath(); ctx.moveTo(a, y0); ctx.lineTo(a, y1); ctx.stroke(); }
   for (let y = 0; y <= P.field.h; y += 10) { const [, b] = toPx(0, y); ctx.beginPath(); ctx.moveTo(x0, b); ctx.lineTo(x1, b); ctx.stroke(); }
@@ -1187,9 +1254,91 @@ setInterval(() => {
   }
 }, 50);
 </script>
+<div id="gpHelp"><div class="box">
+  <h3 style="margin:0 0 6px;display:flex;justify-content:space-between">🎮 コントローラーの割り当て <button id="gpHelpClose">閉じる</button></h3>
+  <div class="muted" id="gpHelpName"></div>
+  <svg id="gpSvg" viewBox="0 0 520 230" style="width:100%;max-width:560px;display:block;margin:8px auto"></svg>
+  <table id="gpTable"></table>
+  <div class="muted">押したボタンが青く光ります。Switch Pro コントローラーは USB か Bluetooth で Mac に接続し、Chrome で何かボタンを1回押すと認識されます。</div>
+</div></div>
+<script src="gamepad.js"></script>
 <script src="coupler-core.js"></script>
 <script src="swarm.js"></script>
 <script src="coupler.js"></script>
 <script src="mission.js"></script>
+<script>
+// ---------- コントローラーのボタン → 動作 ----------
+(() => {
+  const TABS = ['drive', 'path', 'swarm', 'mission'];
+  const tabBtn = t => document.querySelector(`.tabs button[data-tab="${t}"]`);
+  function cycleMode(d) {
+    const bs = [...$('modes').querySelectorAll('button')], k = bs.findIndex(b => b.classList.contains('active'));
+    bs[(k + d + bs.length) % bs.length].click();
+  }
+  gp.onAction = act => {
+    if (act === 'stop') { emergencyStop(); gp.rumble(250, 1); return; }
+    if (act === 'nextTab' || act === 'prevTab') {
+      const k = TABS.indexOf(view); tabBtn(TABS[(k + (act === 'nextTab' ? 1 : -1) + TABS.length) % TABS.length])?.click(); return;
+    }
+    if (view !== 'drive') return;
+    if (act === 'nextTarget') cycleMode(1);
+    else if (act === 'prevTarget') cycleMode(-1);
+    else if (act === 'camera') { $('camShow').checked = !$('camShow').checked; $('camShow').onchange(); }
+    else if (act === 'speedStep') {
+      const v = +$('speed').value, nv = v < 55 ? 70 : v < 85 ? 100 : 40;
+      $('speed').value = nv; $('speed').oninput(); toast('速度 ' + nv + '%');
+    }
+    else if ((act === 'lockOn' || act === 'lockOff') && window.couplerHook) {
+      const on = act === 'lockOn';
+      const ids = /^\d$/.test(mode) ? [+mode - 1] : robots.map((_, i) => i);
+      ids.forEach(i => couplerHook.lock(i, on)); gp.rumble(80, 0.4); toast(on ? 'ロック' : '解除');
+    }
+  };
+  // ---- 割り当て図 (Switch Pro コントローラーの配置) ----
+  // [ボタン番号, x, y, 形] 形: c=丸 r=横長 s=スティック
+  const LAYOUT = [[4,110,28,'r'],[6,110,8,'r'],[5,410,28,'r'],[7,410,8,'r'],
+    [8,205,70,'c'],[9,315,70,'c'],[16,290,105,'c'],[17,230,105,'c'],
+    ['LS',130,95,'s'],['RS',330,160,'s'],[12,190,140,'c'],[13,190,190,'c'],[14,165,165,'c'],[15,215,165,'c'],
+    [3,410,70,'c'],[1,440,100,'c'],[0,410,130,'c'],[2,380,100,'c']];
+  const NAME = { 12:'↑', 13:'↓', 14:'←', 15:'→' };
+  function lab(i) {
+    if (NAME[i]) return NAME[i];
+    const r = gp.map.find(m => m[0] === i); if (!r) return '';
+    const t = gp.kind === 'switch' ? r[1] : r[2];
+    return t.replace('スティック押し込み', '').replace('スティック', '').replace('キャプチャ', '●');
+  }
+  function drawPad() {
+    const on = i => typeof i === 'number' ? gp.pressed.has(i) : i === 'LS' ? Math.hypot(gp.lx, gp.ly) > 0.2 : Math.hypot(gp.rx, gp.ry) > 0.2;
+    let h = '<rect x="40" y="40" width="440" height="180" rx="80" fill="#1e1e1e" stroke="#fff" stroke-width="3"/>';
+    for (const [i, x, y, f] of LAYOUT) {
+      const fill = on(i) ? '#0074d9' : '#4a4a4a', txt = lab(i);
+      if (f === 'r') h += `<rect x="${x - 45}" y="${y - 12}" width="90" height="24" rx="8" fill="${fill}" stroke="#fff"/>`;
+      else if (f === 's') {
+        const dx = (i === 'LS' ? gp.lx : gp.rx) * 14, dy = (i === 'LS' ? gp.ly : gp.ry) * 14;
+        h += `<circle cx="${x}" cy="${y}" r="30" fill="#000" stroke="#fff"/><circle cx="${x + dx}" cy="${y + dy}" r="18" fill="${fill}" stroke="#fff"/>`;
+      } else h += `<circle cx="${x}" cy="${y}" r="15" fill="${fill}" stroke="#fff"/>`;
+      h += `<text x="${x + (f === 's' ? (i === 'LS' ? 0 : 0) : 0)}" y="${y + 5}" fill="#fff" font-size="13" font-weight="900" text-anchor="middle">${txt}</text>`;
+    }
+    $('gpSvg').innerHTML = h;
+    [...$('gpTable').rows].forEach(r => r.classList.toggle('hot', on(isNaN(+r.dataset.i) ? r.dataset.i : +r.dataset.i)));
+  }
+  window.renderGp = () => {
+    const p = $('gpPill');
+    p.textContent = gp.connected ? '🎮 ' + (gp.kind === 'switch' ? 'Switch Pro' : gp.kind === 'ps' ? 'PlayStation' : 'Xbox') + ' 接続中' : '🎮 コントローラー未接続';
+    p.classList.toggle('on', gp.connected);
+    $('gpHelpName').textContent = gp.connected ? '認識名: ' + gp.name : 'コントローラーが見つかりません (ボタンを1回押してください)';
+    $('gpTable').innerHTML = gp.map.map(m => `<tr data-i="${m[0]}"><td><span class="key">${gp.kind === 'switch' ? m[1] : m[2]}</span></td><td>${m[4]}</td></tr>`).join('')
+      + '<tr data-i="kb"><td><span class="key">Space</span></td><td>キーボードから全停止 (? で この表)</td></tr>';
+    drawPad();
+  };
+  gp.onTick = () => { if ($('gpHelp').classList.contains('show')) drawPad(); };
+  $('gpPill').onclick = () => { $('gpHelp').classList.add('show'); renderGp(); };
+  $('gpHelpClose').onclick = () => $('gpHelp').classList.remove('show');
+  $('gpHelp').onclick = e => { if (e.target.id === 'gpHelp') $('gpHelp').classList.remove('show'); };
+  $('hdrStop').onclick = () => emergencyStop();
+  gp.onChange = () => { renderGp(); if (gp.connected) toast('🎮 コントローラー接続'); };
+  renderGp();
+})();
+</script>
 </body>
 </html>

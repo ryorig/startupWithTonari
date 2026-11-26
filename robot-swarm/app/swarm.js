@@ -121,7 +121,7 @@
   });
   function calibMsg() {
     const names = ['左上', '右上', '右下', '左下'];
-    $('swCalibMsg').innerHTML = clickCal ? `<b style="color:#ffc94a">フィールドの「${names[clickCal.length]}」をクリック (${clickCal.length + 1}/4)</b>`
+    $('swCalibMsg').innerHTML = clickCal ? `<b style="color:#ffb000">フィールドの「${names[clickCal.length]}」をクリック (${clickCal.length + 1}/4)</b>`
       : H ? '<span class="ok">● 校正済み</span> (カメラを動かしたら校正し直してください)' : '<span class="ng">● 未校正</span> — フィールド校正をしてください';
     $('swFieldSize').textContent = `${P.field.w} × ${P.field.h} cm`;
   }
@@ -180,13 +180,13 @@
     if (H) {
       const inv = invertH(H);
       if (inv) {
-        octx.strokeStyle = '#9b7bff'; octx.lineWidth = 2 * lw; octx.beginPath();
+        octx.strokeStyle = '#ffffff'; octx.lineWidth = 2 * lw; octx.beginPath();
         fieldCorners().forEach(([x, y], k) => { const [u, v] = applyH(inv, x, y); k ? octx.lineTo(u, v) : octx.moveTo(u, v); });
         octx.closePath(); octx.stroke();
       }
     }
     for (const m of markers) {
-      const isBot = m.id >= 1 && m.id <= N, color = isBot ? COLORS[m.id - 1] : CORNER_IDS.includes(m.id) ? '#9b7bff' : '#888';
+      const isBot = m.id >= 1 && m.id <= N, color = isBot ? COLORS[m.id - 1] : CORNER_IDS.includes(m.id) ? '#ffffff' : '#888';
       octx.strokeStyle = color; octx.lineWidth = 3 * lw; octx.beginPath();
       m.c.forEach(([x, y], k) => k ? octx.lineTo(x, y) : octx.moveTo(x, y)); octx.closePath(); octx.stroke();
       octx.beginPath(); octx.moveTo(m.cx, m.cy); octx.lineTo(m.fx, m.fy); octx.stroke();
@@ -194,7 +194,7 @@
       octx.fillText(isBot ? m.id + '号機' : 'ID' + m.id, m.cx + 10 * lw, m.cy - 10 * lw);
     }
     if (clickCal) {
-      octx.fillStyle = '#ffc94a';
+      octx.fillStyle = '#ffb000';
       clickCal.forEach(([x, y]) => { octx.beginPath(); octx.arc(x, y, 6 * lw, 0, 7); octx.fill(); });
     }
   }
@@ -220,7 +220,7 @@
     const T = (x, y) => [mv.ox + x * s, mv.oy + y * s];
     mctx.clearRect(0, 0, box.width, box.height);
     const [x0, y0] = T(0, 0), [x1, y1] = T(P.field.w, P.field.h);
-    mctx.fillStyle = '#1a1d25'; mctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    mctx.fillStyle = '#1e1e1e'; mctx.fillRect(x0, y0, x1 - x0, y1 - y0);
     mctx.strokeStyle = '#ffffff12';
     for (let x = 0; x <= P.field.w; x += 10) { const [a] = T(x, 0); mctx.beginPath(); mctx.moveTo(a, y0); mctx.lineTo(a, y1); mctx.stroke(); }
     for (let y = 0; y <= P.field.h; y += 10) { const [, b] = T(0, y); mctx.beginPath(); mctx.moveTo(x0, b); mctx.lineTo(x1, b); mctx.stroke(); }
