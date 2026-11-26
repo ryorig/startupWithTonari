@@ -305,6 +305,82 @@
     .view.active { padding-bottom:110px; }
     #hdrStop { position:fixed; right:12px; bottom:12px; z-index:40; width:88px; height:88px; border-radius:50%; min-width:0; font-size:20px; }
   }
+
+  /* ===== v6: 100件調査にもとづく再設計 =====
+     ・面は艶なしのマット。奥行きは影ではなく「層ごとに少し明るく」で表す (Carbon / Material / Apple)
+     ・色は状態と号機だけ。赤+黄は STOP 専用 (ISO 13850 の配色)
+     ・STOP = 黄色い台座に赤いキノコ。押した瞬間に止まり、ラッチ。再開は長押し (FRC / QGC / ISO 13850)
+     ・準備状態を 緑/黄/赤 + 文字 で常時表示 (QGroundControl / OTTO) */
+  :root { --l0:#111214; --l1:#18191c; --l2:#202125; --l3:#2a2b30; --l4:#34363b; --hair:#ffffff10; --txt2:#a9adb6; }
+  body { background:var(--l0); }
+  header { background:var(--l1); box-shadow:none; border-bottom:1px solid var(--hair); min-height:64px; }
+  .card { background:var(--l2); border:1px solid var(--hair); box-shadow:none; border-radius:14px; }
+  .card h3 { border-bottom:1px solid var(--hair); box-shadow:none; }
+  button { background:var(--l3); border:1px solid var(--hair); box-shadow:none; color:#eceef2; border-radius:10px; }
+  button:hover { background:var(--l4); border-color:#ffffff1c; }
+  button:active { transform:scale(.97); box-shadow:none; }
+  .tabs { background:var(--l0); padding:3px; border-radius:12px; border:1px solid var(--hair); gap:2px; }
+  .tabs button { background:transparent; border-color:transparent; color:var(--txt2); }
+  .tabs button.active, .modes button.active, .modeGrid button.active, .seg button.active {
+    background:#eceef2; color:#111214; border-color:#eceef2; box-shadow:none; }
+  .modes { background:var(--l1); padding:4px; border-radius:12px; border:1px solid var(--hair); }
+  .modes button { background:transparent; border:1px solid transparent; border-left:none; color:var(--txt2); position:relative; padding-left:22px; }
+  .modes button::before { content:''; position:absolute; left:9px; top:50%; width:7px; height:7px; margin-top:-3.5px; border-radius:50%; background:var(--mc); }
+  .modes button.active { color:#111214; }
+  .modes { flex-wrap:nowrap; justify-content:stretch; } .modes button { flex:1; padding:8px 6px 8px 20px; white-space:nowrap; font-size:13px; min-height:38px; }
+  .bot button { background:var(--l2) !important; border:1px solid var(--hair) !important; box-shadow:none; color:#eceef2 !important; position:relative; padding-left:22px; }
+  .bot button::before { content:''; position:absolute; left:9px; top:50%; width:4px; height:16px; margin-top:-8px; border-radius:2px; background:currentColor; }
+  .bot:nth-child(1) button::before { background:#f58231; } .bot:nth-child(2) button::before { background:#3cb44b; } .bot:nth-child(3) button::before { background:#5a8cff; }
+  .dot { display:none; }
+  input[type=number], input[type=text], select { background:var(--l0); border:1px solid #ffffff18; box-shadow:none; }
+  .muted { color:var(--txt2); }
+
+  /* 準備状態 */
+  .ready { display:flex; align-items:center; gap:8px; padding:6px 12px; border-radius:10px; background:var(--l2); border:1px solid var(--hair);
+           font-family:var(--din),var(--jp); font-size:13px; white-space:nowrap; }
+  .ready i { width:10px; height:10px; border-radius:50%; background:#e5484d; box-shadow:0 0 0 3px #e5484d33; }
+  .ready.part i { background:#f5a524; box-shadow:0 0 0 3px #f5a52433; } .ready.ok i { background:#2ecc40; box-shadow:0 0 0 3px #2ecc4033; }
+
+  /* STOP: 黄色い台座 + 赤いキノコ (台座の上に文字、キャップには文字を入れない) */
+  #hdrStop.estop { all:unset; box-sizing:border-box; cursor:pointer; flex:none; width:112px; height:56px; border-radius:12px;
+    background:#ffcc00; border:1px solid #b38f00; display:flex; align-items:center; gap:10px; padding:0 14px 0 8px;
+    box-shadow:inset 0 1px 0 #fff6, 0 1px 0 #0006; }
+  #hdrStop .cap { width:42px; height:42px; border-radius:50%; flex:none;
+    background:radial-gradient(circle at 50% 32%, #f2464a 0, #d7191c 55%, #a51216 100%);
+    box-shadow:0 0 0 3px #8e0f12, 0 4px 0 2px #6d0b0e, 0 6px 8px #0007, inset 0 2px 1px #ffffff55; transition:transform .06s, box-shadow .06s; }
+  #hdrStop .lbl { font-family:"DIN Condensed",var(--din); font-weight:700; font-size:24px; letter-spacing:.12em; color:#1a1400; padding-top:3px; }
+  #hdrStop:hover .cap { filter:brightness(1.08); }
+  #hdrStop:active .cap, body.latched #hdrStop .cap { transform:translateY(3px); box-shadow:0 0 0 3px #8e0f12, 0 1px 0 1px #6d0b0e, 0 2px 3px #0007, inset 0 2px 4px #0006; }
+  #hdrStop:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+  .dpad .stop { background:radial-gradient(circle at 50% 32%, #f2464a 0, #d7191c 55%, #a51216 100%) !important; border:none !important; box-shadow:0 0 0 2px #8e0f12, 0 2px 0 1px #6d0b0e !important; font-size:9px; }
+
+  /* 停止中バナー + 長押しで再開 */
+  #stopBanner { display:none; align-items:center; gap:14px; padding:10px 16px; background:#d7191c; color:#fff; font-size:14px; }
+  body.latched #stopBanner { display:flex; }
+  #stopBanner b { font-family:"DIN Condensed",var(--din); font-size:22px; letter-spacing:.1em; padding-top:2px; }
+  #resumeBtn { margin-left:auto; position:relative; overflow:hidden; background:#fff; color:#111; border:none; font-weight:700; padding:9px 18px; }
+  #resumeBtn i { position:absolute; left:0; top:0; bottom:0; width:0; background:#2ecc40; opacity:.45; }
+  #resumeBtn.hold i { width:100%; transition:width 1.2s linear; }
+
+  /* スティック / 十字キー: マットな樹脂とゴム。艶 (強いハイライト) は消す */
+  .stick { background:radial-gradient(circle, #0c0d0f 0, #141518 60%, #1d1e22 72%, #0b0c0e 74%, #24262a 76%, #17181b 100%);
+           box-shadow:0 0 0 1px #000, 0 14px 30px #0009, inset 0 8px 16px #000a; }
+  .stick::before { background:conic-gradient(from 210deg, #3a3c42, #1d1e22 30%, #141518 50%, #1d1e22 70%, #3a3c42); }
+  .knob { box-shadow:0 0 0 2px var(--c,#888), 0 0 0 3px #000, inset 0 1px 1px #ffffff1f, inset 0 -4px 8px #0009, 0 10px 16px #000c; }
+  .dpad { filter:drop-shadow(0 8px 12px #0009);
+          background:linear-gradient(var(--l3),var(--l3)) center / var(--k,48px) 100% no-repeat, linear-gradient(var(--l3),var(--l3)) center / 100% var(--k,48px) no-repeat; }
+  .dpad button { background:var(--l3); box-shadow:none; color:#8d929c; }
+  .dpad button:active, .dpad button.held { background:var(--l1); color:#fff; box-shadow:inset 0 3px 6px #000c; }
+
+  /* コントローラー接続中は画面のパッドを控えめに (Steam Link の考え方) */
+  body.gp-on #padArea .ctrl { opacity:.35; }
+  body.gp-on #padArea .hint::after { content:'  ・ コントローラーで操作中'; color:#2ecc40; }
+
+  @media (max-width:700px) {
+    #hdrStop.estop { position:fixed; right:12px; bottom:12px; z-index:40; width:96px; height:96px; flex-direction:column; justify-content:center; gap:4px; padding:6px; }
+    #hdrStop .lbl { font-size:16px; }
+    .ready { display:none; }
+  }
 </style>
 </head>
 <body>
@@ -313,14 +389,17 @@
   <h1>SwarmBot</h1>
   <div id="bots"></div>
   <span id="distPill" class="pill hidden">距離 --</span>
+  <span id="ready" class="ready"><i></i><b>未接続</b></span>
   <button id="gpPill" class="pill" title="コントローラーの割り当てを表示">コントローラー未接続</button>
   <div class="tabs">
     <button data-tab="drive" class="active">操作</button>
     <button data-tab="path">パス</button>
     <button data-tab="swarm">群制御</button>
   </div>
-  <button id="hdrStop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)">STOP</button>
+  <button id="hdrStop" class="estop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)"><span class="cap"></span><span class="lbl">STOP</span></button>
 </header>
+<div id="stopBanner"><b>停止中</b><span>すべての機体を止めて、動きをロックしています</span>
+  <button id="resumeBtn"><i></i>長押しで再開</button></div>
 
 <!-- ================= 操作画面 ================= -->
 <section class="view active" id="drive">
@@ -898,9 +977,37 @@ function padVec(i, keyVecs) {
   if (Math.abs(x) === 1 && Math.abs(y) === 1) x *= 0.5;
   return [x, y];
 }
+// 停止はラッチ式: 押した瞬間に止め、再開は「長押し」でしか解除できない (FRC / ISO 13850 の考え方)
+let latched = false;
 function emergencyStop() {
+  latched = true; document.body.classList.add('latched'); sfx('stop');
   stopAll(); if (run) stopRun(); swarmHook?.stop(); missionHook?.stop(); toast('■ 全停止');
 }
+// 短いクリック音 (Switch の UI のように操作ごとに音で確認できる)
+let actx = null;
+function sfx(kind) {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
+    const f = { stop: 220, tap: 1400, ok: 880 }[kind] || 1200, d = kind === 'stop' ? 0.18 : 0.03;
+    o.type = kind === 'stop' ? 'square' : 'sine'; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(kind === 'stop' ? 0.08 : 0.04, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g).connect(actx.destination); o.start(t); o.stop(t + d);
+  } catch {}
+}
+document.addEventListener('pointerdown', e => { if (e.target.closest('button') && !e.target.closest('#hdrStop')) sfx('tap'); });
+function resume() { latched = false; document.body.classList.remove('latched'); sfx('ok'); toast('再開'); }
+(() => {
+  const b = $('resumeBtn'); let t = 0;
+  const start = e => { e.preventDefault(); b.classList.add('hold'); t = setTimeout(resume, 1200); };
+  const end = () => { b.classList.remove('hold'); clearTimeout(t); };
+  b.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(k => b.addEventListener(k, end));
+  setInterval(() => {
+    const n = robots.filter(r => r.ok).length, el = $('ready');
+    el.className = 'ready' + (n === N ? ' ok' : n ? ' part' : '');
+    el.querySelector('b').textContent = n === N ? `準備OK ${n}/${N}` : n ? `一部接続 ${n}/${N}` : '未接続 0/' + N;
+  }, 500);
+})();
 let toastT = 0;
 function toast(t) {
   let el = $('toast'); if (!el) { el = document.createElement('div'); el.id = 'toast'; document.body.appendChild(el); }
@@ -1311,6 +1418,7 @@ refreshPath();
 //  送信ループ (20Hz)
 // =====================================================================
 setInterval(() => {
+  if (latched) { robots.forEach(r => r.send(0, 0)); return; }
   if (missionHook && missionHook.active()) {
     const cmds = missionHook.tick();
     robots.forEach((r, i) => r.send(...cmds[i]));
@@ -1376,6 +1484,7 @@ setInterval(() => {
   }
   gp.onAction = act => {
     if (act === 'stop') { emergencyStop(); gp.rumble(250, 1); return; }
+    if (latched) return;
     if (act === 'nextTab' || act === 'prevTab') {
       const k = TABS.indexOf(view); tabBtn(TABS[(k + (act === 'nextTab' ? 1 : -1) + TABS.length) % TABS.length])?.click(); return;
     }
@@ -1430,12 +1539,19 @@ setInterval(() => {
       + '<tr data-i="kb"><td><span class="key">Space</span></td><td>キーボードから全停止 (? で この表)</td></tr>';
     drawPad();
   };
-  gp.onTick = () => { if ($('gpHelp').classList.contains('show')) drawPad(); };
+  let holdA = 0;
+  gp.onTick = () => {
+    if ($('gpHelp').classList.contains('show')) drawPad();
+    // 停止中: A (Switch 表記) を 1.2 秒長押しで再開
+    if (latched && gp.pressed.has(1)) { holdA = holdA || performance.now(); if (performance.now() - holdA > 1200) { holdA = 0; resume(); gp.rumble(60, 0.3); } }
+    else holdA = 0;
+  };
   $('gpPill').onclick = () => { $('gpHelp').classList.add('show'); renderGp(); };
   $('gpHelpClose').onclick = () => $('gpHelp').classList.remove('show');
   $('gpHelp').onclick = e => { if (e.target.id === 'gpHelp') $('gpHelp').classList.remove('show'); };
-  $('hdrStop').onclick = () => emergencyStop();
-  gp.onChange = () => { renderGp(); if (gp.connected) toast(' コントローラー接続'); };
+  $('hdrStop').addEventListener('pointerdown', e => { e.preventDefault(); emergencyStop(); });
+  $('hdrStop').addEventListener('keydown', e => { if (e.key === 'Enter') emergencyStop(); });
+  gp.onChange = () => { renderGp(); document.body.classList.toggle('gp-on', gp.connected); if (gp.connected) toast('コントローラー接続'); };
   renderGp();
 })();
 </script>
