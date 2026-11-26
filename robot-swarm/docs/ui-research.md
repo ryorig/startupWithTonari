@@ -28,3 +28,9 @@ StarCraft II, Halo Wars 2, Pikmin 4, Company of Heroes 3, Total War, Age of Empi
 
 ## 次の候補 (群制御タブ)
 マップを画面いっぱいに、号機カードを端に固定 (Mini Motorways, InOrbit) / 数字キー 1・2・3・4 で選択 (StarCraft II) / 動く前に矢印で予定を表示 (Into the Breach) / ドラッグで目標の向きも指定 (RViz)
+
+## 使用している写真素材
+| ファイル | 内容 | 出典・条件 |
+|---|---|---|
+| `app/img/procon.jpg` | Nintendo Switch Pro コントローラー (割り当て画面) | Evan-Amos / Wikimedia Commons「Nintendo-Switch-Pro-Controller-FL.jpg」パブリックドメイン (API で確認)。製品は任天堂の商標 |
+| `app/img/rubble.jpg` | 真上から見た瓦礫 (パス・群制御のフィールド背景) | ぱくたそ (YUKIR20505_38) 無料・商用可。素材単体の再配布は不可 → リポジトリは非公開のまま扱う |

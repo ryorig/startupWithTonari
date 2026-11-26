@@ -220,7 +220,7 @@
     const T = (x, y) => [mv.ox + x * s, mv.oy + y * s];
     mctx.clearRect(0, 0, box.width, box.height);
     const [x0, y0] = T(0, 0), [x1, y1] = T(P.field.w, P.field.h);
-    mctx.fillStyle = '#1e1e1e'; mctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    drawFieldBg(mctx, x0, y0, x1 - x0, y1 - y0);
     mctx.strokeStyle = '#ffffff12';
     for (let x = 0; x <= P.field.w; x += 10) { const [a] = T(x, 0); mctx.beginPath(); mctx.moveTo(a, y0); mctx.lineTo(a, y1); mctx.stroke(); }
     for (let y = 0; y <= P.field.h; y += 10) { const [, b] = T(0, y); mctx.beginPath(); mctx.moveTo(x0, b); mctx.lineTo(x1, b); mctx.stroke(); }

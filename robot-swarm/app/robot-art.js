@@ -60,5 +60,17 @@
     ctx.beginPath(); ctx.roundRect(x - w / 2, y - 10, w, 20, 10); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#fff'; ctx.fillText(text, x, y + 1); ctx.restore();
   }
+  // フィールドの背景 (瓦礫の写真を暗くして敷く。写真: ぱくたそ)
+  const bg = new Image(); bg.src = 'img/rubble.jpg';
+  bg.onload = () => { root.dispatchEvent(new Event('fieldbg')); };
+  function drawFieldBg(ctx, x, y, w, h) {
+    ctx.fillStyle = '#16171a'; ctx.fillRect(x, y, w, h);
+    if (!bg.complete || !bg.naturalWidth) return;
+    const s = Math.max(w / bg.naturalWidth, h / bg.naturalHeight), iw = bg.naturalWidth * s, ih = bg.naturalHeight * s;
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.globalAlpha = 0.55; ctx.drawImage(bg, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
+    ctx.globalAlpha = 1; ctx.fillStyle = '#0b0c0e80'; ctx.fillRect(x, y, w, h); ctx.restore();
+  }
+  root.drawFieldBg = drawFieldBg;
   root.drawTank = drawTank; root.drawBadge = drawBadge;
 })(window);

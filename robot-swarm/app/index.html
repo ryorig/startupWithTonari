@@ -403,6 +403,15 @@
   body.field { --l0:#000; --l1:#000; --l2:#0b0b0b; --l3:#1a1a1a; --l4:#262626; --hair:#ffffff40; --txt2:#e6e6e6; zoom:1.18; }
   body.field button { border:2px solid #ffffff55; min-height:44px; }
   body.field .muted { color:#fff; }
+
+  /* 写真素材 */
+  #gpPhoto { position:relative; max-width:640px; margin:8px auto; border-radius:14px; overflow:hidden; background:#fff; }
+  #gpPhoto img { display:block; width:100%; }
+  #gpPhoto svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  #gpPhoto .credit { position:absolute; right:8px; bottom:6px; font-size:10px; color:#555; }
+  #gpHelp .box { max-width:960px; }
+  #gpHelp .gpCols { display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:start; }
+  @media (max-width:800px) { #gpHelp .gpCols { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -463,7 +472,7 @@
       <input type="range" id="scrub" min="0" max="1000" value="0">
       <span id="tLabel">0.0 / 0.0 秒</span>
     </div>
-    <div class="muted">ロボットをドラッグで移動・先端の白い点をドラッグで向きを変更。半透明 = 1つ前の隊形、線 = 移動経路。</div>
+    <div class="muted">ロボットをドラッグで移動・先端の白い点をドラッグで向きを変更。半透明 = 1つ前の隊形、線 = 移動経路。<span style="float:right;opacity:.6">背景写真: ぱくたそ</span></div>
   </div>
 
   <div id="side">
@@ -1159,6 +1168,7 @@ function resizeField() {
   drawField();
 }
 addEventListener('resize', () => { if (view === 'path') resizeField(); });
+addEventListener('fieldbg', () => { if (view === 'path') drawField(); });
 const toPx = (x, y) => [view2.ox + x * view2.s, view2.oy + y * view2.s];
 const toCm = (px, py) => [(px - view2.ox) / view2.s, (py - view2.oy) / view2.s];
 
@@ -1178,7 +1188,7 @@ function drawField() {
   const box = $('fieldBox').getBoundingClientRect();
   ctx.clearRect(0, 0, box.width, box.height);
   const [x0, y0] = toPx(0, 0), [x1, y1] = toPx(P.field.w, P.field.h);
-  ctx.fillStyle = '#1e1e1e'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+  drawFieldBg(ctx, x0, y0, x1 - x0, y1 - y0);
   ctx.strokeStyle = '#ffffff10'; ctx.lineWidth = 1;
   for (let x = 0; x <= P.field.w; x += 10) { const [a] = toPx(x, 0); ctx.beginPath(); ctx.moveTo(a, y0); ctx.lineTo(a, y1); ctx.stroke(); }
   for (let y = 0; y <= P.field.h; y += 10) { const [, b] = toPx(0, y); ctx.beginPath(); ctx.moveTo(x0, b); ctx.lineTo(x1, b); ctx.stroke(); }
@@ -1489,8 +1499,9 @@ setInterval(() => {
 <div id="gpHelp"><div class="box">
   <h3 style="margin:0 0 6px;display:flex;justify-content:space-between">コントローラーの割り当て <button id="gpHelpClose">閉じる</button></h3>
   <div class="muted" id="gpHelpName"></div>
-  <svg id="gpSvg" viewBox="0 -4 520 250" style="width:100%;max-width:560px;display:block;margin:8px auto"></svg>
-  <table id="gpTable"></table>
+  <div class="gpCols"><div id="gpPhoto"><img src="img/procon.jpg" alt="Nintendo Switch Pro コントローラー"><svg id="gpSvg" viewBox="0 0 1400 1088"></svg>
+    <div class="credit">写真: Evan-Amos / Wikimedia Commons (パブリックドメイン)</div></div>
+  <table id="gpTable"></table></div>
   <div class="muted">押したボタンが青く光ります。Switch Pro コントローラーは USB か Bluetooth で Mac に接続し、Chrome で何かボタンを1回押すと認識されます。</div>
 </div></div>
 <script src="field.js"></script>
@@ -1528,37 +1539,36 @@ setInterval(() => {
       ids.forEach(i => couplerHook.lock(i, on)); gp.rumble(80, 0.4); toast(on ? 'ロック' : '解除');
     }
   };
-  // ---- 割り当て図 (Switch Pro コントローラーの配置) ----
-  // [ボタン番号, x, y, 形] 形: c=丸 r=横長 s=スティック
-  const LAYOUT = [[4,110,28,'r'],[6,110,8,'r'],[5,410,28,'r'],[7,410,8,'r'],
-    [8,205,70,'c'],[9,315,70,'c'],[16,290,105,'c'],[17,230,105,'c'],
-    ['LS',130,95,'s'],['RS',330,160,'s'],[12,190,140,'c'],[13,190,190,'c'],[14,165,165,'c'],[15,215,165,'c'],
-    [3,410,70,'c'],[1,440,100,'c'],[0,410,130,'c'],[2,380,100,'c']];
+  // ---- 割り当て図: 実物の写真 (Wikimedia Commons, Evan-Amos, パブリックドメイン) の上に番号を重ねる ----
+  // [ボタン番号, x, y] = 写真 (1400x1088) 上の位置。L/ZL/R/ZR は写真の上端の外に置く
+  // [番号, x, y, ラベルのずれ dx, dy]
+  const LAYOUT = [[6,300,175,0,-62],[4,470,150,0,-62],[7,1200,190,0,-62],[5,1040,160,0,-62],
+    ['LS',453,239,-235,20],['RS',840,437,0,112],
+    [12,545,335],[13,520,435],[14,490,380],[15,590,388],
+    [8,627,201,0,-72],[17,669,278,-108,0],[9,901,251,0,-80],[16,820,310,-58,-66],
+    [3,1050,285],[2,948,325],[1,1118,365],[0,1015,405]];
   const NAME = { 12:'↑', 13:'↓', 14:'←', 15:'→' };
   function lab(i) {
     if (NAME[i]) return NAME[i];
     const r = gp.map.find(m => m[0] === i); if (!r) return '';
     const t = gp.kind === 'switch' ? r[1] : r[2];
-    return t.replace('スティック押し込み', '').replace('スティック', '').replace('キャプチャ', '●');
+    if (i === 'LS') return 'Lスティック';
+    if (i === 'RS') return 'Rスティック';
+    return t.replace('スティック押し込み', 'R押込').replace('スティック', '').replace('キャプチャ', '●');
   }
   function drawPad() {
     const on = i => typeof i === 'number' ? gp.pressed.has(i) : i === 'LS' ? Math.hypot(gp.lx, gp.ly) > 0.2 : Math.hypot(gp.rx, gp.ry) > 0.2;
-    // Pro コントローラーの外形 (グリップ付き)
-    let h = `<defs><linearGradient id="gpBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3c42"/><stop offset="1" stop-color="#1b1c1f"/></linearGradient>
-      <radialGradient id="gpBtn" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#4a4d54"/><stop offset="1" stop-color="#26282c"/></radialGradient>
-      <radialGradient id="gpOn" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#6fb3ff"/><stop offset="1" stop-color="#0b62c4"/></radialGradient></defs>
-      <path d="M70,22 L150,14 L150,30 L70,36 Z M450,22 L370,14 L370,30 L450,36 Z" fill="#26282c"/>
-      <path d="M112,42 C160,30 360,30 408,42 C470,58 506,124 508,182 C510,226 472,240 444,222 C418,205 398,196 366,194 L154,194 C122,196 102,205 76,222 C48,240 10,226 12,182 C14,124 50,58 112,42 Z" fill="url(#gpBody)" stroke="#000" stroke-width="2"/>
-      <path d="M120,48 C170,38 350,38 400,48" fill="none" stroke="#ffffff22" stroke-width="2"/>`;
-    for (const [i, x, y, f] of LAYOUT) {
-      const fill = on(i) ? 'url(#gpOn)' : 'url(#gpBtn)', txt = lab(i);
-      if (f === 'r') h += `<rect x="${x - 45}" y="${y - 12}" width="90" height="24" rx="10" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
-      else if (f === 's') {
-        const dx = (i === 'LS' ? gp.lx : gp.rx) * 14, dy = (i === 'LS' ? gp.ly : gp.ry) * 14;
-        h += `<circle cx="${x}" cy="${y}" r="30" fill="#0c0d0f" stroke="#000"/><circle cx="${x + dx}" cy="${y + dy}" r="20" fill="${fill}" stroke="#000" stroke-width="2"/><circle cx="${x + dx}" cy="${y + dy}" r="11" fill="#141518"/>`;
-      } else h += `<circle cx="${x}" cy="${y}" r="15" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
-      const fs = txt.length > 2 ? 9 : 13, ty = f === 's' ? y + 46 : y + 5;
-      h += `<text x="${x}" y="${ty}" fill="#fff" font-size="${f === 's' ? 11 : fs}" font-weight="800" text-anchor="middle">${f === 's' ? txt + 'スティック' : txt}</text>`;
+    let h = '';
+    // 文字が印刷されているボタン (ABXY・十字) は丸だけ。他は大きなラベルを付ける
+    const plain = new Set([0, 1, 2, 3, 12, 13, 14, 15]);
+    for (const [i, x, y, dx = 0, dy = -78] of LAYOUT) {
+      const hot = on(i), t = lab(i), stick = typeof i === 'string';
+      const dpad = i >= 12 && i <= 15;
+      h += `<circle cx="${x}" cy="${y}" r="${stick ? 66 : dpad ? 24 : 34}" fill="${hot ? '#2f8cf066' : 'none'}" stroke="${hot ? '#2f8cf0' : '#ffcc00'}" stroke-width="${hot ? 12 : 7}"/>`;
+      if (plain.has(i)) continue;
+      const w = Math.max(80, t.length * 40 + 36), lx = x + dx, ly = y + dy;
+      h += `<rect x="${lx - w / 2}" y="${ly - 32}" width="${w}" height="62" rx="31" fill="${hot ? '#2f8cf0' : '#111214'}" stroke="#ffcc00" stroke-width="4"/>`
+        + `<text x="${lx}" y="${ly + 13}" fill="#fff" font-size="40" font-weight="800" text-anchor="middle" font-family="DIN Alternate, Hiragino Sans, sans-serif">${t}</text>`;
     }
     $('gpSvg').innerHTML = h;
     [...$('gpTable').rows].forEach(r => r.classList.toggle('hot', on(isNaN(+r.dataset.i) ? r.dataset.i : +r.dataset.i)));
