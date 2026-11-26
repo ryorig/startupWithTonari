@@ -33,4 +33,4 @@ StarCraft II, Halo Wars 2, Pikmin 4, Company of Heroes 3, Total War, Age of Empi
 | ファイル | 内容 | 出典・条件 |
 |---|---|---|
 | `app/img/procon.jpg` | Nintendo Switch Pro コントローラー (割り当て画面) | Evan-Amos / Wikimedia Commons「Nintendo-Switch-Pro-Controller-FL.jpg」パブリックドメイン (API で確認)。製品は任天堂の商標 |
-| `app/img/rubble.jpg` | 真上から見た瓦礫 (パス・群制御のフィールド背景) | ぱくたそ (YUKIR20505_38) 無料・商用可。素材単体の再配布は不可 → リポジトリは非公開のまま扱う |
+| `app/img/rubble.jpg` | 真上から見た瓦礫 (パス・群制御のフィールド背景) | ぱくたそ (YUKIR20505_38) 無料・商用可。素材単体の再配布は不可。⚠ このリポジトリは公開 (PUBLIC) なので扱いを要判断 |
