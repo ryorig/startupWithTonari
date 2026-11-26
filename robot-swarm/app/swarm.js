@@ -249,13 +249,11 @@
       // ロボット
       const p = poses[i];
       if (p) {
-        const [u, v] = T(p.x, p.y), R = Math.max(9, 6 * s), stale = now - p.t > STALE_MS;
+        const [u, v] = T(p.x, p.y), R = Math.max(14, 7 * s), stale = now - p.t > STALE_MS;
         mctx.save(); mctx.translate(u, v); mctx.rotate(rad(p.h)); mctx.globalAlpha = stale ? 0.3 : 1;
-        mctx.fillStyle = c; mctx.beginPath(); mctx.roundRect(-R * .8, -R * .9, R * 1.6, R * 1.8, R * .3); mctx.fill();
-        mctx.fillStyle = '#fff'; mctx.beginPath(); mctx.moveTo(0, -R * .75); mctx.lineTo(R * .4, -R * .15); mctx.lineTo(-R * .4, -R * .15); mctx.fill();
+        drawTank(mctx, R, c, { phase: now / 400 });
         mctx.restore();
-        mctx.fillStyle = '#fff'; mctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.textAlign = 'center';
-        mctx.fillText(String(i + 1) + (stale ? ' (見失い)' : ''), u, v + R * 1.3 + 12); mctx.textAlign = 'left';
+        drawBadge(mctx, u, v + R * 1.5 + 8, (i + 1) + '号機' + (stale ? ' 見失い' : ''), stale ? '#f5a524' : c);
       }
     });
     if (!H) { mctx.fillStyle = '#ffffff'; mctx.font = '600 14px "Hiragino Sans",sans-serif'; mctx.textAlign = 'center'; mctx.fillText('フィールド未校正', (x0 + x1) / 2, (y0 + y1) / 2 - 8); mctx.font = '300 12px "Hiragino Sans",sans-serif'; mctx.fillStyle = '#cccccc'; mctx.fillText('右の「2. フィールド校正」をしてください', (x0 + x1) / 2, (y0 + y1) / 2 + 14); mctx.textAlign = 'left'; }

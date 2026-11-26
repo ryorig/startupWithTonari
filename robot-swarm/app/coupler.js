@@ -235,9 +235,8 @@
     ps.forEach((p, i) => {
       const [u, v] = T(p);
       c.save(); c.translate(u, v); c.rotate(-p.th + Math.PI / 2);
-      c.fillStyle = COLORS[i]; c.beginPath(); c.roundRect(-g.track / 2 * s, -6 * s, g.track * s, 12 * s, 4); c.fill();
-      c.fillStyle = '#fff'; c.beginPath(); c.moveTo(0, -5 * s); c.lineTo(2.5 * s, -1 * s); c.lineTo(-2.5 * s, -1 * s); c.fill();
-      c.restore(); c.fillStyle = '#fff'; c.font = 'bold 11px "DIN Alternate","Hiragino Sans",sans-serif'; c.fillText(i + 1, u + 14, v + 4);
+      drawTank(c, 6 * s, COLORS[i], { phase: performance.now() / 400 });
+      c.restore(); drawBadge(c, u + 6 * s * 1.6, v, String(i + 1), COLORS[i]);
     });
   }
   function drawInfo() {

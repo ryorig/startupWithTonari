@@ -381,6 +381,28 @@
     #hdrStop .lbl { font-size:16px; }
     .ready { display:none; }
   }
+
+  /* ===== 災害現場向け ===== */
+  #alerts { position:fixed; top:74px; left:50%; transform:translateX(-50%); z-index:45; display:flex; flex-direction:column; gap:6px; width:min(560px,92vw); }
+  .alert { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; background:#3a0d0e; border:2px solid #e5484d; color:#fff; font-size:14px; }
+  .alert.warn { background:#3a2a05; border-color:#f5a524; } .alert.info { background:#0d2a3a; border-color:#5a8cff; }
+  .alert.new { animation:alertBlink 1s steps(2) infinite; }
+  @keyframes alertBlink { 50% { border-color:transparent; } }
+  header button { white-space:nowrap; }
+  @media (max-width:1180px) { #gpPill { display:none; } }
+  .alert button { white-space:nowrap; flex:none; }
+  .alert b { white-space:nowrap;  font-family:var(--din),var(--jp); letter-spacing:.06em; } .alert button { margin-left:auto; }
+  .bot button.lost { color:#fff !important; background:#5a0f12 !important; animation:alertBlink 1s steps(2) infinite; }
+  #logPanel { position:fixed; inset:0; background:#000c; z-index:60; display:none; align-items:center; justify-content:center; }
+  #logPanel.show { display:flex; }
+  #logPanel .box { background:var(--l2); border:1px solid var(--hair); border-radius:14px; padding:16px; width:min(720px,94vw); max-height:86vh; overflow:auto; }
+  #logPanel h3 { display:flex; justify-content:space-between; margin:0 0 10px; }
+  #logTable td { padding:5px 8px; border-bottom:1px solid var(--hair); font-size:13px; } #logTable td:first-child { font-family:var(--din); color:var(--txt2); white-space:nowrap; }
+  #fieldBtn.on { background:#ffcc00; color:#111; }
+  /* 手袋・屋外モード: 大きく、白黒はっきり (直射日光・手袋でも押せる) */
+  body.field { --l0:#000; --l1:#000; --l2:#0b0b0b; --l3:#1a1a1a; --l4:#262626; --hair:#ffffff40; --txt2:#e6e6e6; zoom:1.18; }
+  body.field button { border:2px solid #ffffff55; min-height:44px; }
+  body.field .muted { color:#fff; }
 </style>
 </head>
 <body>
@@ -389,6 +411,8 @@
   <h1>SwarmBot</h1>
   <div id="bots"></div>
   <span id="distPill" class="pill hidden">距離 --</span>
+  <button id="fieldBtn" class="small" title="手袋・屋外モード (文字とボタンを大きく、白黒はっきり)">手袋</button>
+  <button id="logBtn" class="small" title="操作記録">記録</button>
   <span id="ready" class="ready"><i></i><b>未接続</b></span>
   <button id="gpPill" class="pill" title="コントローラーの割り当てを表示">コントローラー未接続</button>
   <div class="tabs">
@@ -398,6 +422,8 @@
   </div>
   <button id="hdrStop" class="estop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)"><span class="cap"></span><span class="lbl">STOP</span></button>
 </header>
+<div id="alerts"></div>
+<div id="logPanel"><div class="box"><h3>操作記録 <span><button id="logCsv" class="small">CSVで保存</button> <button id="logClose" class="small">閉じる</button></span></h3><table id="logTable"></table></div></div>
 <div id="stopBanner"><b>停止中</b><span>すべての機体を止めて、動きをロックしています</span>
   <button id="resumeBtn"><i></i>長押しで再開</button></div>
 
@@ -712,6 +738,7 @@
 <script src="lib/cv.js"></script>
 <script src="lib/aruco.js"></script>
 <script src="lib/apriltag_36h11.js"></script>
+<script src="robot-art.js"></script>
 <script>
 // =====================================================================
 //  設定
@@ -751,7 +778,7 @@ class Robot {
   }
   get ok() { return !!this.rx && this.dev?.gatt.connected; }
   async connect() {
-    if (this.ok) { this.dev.gatt.disconnect(); return; }
+    if (this.ok) { this.manual = true; this.dev.gatt.disconnect(); return; }
     try {
       const dev = await navigator.bluetooth.requestDevice({
         filters: [{ services: [SVC] }, { namePrefix: 'SwarmBot' }], optionalServices: [SVC] });
@@ -769,8 +796,8 @@ class Robot {
           this.onMsg(new TextDecoder().decode(dv));
         });
       } catch {}
-      this.dot.classList.add('on');
-      this.updateLabel();
+      this.dot.classList.add('on'); this.lastRx = performance.now(); this.manual = false;
+      this.updateLabel(); window.fieldOps?.log('接続', this.id + '号機');
       window.couplerInput?.connected(this.id);   // 連結器の状態を問い合わせ
     } catch (e) { console.warn(e); if (e.name !== 'NotFoundError') alert('接続失敗: ' + e.message); }
   }
@@ -779,6 +806,7 @@ class Robot {
     this.btn.textContent = this.id + '号機: 接続中' + (this.realId ? ' (実機ID ' + this.realId + ')' : '');
   }
   onMsg(t) {
+    this.lastRx = performance.now();
     let m;
     if ((m = t.match(/^ID(\d+)/))) { this.realId = m[1]; this.updateLabel(); this.btn.title = t; }
     else if ((m = t.match(/^IP(\S+)/))) { onCameraIP(m[1]); }
@@ -787,7 +815,7 @@ class Robot {
     else if (t === 'K1' || t === 'K0') { window.couplerInput?.status(this.id, t); }
     else if (t.startsWith('D')) { this.dist = t === 'D-' ? -1 : parseInt(t.slice(1)); updateDist(this); }
   }
-  onDisc() { this.rx = null; this.realId = null; this.dot.classList.remove('on'); this.updateLabel(); }
+  onDisc() { window.fieldOps?.lost(this); this.rx = null; this.realId = null; this.dot.classList.remove('on'); this.updateLabel(); }
   async send(l, r, force = false) {
     if (!this.ok || this.busy) return;
     const msg = (l === 0 && r === 0) ? 'S\n' : `M,${l},${r}\n`;
@@ -1135,18 +1163,15 @@ const toPx = (x, y) => [view2.ox + x * view2.s, view2.oy + y * view2.s];
 const toCm = (px, py) => [(px - view2.ox) / view2.s, (py - view2.oy) / view2.s];
 
 function drawRobot(p, color, label, alpha = 1, handle = false) {
-  const [x, y] = toPx(p.x, p.y), R = Math.max(10, 7 * view2.s);
+  const [x, y] = toPx(p.x, p.y), R = Math.max(15, 8 * view2.s);
   ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(rad(p.h));
-  ctx.fillStyle = color; ctx.strokeStyle = '#0008'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.roundRect(-R * 0.8, -R * 0.9, R * 1.6, R * 1.8, R * 0.35); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.moveTo(0, -R * 0.75); ctx.lineTo(R * 0.4, -R * 0.15); ctx.lineTo(-R * 0.4, -R * 0.15); ctx.fill();
+  drawTank(ctx, R, color, { phase: label.length ? performance.now() / 400 : 0 });
   if (handle) {
     ctx.strokeStyle = '#fff8'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(0, -R); ctx.lineTo(0, -R * 1.8); ctx.stroke();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -R * 1.8, 5, 0, 7); ctx.fill();
   }
   ctx.restore();
-  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = '#fff'; ctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText(label, x, y + R * 1.3 + 12); ctx.restore();
+  if (label) { ctx.save(); ctx.globalAlpha = alpha; drawBadge(ctx, x, y + R * 1.5 + 8, label, color); ctx.restore(); }
 }
 
 function drawField() {
@@ -1464,10 +1489,11 @@ setInterval(() => {
 <div id="gpHelp"><div class="box">
   <h3 style="margin:0 0 6px;display:flex;justify-content:space-between">コントローラーの割り当て <button id="gpHelpClose">閉じる</button></h3>
   <div class="muted" id="gpHelpName"></div>
-  <svg id="gpSvg" viewBox="0 0 520 230" style="width:100%;max-width:560px;display:block;margin:8px auto"></svg>
+  <svg id="gpSvg" viewBox="0 -4 520 250" style="width:100%;max-width:560px;display:block;margin:8px auto"></svg>
   <table id="gpTable"></table>
   <div class="muted">押したボタンが青く光ります。Switch Pro コントローラーは USB か Bluetooth で Mac に接続し、Chrome で何かボタンを1回押すと認識されます。</div>
 </div></div>
+<script src="field.js"></script>
 <script src="gamepad.js"></script>
 <script src="coupler-core.js"></script>
 <script src="swarm.js"></script>
@@ -1517,15 +1543,22 @@ setInterval(() => {
   }
   function drawPad() {
     const on = i => typeof i === 'number' ? gp.pressed.has(i) : i === 'LS' ? Math.hypot(gp.lx, gp.ly) > 0.2 : Math.hypot(gp.rx, gp.ry) > 0.2;
-    let h = '<rect x="40" y="40" width="440" height="180" rx="80" fill="#1e1e1e" stroke="#fff" stroke-width="3"/>';
+    // Pro コントローラーの外形 (グリップ付き)
+    let h = `<defs><linearGradient id="gpBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3c42"/><stop offset="1" stop-color="#1b1c1f"/></linearGradient>
+      <radialGradient id="gpBtn" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#4a4d54"/><stop offset="1" stop-color="#26282c"/></radialGradient>
+      <radialGradient id="gpOn" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#6fb3ff"/><stop offset="1" stop-color="#0b62c4"/></radialGradient></defs>
+      <path d="M70,22 L150,14 L150,30 L70,36 Z M450,22 L370,14 L370,30 L450,36 Z" fill="#26282c"/>
+      <path d="M112,42 C160,30 360,30 408,42 C470,58 506,124 508,182 C510,226 472,240 444,222 C418,205 398,196 366,194 L154,194 C122,196 102,205 76,222 C48,240 10,226 12,182 C14,124 50,58 112,42 Z" fill="url(#gpBody)" stroke="#000" stroke-width="2"/>
+      <path d="M120,48 C170,38 350,38 400,48" fill="none" stroke="#ffffff22" stroke-width="2"/>`;
     for (const [i, x, y, f] of LAYOUT) {
-      const fill = on(i) ? '#0074d9' : '#4a4a4a', txt = lab(i);
-      if (f === 'r') h += `<rect x="${x - 45}" y="${y - 12}" width="90" height="24" rx="8" fill="${fill}" stroke="#fff"/>`;
+      const fill = on(i) ? 'url(#gpOn)' : 'url(#gpBtn)', txt = lab(i);
+      if (f === 'r') h += `<rect x="${x - 45}" y="${y - 12}" width="90" height="24" rx="10" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
       else if (f === 's') {
         const dx = (i === 'LS' ? gp.lx : gp.rx) * 14, dy = (i === 'LS' ? gp.ly : gp.ry) * 14;
-        h += `<circle cx="${x}" cy="${y}" r="30" fill="#000" stroke="#fff"/><circle cx="${x + dx}" cy="${y + dy}" r="18" fill="${fill}" stroke="#fff"/>`;
-      } else h += `<circle cx="${x}" cy="${y}" r="15" fill="${fill}" stroke="#fff"/>`;
-      h += `<text x="${x + (f === 's' ? (i === 'LS' ? 0 : 0) : 0)}" y="${y + 5}" fill="#fff" font-size="13" font-weight="900" text-anchor="middle">${txt}</text>`;
+        h += `<circle cx="${x}" cy="${y}" r="30" fill="#0c0d0f" stroke="#000"/><circle cx="${x + dx}" cy="${y + dy}" r="20" fill="${fill}" stroke="#000" stroke-width="2"/><circle cx="${x + dx}" cy="${y + dy}" r="11" fill="#141518"/>`;
+      } else h += `<circle cx="${x}" cy="${y}" r="15" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
+      const fs = txt.length > 2 ? 9 : 13, ty = f === 's' ? y + 46 : y + 5;
+      h += `<text x="${x}" y="${ty}" fill="#fff" font-size="${f === 's' ? 11 : fs}" font-weight="800" text-anchor="middle">${f === 's' ? txt + 'スティック' : txt}</text>`;
     }
     $('gpSvg').innerHTML = h;
     [...$('gpTable').rows].forEach(r => r.classList.toggle('hot', on(isNaN(+r.dataset.i) ? r.dataset.i : +r.dataset.i)));
