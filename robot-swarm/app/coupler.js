@@ -260,7 +260,7 @@
     box.innerHTML = '';
     robots.forEach((r, i) => {
       const b = document.createElement('button'); b.className = 'small';
-      b.style.color = COLORS[i];
+      b.style.color = COLORS[i]; b.style.borderColor = locked[i] ? COLORS[i] : '#4a5570'; if (locked[i]) b.style.background = 'color-mix(in srgb,' + COLORS[i] + ' 22%,#151a24)';
       b.textContent = `${i + 1}号機 ${locked[i] == null ? '?' : locked[i] ? '🔒' : '🔓'}`;
       b.title = 'クリックでロック/解除を切り替え';
       b.onclick = () => lock(i, !locked[i]);
@@ -276,14 +276,14 @@
     const presets = ['1-2-3', '2-1-3', '3-2-1', '1-2, 3', '2-3, 1', '1-3, 2', ''];
     panel.innerHTML = `
       <h3>🔗 連結 <span class="muted" style="font-weight:400">前 → 後ろ の順。「,」で別の列</span></h3>
-      <div class="row">列 <input id="cpSpec" style="width:110px;background:var(--panel);color:inherit;border:1px solid var(--line);border-radius:6px;padding:3px 6px" value="${st.spec}">
+      <div class="row">列 <input type="text" id="cpSpec" style="width:110px" value="${st.spec}">
         ${presets.map(p => `<button class="small cpPre" data-s="${p}">${p || '全部単独'}</button>`).join('')}</div>
       <div class="row">連結のしかた
         <label><input type="radio" name="cpMode" value="hinge" ${st.mode === 'hinge' ? 'checked' : ''}> ヒンジ (首振り)</label>
         <label><input type="radio" name="cpMode" value="rigid" ${st.mode === 'rigid' ? 'checked' : ''}> 固定</label></div>
       <div class="row">連結器 <span id="cpLocks" class="row" style="margin:0"></span>
         <button class="small" id="cpLockAll">全ロック</button><button class="small" id="cpUnlockAll">全解除</button></div>
-      <canvas id="cpSim" style="width:100%;height:190px;background:#1a1d25;border-radius:8px;display:block"></canvas>
+      <canvas id="cpSim" style="width:100%;height:190px;background:#0f131b;border:1px solid var(--line);border-radius:8px;display:block"></canvas>
       <div class="row"><button class="small" id="cpStraight">まっすぐ並べた (折れ角0)</button>
         <span class="muted" id="cpInfo"></span></div>
       <details><summary class="muted">寸法・補正 (実測して合わせる)</summary>
