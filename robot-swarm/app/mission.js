@@ -1,5 +1,5 @@
 // =====================================================================
-//  🚨 救助ミッション (災害対応 群ロボット)
+//   救助ミッション (災害対応 群ロボット)
 //
 //  役割分担 (段階的確認パイプライン)
 //    3号機 = 探索 (距離センサー)   : 走査ルートを先行し、障害物を地図化
@@ -7,9 +7,9 @@
 //    1号機 = 確認 (カメラ + AI)    : 熱源の位置へ派遣され、AI (COCO-SSD) で人かどうか最終判定
 //  人と確定 → 救助隊形 (要救助者を囲んで位置をマーク) → 探索再開
 //
-//  🧪 シミュレーション: 仮想の被災現場 (瓦礫・要救助者・おとり熱源) と仮想センサーで
+//   シミュレーション: 仮想の被災現場 (瓦礫・要救助者・おとり熱源) と仮想センサーで
 //     パイプライン全体をブラウザだけで検証できる。一括実験で方式の比較も可能。
-//  🤖 実機: 位置は俯瞰カメラの AprilTag (群制御タブ) から、センサーは BLE から取得。
+//   実機: 位置は俯瞰カメラの AprilTag (群制御タブ) から、センサーは BLE から取得。
 // =====================================================================
 (() => {
   const $ = id => document.getElementById(id);
@@ -20,7 +20,7 @@
 
   const R_CONF = 0, R_THERM = 1, R_SCOUT = 2;                 // robots[] の添字
   const ROLE = ['確認 (カメラAI)', '熱探知 (サーマル)', '探索 (距離センサー)'];
-  const ROLE_ICON = ['📷', '🌡', '📡'];
+  const ROLE_ICON = ['', '', ''];
   const T_FOV = 110, T_VFOV = 75, T_RANGE = 150;              // MLX90640-D110
   const CAM_FOV = 62, CAM_RANGE = 80;                         // XIAO OV2640 の目安
   const ROBOT_R = 7;
@@ -305,11 +305,11 @@
         else if (!c) {
           c = { id: M.cands.length + 1, ...pos, n: 1, conf: h.conf, tmax: h.tmax, status: 'pending', t: M.t, seenFrom: { x: T.x, y: T.y } };
           M.cands.push(c);
-          emit({ t: M.t, type: 'hot', icon: '🌡', text: `熱源を検知 #${c.id} (${h.tmax.toFixed(1)}℃ / 確度${h.conf}%)`, data: c, say: '熱源を検知しました' });
+          emit({ t: M.t, type: 'hot', icon: '', text: `熱源を検知 #${c.id} (${h.tmax.toFixed(1)}℃ / 確度${h.conf}%)`, data: c, say: '熱源を検知しました' });
           if (M.phase === 'explore') {
             M.cur = c;
             if (prm.pipeline === 'thermalOnly') { confirm(c, null); }
-            else setPhase('hotspot', '探索を一時停止し、熱源の位置を推定中', '🎯');
+            else setPhase('hotspot', '探索を一時停止し、熱源の位置を推定中', '');
           }
         }
       }
@@ -337,12 +337,12 @@
       const pending = prm.pipeline === 'staged' && M.cands.find(c => c.status === 'pending' && !c.tried);
       if (ph === 'explore' && pending) {
         M.cur = pending;
-        setPhase('dispatch', `未確認の熱源 #${pending.id} へ確認機を派遣`, '🚀');
+        setPhase('dispatch', `未確認の熱源 #${pending.id} へ確認機を派遣`, '');
       }
       else if (ph === 'explore') {
         // 探索機: 走査ルートを進む。距離センサーで近い障害物を避ける
         const wp = M.lanes[M.lane];
-        if (!wp) { setPhase('complete', '捜索エリアの走査が完了しました', '🏁', null); emit({ t: M.t, type: 'say', say: '捜索が完了しました' }); }
+        if (!wp) { setPhase('complete', '捜索エリアの走査が完了しました', '', null); emit({ t: M.t, type: 'say', say: '捜索が完了しました' }); }
         else {
           M.laneT += dt;
           if (inp.tof != null && inp.tof < 16 && S) M.man[R_SCOUT] = { until: M.t + 0.45, cmd: [-150, -60] };
@@ -363,7 +363,7 @@
         const c = M.cur;
         if (T && c) { const b = norm(deg(Math.atan2(c.x - T.x, -(c.y - T.y))) - T.h); cmds[R_THERM] = Math.abs(b) > 6 ? wheels(0, clamp(b / 90, -0.4, 0.4), prm.minPct) : [0, 0]; }
         if (M.phaseT > 1.8) {
-          setPhase('dispatch', `確認機 (1号機) を熱源 #${c.id} へ派遣`, '🚀');
+          setPhase('dispatch', `確認機 (1号機) を熱源 #${c.id} へ派遣`, '');
           emit({ t: M.t, type: 'say', say: '確認機を派遣します' });
         }
       }
@@ -384,7 +384,7 @@
           }
           const reached = goPlanned(R_CONF, g, go) && dist(C, g) < 10;
           if (reached || M.phaseT > 28) {
-            c.tried = true; c.vpose = { ...C, timeout: M.phaseT > 28 }; M.votes = []; setPhase('verify', `AI でカメラ映像を判定中… (熱源 #${c.id})` + (M.phaseT > 28 ? ' ※接近できず手前から判定' : ''), '🧠');
+            c.tried = true; c.vpose = { ...C, timeout: M.phaseT > 28 }; M.votes = []; setPhase('verify', `AI でカメラ映像を判定中… (熱源 #${c.id})`+ (M.phaseT > 28 ? ' ※接近できず手前から判定' : ''), '');
           }
         }
       }
@@ -422,7 +422,7 @@
             if (goPlanned(i, g, go)) done++;
           });
           if ((done === 2 && M.phaseT > 3) || M.phaseT > 15) {
-            emit({ t: M.t, type: 'info', icon: '📍', text: `要救助者 #${c.id} の位置をマークしました → 次の要救助者を探索` });
+            emit({ t: M.t, type: 'info', icon: '', text: `要救助者 #${c.id} の位置をマークしました → 次の要救助者を探索`});
             setPhase('explore');
           }
         }
@@ -438,15 +438,15 @@
         c.x = clamp(C.x + Math.sin(a) * d, 0, W); c.y = clamp(C.y - Math.cos(a) * d, 0, H);
       }
       M.stats.found++; if (M.stats.firstFound == null) M.stats.firstFound = M.t;
-      emit({ t: M.t, type: 'victim', icon: '🆘', text: `要救助者を発見！ #${c.id}` + (best ? ` (AI確度 ${(best.score * 100).toFixed(0)}%)` : ' (サーマルのみで判定)'), data: c, say: '要救助者を発見しました。救助隊形に移行します', siren: true });
-      M.setPhase('rescue', '救助隊形: 要救助者を囲んで位置をマーク', '🛡');
+      emit({ t: M.t, type: 'victim', icon: '', text: `要救助者を発見！ #${c.id}`+ (best ? `(AI確度 ${(best.score * 100).toFixed(0)}%)`: ' (サーマルのみで判定)'), data: c, say: '要救助者を発見しました。救助隊形に移行します', siren: true });
+      M.setPhase('rescue', '救助隊形: 要救助者を囲んで位置をマーク', '');
     }
     M.forceVerdict = person => {
       if (M.phase !== 'verify' || !M.cur) return;
       if (person) confirm(M.cur, { score: 1 });
       else { M.cur.status = 'false'; M.stats.decoyRejected++; emit({ t: M.t, type: 'false', icon: '✖', text: `熱源 #${M.cur.id} はオペレーターが「人ではない」と判定`, data: M.cur }); M.setPhase('explore'); }
     };
-    M.dispatchTo = c => { if (!c) return; M.cur = c; c.tried = false; M.setPhase('dispatch', `確認機を熱源 #${c.id} へ派遣 (手動指示)`, '🚀'); };
+    M.dispatchTo = c => { if (!c) return; M.cur = c; c.tried = false; M.setPhase('dispatch', `確認機を熱源 #${c.id} へ派遣 (手動指示)`, ''); };
     return M;
   }
 
@@ -559,7 +559,7 @@
     updateButtons(); draw();
   }
   function updateButtons() {
-    $('mStart').textContent = running ? '⏸ 一時停止' : (mission && mission.phase !== 'complete' ? '▶ 再開' : '▶ ミッション開始');
+    $('mStart').textContent = running ? ' 一時停止' : (mission && mission.phase !== 'complete' ? '▶ 再開' : '▶ ミッション開始');
   }
   $('mStart').onclick = () => running ? pause() : start();
   $('mReset').onclick = reset;
@@ -584,7 +584,7 @@
   $('mDispatch').onclick = () => { const c = mission?.cands.filter(c => c.status === 'pending').pop(); if (c) mission.dispatchTo(c); else alert('未確認の熱源がありません'); };
   $('mYes').onclick = () => mission?.forceVerdict(true);
   $('mNo').onclick = () => mission?.forceVerdict(false);
-  $('mResume').onclick = () => { if (mission) { mission.setPhase('explore', '探索を再開 (手動指示)', '🔁'); } };
+  $('mResume').onclick = () => { if (mission) { mission.setPhase('explore', '探索を再開 (手動指示)', ''); } };
   $('mReport').onclick = exportReport;
 
   // マップクリック: シミュレーションの配置編集
@@ -729,13 +729,13 @@
     mctx.strokeStyle = '#555'; mctx.strokeRect(x0, y0, W * s, H * s);
     // 拠点
     const [bx, by] = T(0, H - 40); mctx.fillStyle = 'rgba(59,91,219,0.18)'; mctx.fillRect(bx, by, 55 * s, 40 * s);
-    mctx.fillStyle = '#8fa8ff'; mctx.font = '11px system-ui'; mctx.fillText('拠点', bx + 4, by + 13);
+    mctx.fillStyle = '#8fa8ff'; mctx.font = '11px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.fillText('拠点', bx + 4, by + 13);
 
     // 正解 (シミュレーションの実際の配置)
     if (mode === 'sim' && world) {
       world.obstacles.forEach(o => { const [x, y] = T(o.x, o.y); mctx.fillStyle = showTruth ? '#4a4038' : '#2a2620'; mctx.fillRect(x, y, o.w * s, o.h * s); });
       if (showTruth) world.sources.forEach(src => {
-        const [x, y] = T(src.x, src.y); mctx.font = `${Math.max(14, 13 * s)}px system-ui`; mctx.textAlign = 'center'; mctx.globalAlpha = 0.85;
+        const [x, y] = T(src.x, src.y); mctx.font = `${Math.max(14, 13 * s)}px "DIN Alternate","Hiragino Sans",sans-serif`; mctx.textAlign = 'center'; mctx.globalAlpha = 0.85;
         mctx.fillText(SRC[src.type].icon, x, y + 6); mctx.globalAlpha = 1; mctx.textAlign = 'left';
       });
     }
@@ -754,13 +754,13 @@
         const [x, y] = T(c.x, c.y), pulse = 1 + 0.25 * Math.sin(now / 150);
         if (c.status === 'victim') {
           mctx.strokeStyle = '#ff3b30'; mctx.lineWidth = 3; mctx.beginPath(); mctx.arc(x, y, 16 * pulse, 0, 7); mctx.stroke();
-          mctx.fillStyle = '#ff3b30'; mctx.font = 'bold 12px system-ui'; mctx.fillText(`🆘 要救助者 #${c.id}`, x + 18, y - 10);
+          mctx.fillStyle = '#ff3b30'; mctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.fillText(`要救助者 #${c.id}`, x + 18, y - 10);
         } else if (c.status === 'false') {
           mctx.strokeStyle = '#888'; mctx.lineWidth = 2; mctx.beginPath(); mctx.moveTo(x - 7, y - 7); mctx.lineTo(x + 7, y + 7); mctx.moveTo(x + 7, y - 7); mctx.lineTo(x - 7, y + 7); mctx.stroke();
-          mctx.fillStyle = '#999'; mctx.font = '11px system-ui'; mctx.fillText(`#${c.id} 人ではない`, x + 10, y + 4);
+          mctx.fillStyle = '#999'; mctx.font = '11px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.fillText(`#${c.id} 人ではない`, x + 10, y + 4);
         } else {
           mctx.strokeStyle = '#ffb000'; mctx.lineWidth = 2; mctx.setLineDash([4, 3]); mctx.beginPath(); mctx.arc(x, y, 14 * pulse, 0, 7); mctx.stroke(); mctx.setLineDash([]);
-          mctx.fillStyle = '#ffb000'; mctx.font = 'bold 12px system-ui'; mctx.fillText(`? 熱源 #${c.id}`, x + 16, y - 8);
+          mctx.fillStyle = '#ffb000'; mctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.fillText(`? 熱源 #${c.id}`, x + 16, y - 8);
         }
         mctx.lineWidth = 1;
       });
@@ -782,22 +782,22 @@
       mctx.fillStyle = COLORS[i]; mctx.beginPath(); mctx.roundRect(-R * .8, -R * .9, R * 1.6, R * 1.8, R * .3); mctx.fill();
       mctx.fillStyle = '#fff'; mctx.beginPath(); mctx.moveTo(0, -R * .75); mctx.lineTo(R * .4, -R * .15); mctx.lineTo(-R * .4, -R * .15); mctx.fill();
       mctx.restore();
-      mctx.font = 'bold 11px system-ui'; mctx.fillStyle = '#fff'; mctx.textAlign = 'center'; mctx.fillText(`${ROLE_ICON[i]}${i + 1}`, x, y + R + 13); mctx.textAlign = 'left';
+      mctx.font = 'bold 11px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.fillStyle = '#fff'; mctx.textAlign = 'center'; mctx.fillText(`${ROLE_ICON[i]}${i + 1}`, x, y + R + 13); mctx.textAlign = 'left';
     });
     if (mode === 'real' && !swarmHook?.api?.calibrated()) {
-      mctx.fillStyle = '#cccccc'; mctx.font = '13px system-ui';
+      mctx.fillStyle = '#cccccc'; mctx.font = '13px "DIN Alternate","Hiragino Sans",sans-serif';
       mctx.fillText('実機の位置表示・自動移動には、群制御タブで俯瞰カメラとフィールド校正が必要です', x0 + 10, y0 + 22);
     }
     drawBanner(); drawThermal(); drawCam(); drawRoles();
   }
 
   const PHASE = {
-    idle: ['待機中', '#cccccc'], explore: ['🔍 捜索中', '#2ecc40'], hotspot: ['🎯 熱源を検知', '#ffb000'], dispatch: ['🚀 確認機を派遣中', '#0074d9'],
-    verify: ['🧠 AI判定中', '#b18cff'], rescue: ['🆘 要救助者を発見 — 救助隊形', '#ff3b30'], complete: ['🏁 捜索完了', '#e8eaf0'],
+    idle: ['待機中', '#cccccc'], explore: ['捜索中', '#2ecc40'], hotspot: ['熱源を検知', '#ffb000'], dispatch: ['確認機を派遣中', '#0074d9'],
+    verify: ['AI判定中', '#0074d9'], rescue: ['要救助者を発見 — 救助隊形', '#ff3b30'], complete: ['捜索完了', '#e8eaf0'],
   };
   function drawBanner() {
     const ph = mission ? mission.phase : 'idle', [label, color] = PHASE[ph];
-    $('mPhase').textContent = running || ph === 'complete' ? label : (mission ? '⏸ 一時停止中 — ' + label : '待機中');
+    $('mPhase').textContent = running || ph === 'complete' ? label : (mission ? ' 一時停止中 — ' + label : '待機中');
     $('mPhase').style.color = color;
     $('mTimer').textContent = mission ? fmt(mission.t) : '00:00';
     const cv = mission ? Math.round(mission.cov.reduce((a, v) => a + v, 0) / mission.cov.length * 100) : 0;
@@ -814,7 +814,7 @@
   function drawThermal() {
     const b = fitCanvas(thc, tctx);
     tctx.fillStyle = '#000'; tctx.fillRect(0, 0, b.width, b.height);
-    if (!thermalThumb) { tctx.fillStyle = '#cccccc'; tctx.font = '12px system-ui'; tctx.fillText(mode === 'sim' ? 'ミッション開始で表示' : '2号機 (MLX90640) の接続待ち', 10, 20); return; }
+    if (!thermalThumb) { tctx.fillStyle = '#cccccc'; tctx.font = '12px "DIN Alternate","Hiragino Sans",sans-serif'; tctx.fillText(mode === 'sim' ? 'ミッション開始で表示' : '2号機 (MLX90640) の接続待ち', 10, 20); return; }
     let mn = 255, mx = 0; thermalThumb.forEach(v => { mn = Math.min(mn, v); mx = Math.max(mx, v); });
     mx = Math.max(mx, mn + 24);                                 // 最低 6℃ のレンジ
     const sc = thSmall.getContext('2d'), img = sc.createImageData(16, 12);
@@ -823,13 +823,13 @@
     const w = b.width, h = Math.min(b.height, w * 0.75), oy = (b.height - h) / 2;
     tctx.imageSmoothingEnabled = true; tctx.drawImage(thSmall, 0, oy, w, h);
     const hi = thermalHotInfo;
-    tctx.font = '12px system-ui'; tctx.fillStyle = '#fff';
+    tctx.font = '12px "DIN Alternate","Hiragino Sans",sans-serif'; tctx.fillStyle = '#fff';
     tctx.fillText(`${(mn / 4 + 15).toFixed(1)}〜${(mx / 4 + 15).toFixed(1)}℃`, 6, oy + h - 6);
     if (hi) {
       const x = (hi.bearing / T_FOV + 0.5) * w;
       tctx.strokeStyle = hi.conf >= (+$('mMinConf').value || 50) ? '#2ecc40' : '#ffb000'; tctx.lineWidth = 2;
       tctx.strokeRect(x - 18, oy + h * 0.25, 36, h * 0.5);
-      tctx.fillStyle = '#fff'; tctx.font = 'bold 13px system-ui';
+      tctx.fillStyle = '#fff'; tctx.font = 'bold 13px "DIN Alternate","Hiragino Sans",sans-serif';
       tctx.fillText(`人らしき熱源 ${hi.tmax.toFixed(1)}℃ 確度${hi.conf}% 方位${hi.bearing > 0 ? '+' : ''}${hi.bearing}°`, 6, oy + 34);
     }
   }
@@ -850,23 +850,23 @@
           .forEach(it => {
             const x = w / 2 + it.b / (CAM_FOV / 2) * w / 2, sz = clamp(it.size / it.d * h * 1.1, 6, h * 0.9), y = h * 0.55 + clamp(40 / it.d, 0, 1) * h * 0.3;
             if (it.k === 'o') { cctx.fillStyle = '#6b5a48'; cctx.fillRect(x - sz / 2, y - sz * 0.6, sz, sz * 0.7); }
-            else { cctx.font = `${sz}px system-ui`; cctx.textAlign = 'center'; cctx.fillText(SRC[it.k].icon, x, y + sz * 0.3); cctx.textAlign = 'left'; }
+            else { cctx.font = `${sz}px "DIN Alternate","Hiragino Sans",sans-serif`; cctx.textAlign = 'center'; cctx.fillText(SRC[it.k].icon, x, y + sz * 0.3); cctx.textAlign = 'left'; }
           });
         if (lastAI?.person && mission?.phase === 'verify') {
           const x = w / 2 + lastAI.bx * w / 2, bw = lastAI.bw * w;
           cctx.strokeStyle = '#2ecc40'; cctx.lineWidth = 3; cctx.strokeRect(x - bw / 2, h * 0.25, bw, h * 0.6);
-          cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, x - bw / 2, h * 0.25 - 5);
+          cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px "DIN Alternate","Hiragino Sans",sans-serif'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, x - bw / 2, h * 0.25 - 5);
         }
       }
-      cctx.fillStyle = '#ffffffaa'; cctx.font = '11px system-ui'; cctx.fillText('(仮想映像)', w - 70, 14);
+      cctx.fillStyle = '#ffffffaa'; cctx.font = '11px "DIN Alternate","Hiragino Sans",sans-serif'; cctx.fillText('(仮想映像)', w - 70, 14);
     } else if (lastAI?.person && lastAI.box && mImg.naturalWidth) {
       const r = mImg.getBoundingClientRect(), pr = camc.getBoundingClientRect();
       const sx = r.width / lastAI.w, sy = r.height / lastAI.h, [bx, by, bw, bh] = lastAI.box;
       cctx.strokeStyle = '#2ecc40'; cctx.lineWidth = 3; cctx.strokeRect(r.left - pr.left + bx * sx, r.top - pr.top + by * sy, bw * sx, bh * sy);
-      cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, r.left - pr.left + bx * sx, r.top - pr.top + by * sy - 5);
+      cctx.fillStyle = '#2ecc40'; cctx.font = 'bold 13px "DIN Alternate","Hiragino Sans",sans-serif'; cctx.fillText(`person ${(lastAI.score * 100).toFixed(0)}%`, r.left - pr.left + bx * sx, r.top - pr.top + by * sy - 5);
     }
     const ph = mission?.phase;
-    if (ph === 'verify') { const yes = mission.votes.filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length; cctx.fillStyle = '#b18cff'; cctx.font = 'bold 13px system-ui'; cctx.fillText(`AI判定中… 人の検出 ${mission.votes.slice(-6).filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length}/3 (直近6フレーム)`, 6, h - 8); }
+    if (ph === 'verify') { const yes = mission.votes.filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length; cctx.fillStyle = '#0074d9'; cctx.font = 'bold 13px "DIN Alternate","Hiragino Sans",sans-serif'; cctx.fillText(`AI判定中… 人の検出 ${mission.votes.slice(-6).filter(v => v.person && v.score >= (+$('mAiTh').value || 60) / 100).length}/3 (直近6フレーム)`, 6, h - 8); }
   }
   function drawRoles() {
     const el = $('mRoles'); if (el.children.length !== 3) el.innerHTML = [0, 1, 2].map(i => `<div class="role" style="border-color:${COLORS[i]}"><b style="color:${COLORS[i]}">${ROLE_ICON[i]} ${i + 1}号機</b><span>${ROLE[i]}</span><em></em></div>`).join('');
@@ -893,7 +893,7 @@
     const mapImg = map.toDataURL('image/png');
     const vs = mission.cands.filter(c => c.status === 'victim');
     const html = `<!doctype html><meta charset=utf-8><title>捜索レポート</title><body style="font-family:sans-serif;max-width:900px;margin:20px auto">
-<h1>🚨 SwarmBot 捜索レポート</h1><p>${new Date().toLocaleString()} / モード: ${mode === 'sim' ? 'シミュレーション' : '実機'} / 経過 ${fmt(mission.t)} / 捜索済み ${Math.round(mission.cov.reduce((a, v) => a + v, 0) / mission.cov.length * 100)}%</p>
+<h1> SwarmBot 捜索レポート</h1><p>${new Date().toLocaleString()} / モード: ${mode === 'sim' ? 'シミュレーション' : '実機'} / 経過 ${fmt(mission.t)} / 捜索済み ${Math.round(mission.cov.reduce((a, v) => a + v, 0) / mission.cov.length * 100)}%</p>
 <h2>要救助者 ${vs.length}名</h2><table border=1 cellpadding=6 style="border-collapse:collapse"><tr><th>#</th><th>位置 (cm)</th><th>温度</th><th>AI確度</th><th>写真</th></tr>
 ${vs.map(c => { const sn = snapshots.find(s => s.id === c.id); return `<tr><td>${c.id}</td><td>X ${c.x.toFixed(0)} / Y ${c.y.toFixed(0)}</td><td>${c.tmax?.toFixed(1)}℃</td><td>${c.score ? (c.score * 100).toFixed(0) + '%' : '-'}</td><td>${sn ? `<img src="${sn.img}" width=200>` : ''}</td></tr>`; }).join('')}</table>
 <h2>地図</h2><img src="${mapImg}" style="max-width:100%;background:#111">

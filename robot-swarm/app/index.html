@@ -11,7 +11,7 @@
           --all:#ffffff; --ok:#2ecc40; --warn:#ffb000; --accent:#0074d9; --danger:#e00000; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
-              font-family:system-ui,-apple-system,"Hiragino Sans",sans-serif; overflow:hidden; }
+              font-family:var(--jp); overflow:hidden; }
   body { display:flex; flex-direction:column; }
   button, input, select { font:inherit; color:var(--text); }
   button { background:var(--panel); border:1px solid #4a5570; border-radius:10px; padding:7px 12px; cursor:pointer; user-select:none; font-weight:600; transition:background .12s,border-color .12s; }
@@ -195,6 +195,32 @@
   #gpHelp .key { display:inline-block; min-width:34px; text-align:center; padding:2px 8px; border-radius:6px; background:#fff; color:#000; font-weight:900; }
   #gpHelp .hot td { background:var(--accent); }
   .tabs button { white-space:nowrap; }
+  /* ===== 文字 (v4) =====
+     和文: ヒラギノ角ゴ (W3 本文 / W6 見出し) — 駅・空港サインと同系統の読みやすさ
+     数字・英字: DIN (道路標識・計器と同じ書体)。数字は等幅で桁がぶれない
+     太字は見出しと操作ボタンだけ。絵文字アイコンは使わない */
+  :root { --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","BIZ UDPGothic","Noto Sans JP",sans-serif;
+          --din:"DIN Alternate","DIN Condensed","Barlow Semi Condensed","Arial Narrow",sans-serif; }
+  html, body, input, select { font-family:var(--jp); }
+  button, .tabs, #mTimer { font-family:var(--din), var(--jp); }
+  body { font-weight:300; font-size:14px; letter-spacing:.01em; font-feature-settings:"palt" 1; }
+  button { font-weight:600; letter-spacing:.02em; }
+  h1 { font-family:"DIN Condensed",var(--din); font-weight:700; font-size:24px; letter-spacing:.12em; text-transform:uppercase; padding-top:3px; }
+  .card h3, #gpHelp h3 { font-weight:600; font-size:15px; letter-spacing:.04em; }
+  .tabs button { font-size:15px; padding:8px 16px; }
+  #hdrStop { font-family:"DIN Condensed",var(--din); font-size:26px; letter-spacing:.14em; padding-top:4px; }
+  .muted { font-weight:300; }
+  .num, #mTimer, #mStats b, #speedv, #swFps, #tLabel, #swStatus td, input[type=number] { font-family:var(--din); font-variant-numeric:tabular-nums; }
+  #mPhase { font-weight:600; font-size:20px; letter-spacing:.04em; }
+  .modeGrid button b { font-weight:600; font-size:14px; margin-bottom:2px; }
+  .modeGrid button { font-weight:300; color:#ddd; }
+  .pad .label { font-size:15px; font-weight:600; letter-spacing:.06em; }
+  #toast { font-weight:600; letter-spacing:.06em; }
+  #estop { display:none; }   /* 右上の STOP に一本化 */
+  #speedv { font-size:20px; font-weight:700; min-width:52px; display:inline-block; color:#fff; }
+  .driveFoot { font-size:14px; color:#ddd; }
+  .ev-victim, .ev-hot, .ev-false, .ev-info { padding-left:8px; border-left:4px solid currentColor; }
+
   @media (max-width:700px) {
     header { gap:6px; padding:6px 8px; }
     h1 { display:none; }
@@ -213,12 +239,12 @@
   <h1>SwarmBot</h1>
   <div id="bots"></div>
   <span id="distPill" class="pill hidden">距離 --</span>
-  <button id="gpPill" class="pill" title="コントローラーの割り当てを表示">🎮 コントローラー未接続</button>
+  <button id="gpPill" class="pill" title="コントローラーの割り当てを表示">コントローラー未接続</button>
   <div class="tabs">
-    <button data-tab="drive" class="active">🎮 操作</button>
-    <button data-tab="path">🗺 パス</button>
-    <button data-tab="swarm">🛰 群制御</button>
-    <button data-tab="mission">🚨 救助ミッション</button>
+    <button data-tab="drive" class="active">操作</button>
+    <button data-tab="path">パス</button>
+    <button data-tab="swarm">群制御</button>
+    <button data-tab="mission">救助ミッション</button>
   </div>
   <button id="hdrStop" title="全停止 (Space / コントローラーの B・HOME・キャプチャ)">STOP</button>
 </header>
@@ -388,14 +414,14 @@
     <div class="card">
       <h3>3. 群制御モード</h3>
       <div class="modeGrid" id="swModes">
-        <button data-m="goto"><b>📍 クリック移動</b>マップをクリックした場所へ (対象を選択)</button>
-        <button data-m="form"><b>🔺 隊形を組む</b>テンプレートの隊形に自動で並ぶ</button>
-        <button data-m="follow"><b>🚩 リーダー追従</b>1号機を操作、他は隊形を保って追従</button>
-        <button data-m="orbit"><b>🔄 円周回</b>中心の周りを等間隔で回る</button>
-        <button data-m="gather"><b>🧲 集合</b>みんなの重心に集まる</button>
-        <button data-m="disperse"><b>💥 分散</b>互いに離れて広がる</button>
-        <button data-m="train" style="grid-column:span 2"><b>🔗 連結列で移動</b>連結した列を1台のように扱い、クリックした場所へ (先頭が目標へ・後ろは連結を保って追従)</button>
-        <button data-m="path" style="grid-column:span 2"><b>🗺 パスを閉ループ実行</b>パス画面の隊形の流れを、カメラで位置補正しながら実行</button>
+        <button data-m="goto"><b>クリック移動</b>マップをクリックした場所へ (対象を選択)</button>
+        <button data-m="form"><b>隊形を組む</b>テンプレートの隊形に自動で並ぶ</button>
+        <button data-m="follow"><b>リーダー追従</b>1号機を操作、他は隊形を保って追従</button>
+        <button data-m="orbit"><b>円周回</b>中心の周りを等間隔で回る</button>
+        <button data-m="gather"><b>集合</b>みんなの重心に集まる</button>
+        <button data-m="disperse"><b>分散</b>互いに離れて広がる</button>
+        <button data-m="train" style="grid-column:span 2"><b>連結列で移動</b>連結した列を1台のように扱い、クリックした場所へ (先頭が目標へ・後ろは連結を保って追従)</button>
+        <button data-m="path" style="grid-column:span 2"><b>パスを閉ループ実行</b>パス画面の隊形の流れを、カメラで位置補正しながら実行</button>
       </div>
       <div class="row" style="margin-top:8px">
         対象 <select id="swTarget" >
@@ -419,7 +445,7 @@
     </div>
 
     <div class="card">
-      <h3>🔗 自動ドッキング / 分離</h3>
+      <h3> 自動ドッキング / 分離</h3>
       <div class="row">
         <select id="swDockF" ></select> を
         <select id="swDockL" ></select> の後ろに
@@ -430,7 +456,7 @@
         <button id="swDetachBtn" class="small">前との連結を外す</button>
         <span class="muted" id="swTrains"></span>
       </div>
-      <div class="muted">カメラで両機の位置を見ながら、後ろの機体が前の機体の後ろピンへ真っ直ぐ寄ってロックします。寸法は 操作タブ → 🔗 連結 → 寸法 で設定。</div>
+      <div class="muted">カメラで両機の位置を見ながら、後ろの機体が前の機体の後ろピンへ真っ直ぐ寄ってロックします。寸法は 操作タブ →  連結 → 寸法 で設定。</div>
     </div>
 
     <div class="card">
@@ -460,8 +486,8 @@
     <div id="mTimer">00:00</div>
     <div id="mStats"></div>
     <div style="margin-left:auto" class="seg">
-      <button data-mmode="sim" class="active">🧪 シミュレーション</button>
-      <button data-mmode="real">🤖 実機</button>
+      <button data-mmode="sim" class="active">シミュレーション</button>
+      <button data-mmode="real">実機</button>
     </div>
   </div>
   <div id="mBody">
@@ -470,8 +496,8 @@
       <div id="mRoles"></div>
     </div>
     <div id="mMid">
-      <div class="mPanel" id="mThermalBox"><span class="ttl">🌡 2号機 サーマル (MLX90640)</span><canvas id="mThermal"></canvas></div>
-      <div class="mPanel" id="mCamBox"><span class="ttl">📷 1号機 カメラ + AI人物判定</span><img id="mCamImg" alt=""><canvas id="mCamCanvas"></canvas></div>
+      <div class="mPanel" id="mThermalBox"><span class="ttl">2号機 サーマル (MLX90640)</span><canvas id="mThermal"></canvas></div>
+      <div class="mPanel" id="mCamBox"><span class="ttl">1号機 カメラ + AI人物判定</span><img id="mCamImg" alt=""><canvas id="mCamCanvas"></canvas></div>
       <div class="row realOnly" style="display:none">
         <button class="small" id="mCamStart">映像を接続</button>
         <button class="small" id="mAiTest">AI判定テスト</button>
@@ -484,12 +510,12 @@
         <button id="mStart">▶ ミッション開始</button>
         <div class="row" style="margin-top:6px">
           <button class="small" id="mReset">↺ リセット</button>
-          <button class="small" id="mReport">📄 レポート出力</button>
+          <button class="small" id="mReport">レポート出力</button>
           <label><input type="checkbox" id="mVoice" checked> 音声・サイレン</label>
         </div>
       </div>
       <div class="card simOnly">
-        <h3>🧪 仮想の被災現場</h3>
+        <h3> 仮想の被災現場</h3>
         <div class="row">
           <select id="mScenario" style="flex:1">
             <option value="basic">基本 (要救助者1・おとり2)</option><option value="rubble">瓦礫が多い (要救助者2)</option>
@@ -499,23 +525,23 @@
         <div class="row">速さ <span class="seg"><button data-speed="1" class="active">×1</button><button data-speed="2">×2</button><button data-speed="4">×4</button><button data-speed="8">×8</button></span></div>
         <div class="row"><label><input type="checkbox" id="mTruth" checked> 正解の配置を表示</label></div>
         <div class="row">配置: <span class="seg">
-          <button class="small" data-tool="human">🧑人</button><button class="small" data-tool="doll">🧸人形</button>
-          <button class="small" data-tool="stove">🔥熱源</button><button class="small" data-tool="rubble">🧱瓦礫</button><button class="small" data-tool="erase">消す</button></span></div>
-        <div class="muted">🧸 = カイロ付き人形 (体温に近い→サーマルは反応、AIで除外)<br>🔥 = ストーブ (高温→サーマルの段階で除外)</div>
+          <button class="small" data-tool="human">人</button><button class="small" data-tool="doll">人形</button>
+          <button class="small" data-tool="stove">熱源</button><button class="small" data-tool="rubble">瓦礫</button><button class="small" data-tool="erase">消す</button></span></div>
+        <div class="muted">= カイロ付き人形 (体温に近い→サーマルは反応、AIで除外)<br> = ストーブ (高温→サーマルの段階で除外)</div>
       </div>
       <div class="card">
-        <h3>👆 オペレーター介入</h3>
+        <h3> オペレーター介入</h3>
         <div class="row">
           <button class="small" id="mDispatch">確認機を派遣</button>
           <button class="small" id="mResume">探索再開</button>
         </div>
         <div class="row">
-          <button class="small" id="mYes">✔ 人と判定</button>
+          <button class="small" id="mYes">人と判定</button>
           <button class="small" id="mNo">✖ 人ではない</button>
         </div>
       </div>
       <div class="card">
-        <h3>⚙ 判定・探索の設定</h3>
+        <h3> 判定・探索の設定</h3>
         <div class="row">熱源の確度しきい値 <input type="number" id="mMinConf" value="40" min="5" max="99" step="5"> %</div>
         <div class="row">熱源の大きさ (距離推定) <input type="number" id="mSize" value="20" min="5" step="1"> cm</div>
         <div class="row">AI 人物判定しきい値 <input type="number" id="mAiTh" value="60" min="30" max="95" step="5"> %</div>
@@ -523,7 +549,7 @@
         <div class="row">走査の間隔 <input type="number" id="mLane" value="40" min="20" step="5"> cm</div>
       </div>
       <div class="card simOnly">
-        <h3>📊 一括実験 (方式の比較)</h3>
+        <h3> 一括実験 (方式の比較)</h3>
         <div class="row">試行回数 <input type="number" id="mTrials" value="20" min="1" max="200"> <button class="small" id="mBatch">実行</button></div>
         <div id="mBatchOut" class="muted">同じ現場を「サーマル→カメラAIの段階的確認」と「サーマルだけ」で走らせ、発見率と誤報を比較します。</div>
       </div>
@@ -753,7 +779,7 @@ const keyVec = set => [(keys.has(set.right) ? 1 : 0) - (keys.has(set.left) ? 1 :
 
 const MODES = [['all', N + '台同時', 'var(--all)'],
   ...robots.map(r => [String(r.id), r.id + '号機', COLORS[r.id - 1]]),
-  ['split', '個別', '#ffffff'], ['link', '🔗 連結', '#ffffff']];
+  ['split', '個別', '#ffffff'], ['link', ' 連結', '#ffffff']];
 let mode = 'all';
 for (const [m, label, color] of MODES) {
   const b = document.createElement('button'); b.textContent = label; b.style.setProperty('--mc', color);
@@ -939,7 +965,7 @@ function drawRobot(p, color, label, alpha = 1, handle = false) {
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -R * 1.8, 5, 0, 7); ctx.fill();
   }
   ctx.restore();
-  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = '#fff'; ctx.font = 'bold 12px system-ui'; ctx.textAlign = 'center';
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = '#fff'; ctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; ctx.textAlign = 'center';
   ctx.fillText(label, x, y + R * 1.3 + 12); ctx.restore();
 }
 
@@ -955,7 +981,7 @@ function drawField() {
   for (let x = 0; x <= P.field.w; x += 50) { const [a] = toPx(x, 0); ctx.beginPath(); ctx.moveTo(a, y0); ctx.lineTo(a, y1); ctx.stroke(); }
   for (let y = 0; y <= P.field.h; y += 50) { const [, b] = toPx(0, y); ctx.beginPath(); ctx.moveTo(x0, b); ctx.lineTo(x1, b); ctx.stroke(); }
   ctx.strokeStyle = '#555'; ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-  ctx.fillStyle = '#8a90a2'; ctx.font = '11px system-ui';
+  ctx.fillStyle = '#8a90a2'; ctx.font = '11px "DIN Alternate","Hiragino Sans",sans-serif';
   ctx.fillText(`${P.field.w} × ${P.field.h} cm  (マス=10cm)`, x0, y0 - 6);
 
   // 全体の経路
@@ -1167,7 +1193,7 @@ $('pPreview').onclick = () => {
   if (run) return;
   if (previewTimer) { stopPreview(); return; }
   const t0 = performance.now() - (previewT && previewT < plan.total ? previewT : 0) * 1000;
-  $('pPreview').textContent = '❚❚ 一時停止';
+  $('pPreview').textContent = ' 一時停止';
   previewTimer = setInterval(() => {
     previewT = (performance.now() - t0) / 1000;
     if (previewT >= plan.total) { previewT = plan.total; stopPreview(); }
@@ -1255,7 +1281,7 @@ setInterval(() => {
 }, 50);
 </script>
 <div id="gpHelp"><div class="box">
-  <h3 style="margin:0 0 6px;display:flex;justify-content:space-between">🎮 コントローラーの割り当て <button id="gpHelpClose">閉じる</button></h3>
+  <h3 style="margin:0 0 6px;display:flex;justify-content:space-between">コントローラーの割り当て <button id="gpHelpClose">閉じる</button></h3>
   <div class="muted" id="gpHelpName"></div>
   <svg id="gpSvg" viewBox="0 0 520 230" style="width:100%;max-width:560px;display:block;margin:8px auto"></svg>
   <table id="gpTable"></table>
@@ -1324,7 +1350,7 @@ setInterval(() => {
   }
   window.renderGp = () => {
     const p = $('gpPill');
-    p.textContent = gp.connected ? '🎮 ' + (gp.kind === 'switch' ? 'Switch Pro' : gp.kind === 'ps' ? 'PlayStation' : 'Xbox') + ' 接続中' : '🎮 コントローラー未接続';
+    p.textContent = gp.connected ? ' ' + (gp.kind === 'switch' ? 'Switch Pro' : gp.kind === 'ps' ? 'PlayStation' : 'Xbox') + ' 接続中' : ' コントローラー未接続';
     p.classList.toggle('on', gp.connected);
     $('gpHelpName').textContent = gp.connected ? '認識名: ' + gp.name : 'コントローラーが見つかりません (ボタンを1回押してください)';
     $('gpTable').innerHTML = gp.map.map(m => `<tr data-i="${m[0]}"><td><span class="key">${gp.kind === 'switch' ? m[1] : m[2]}</span></td><td>${m[4]}</td></tr>`).join('')
@@ -1336,7 +1362,7 @@ setInterval(() => {
   $('gpHelpClose').onclick = () => $('gpHelp').classList.remove('show');
   $('gpHelp').onclick = e => { if (e.target.id === 'gpHelp') $('gpHelp').classList.remove('show'); };
   $('hdrStop').onclick = () => emergencyStop();
-  gp.onChange = () => { renderGp(); if (gp.connected) toast('🎮 コントローラー接続'); };
+  gp.onChange = () => { renderGp(); if (gp.connected) toast(' コントローラー接続'); };
   renderGp();
 })();
 </script>

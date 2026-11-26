@@ -1,5 +1,5 @@
 // =====================================================================
-//  🔗 連結走行 (UI と制御)  — 運動学は coupler-core.js
+//   連結走行 (UI と制御)  — 運動学は coupler-core.js
 //
 //  ・どの号機でも、どの順番でも連結できる (例 "2-1-3", "3-1,2" = 3-1 の列と 2 単独)
 //  ・連結器のロック/解除 (BLE: K1 / K0) を各機体に送る
@@ -237,7 +237,7 @@
       c.save(); c.translate(u, v); c.rotate(-p.th + Math.PI / 2);
       c.fillStyle = COLORS[i]; c.beginPath(); c.roundRect(-g.track / 2 * s, -6 * s, g.track * s, 12 * s, 4); c.fill();
       c.fillStyle = '#fff'; c.beginPath(); c.moveTo(0, -5 * s); c.lineTo(2.5 * s, -1 * s); c.lineTo(-2.5 * s, -1 * s); c.fill();
-      c.restore(); c.fillStyle = '#fff'; c.font = 'bold 11px system-ui'; c.fillText(i + 1, u + 14, v + 4);
+      c.restore(); c.fillStyle = '#fff'; c.font = 'bold 11px "DIN Alternate","Hiragino Sans",sans-serif'; c.fillText(i + 1, u + 14, v + 4);
     });
   }
   function drawInfo() {
@@ -253,7 +253,7 @@
   }
 
   // =====================================================================
-  //  パネル (操作タブの「🔗 連結」モード)
+  //  パネル (操作タブの「 連結」モード)
   // =====================================================================
   function renderLocks() {
     const box = $('cpLocks'); if (!box) return;
@@ -261,7 +261,7 @@
     robots.forEach((r, i) => {
       const b = document.createElement('button'); b.className = 'small';
       b.style.color = COLORS[i]; b.style.borderColor = locked[i] ? COLORS[i] : '#4a5570'; if (locked[i]) b.style.background = 'color-mix(in srgb,' + COLORS[i] + ' 22%,#151a24)';
-      b.textContent = `${i + 1}号機 ${locked[i] == null ? '?' : locked[i] ? '🔒' : '🔓'}`;
+      b.textContent = `${i + 1}号機 ${locked[i] == null ? '状態不明' : locked[i] ? 'ロック中' : '解除中'}`;
       b.title = 'クリックでロック/解除を切り替え';
       b.onclick = () => lock(i, !locked[i]);
       box.appendChild(b);
@@ -269,13 +269,13 @@
     drawInfo();
   }
   function render(area) {
-    const pad = makePad(0, '🔗 連結走行', '#ffffff', false);
+    const pad = makePad(0, ' 連結走行', '#ffffff', false);
     pad.querySelector('.hint').textContent = 'キー: 矢印 / WASD ・ 列ごとに連結を保って走る';
     const panel = document.createElement('div'); panel.className = 'card'; panel.id = 'cpPanel';
     panel.style.cssText = 'max-width:440px;flex:1;min-width:280px';
     const presets = ['1-2-3', '2-1-3', '3-2-1', '1-2, 3', '2-3, 1', '1-3, 2', ''];
     panel.innerHTML = `
-      <h3>🔗 連結 <span class="muted" style="font-weight:400">前 → 後ろ の順。「,」で別の列</span></h3>
+      <h3> 連結 <span class="muted" style="font-weight:400">前 → 後ろ の順。「,」で別の列</span></h3>
       <div class="row">列 <input type="text" id="cpSpec" style="width:110px" value="${st.spec}">
         ${presets.map(p => `<button class="small cpPre" data-s="${p}">${p || '全部単独'}</button>`).join('')}</div>
       <div class="row">連結のしかた

@@ -190,7 +190,7 @@
       octx.strokeStyle = color; octx.lineWidth = 3 * lw; octx.beginPath();
       m.c.forEach(([x, y], k) => k ? octx.lineTo(x, y) : octx.moveTo(x, y)); octx.closePath(); octx.stroke();
       octx.beginPath(); octx.moveTo(m.cx, m.cy); octx.lineTo(m.fx, m.fy); octx.stroke();
-      octx.fillStyle = color; octx.font = `bold ${14 * lw}px system-ui`;
+      octx.fillStyle = color; octx.font = `bold ${14 * lw}px "DIN Alternate","Hiragino Sans",sans-serif`;
       octx.fillText(isBot ? m.id + '号機' : 'ID' + m.id, m.cx + 10 * lw, m.cy - 10 * lw);
     }
     if (clickCal) {
@@ -254,11 +254,11 @@
         mctx.fillStyle = c; mctx.beginPath(); mctx.roundRect(-R * .8, -R * .9, R * 1.6, R * 1.8, R * .3); mctx.fill();
         mctx.fillStyle = '#fff'; mctx.beginPath(); mctx.moveTo(0, -R * .75); mctx.lineTo(R * .4, -R * .15); mctx.lineTo(-R * .4, -R * .15); mctx.fill();
         mctx.restore();
-        mctx.fillStyle = '#fff'; mctx.font = 'bold 12px system-ui'; mctx.textAlign = 'center';
+        mctx.fillStyle = '#fff'; mctx.font = 'bold 12px "DIN Alternate","Hiragino Sans",sans-serif'; mctx.textAlign = 'center';
         mctx.fillText(String(i + 1) + (stale ? ' (見失い)' : ''), u, v + R * 1.3 + 12); mctx.textAlign = 'left';
       }
     });
-    if (!H) { mctx.fillStyle = '#8a90a2'; mctx.font = '13px system-ui'; mctx.fillText('フィールド校正をするとロボットの位置が表示されます', x0 + 10, y0 + 22); }
+    if (!H) { mctx.fillStyle = '#ffffff'; mctx.font = '600 14px "Hiragino Sans",sans-serif'; mctx.textAlign = 'center'; mctx.fillText('フィールド未校正', (x0 + x1) / 2, (y0 + y1) / 2 - 8); mctx.font = '300 12px "Hiragino Sans",sans-serif'; mctx.fillStyle = '#cccccc'; mctx.fillText('右の「2. フィールド校正」をしてください', (x0 + x1) / 2, (y0 + y1) / 2 + 14); mctx.textAlign = 'left'; }
     updateStatus();
   }
 
@@ -530,7 +530,7 @@
     if (key !== lastFormKey) { lastFormKey = key; assign(points); }
   }
 
-  // ---------- 🔗 ドッキング / 分離 UI ----------
+  // ----------  ドッキング / 分離 UI ----------
   const dockApi = {
     poses, targets, arrived, goTo, headTo, wheels,
     label: t => { $('swModeLabel').textContent = t; },
