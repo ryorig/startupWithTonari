@@ -343,7 +343,7 @@ void loop() {
     if (phase == 0)      notifyText("IP" + camIP);
     else if (phase == 1) notifyText(camOk ? "CAM OK" : "CAM NG");
     else                 notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
-        phase = (phase + 1) % 3;
+    phase = (phase + 1) % 3;
   }
   delay(10);
 }

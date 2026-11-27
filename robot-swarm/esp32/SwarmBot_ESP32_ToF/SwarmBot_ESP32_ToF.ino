@@ -11,7 +11,7 @@
  *    VL53L1X: VIN→3V3, GND→GND, SDA→GPIO25, SCL→GPIO26
  *
  * アプリへ送る距離: "D<mm>"  (測定不可なら "D-")
- * 前進中に障害物が SAFETY_STOP_MM 以内なら自動停止 (0 で無効)
+ * 前進中に障害物が SAFETY_STOP_MM 以内なら自動停止 (0 で無効)。アプリから T0 で一時 OFF / T1 で ON
  */
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -33,6 +33,8 @@ const int STBY = 23;
 const int I2C_SDA = 25, I2C_SCL = 26;
 
 const int SAFETY_STOP_MM = 150;   // 前進中この距離以内で停止 (0で無効)
+// 連結して列の2台目以降になると、前の機体を障害物と見て止まってしまうので、アプリから T0 / T1 で切り替える
+volatile bool safetyOn = true;
 
 Adafruit_VL53L1X tof;
 bool tofOk = false;
@@ -68,6 +70,8 @@ void setMotors(int l, int r) {
 void handleLine(const String& line) {
   if (line.length() == 0) return;
   if (coupler::handle(line)) return;   // 連結器 K1/K0/KA..
+  if (line == "T0") { safetyOn = false; return; }   // 障害物停止 OFF (連結の後ろ側にいるとき)
+  if (line == "T1") { safetyOn = true;  return; }   // 障害物停止 ON
   if (line[0] == 'S') { targetL = targetR = 0; lastCmdMs = millis(); return; }
   if (line[0] == 'M') {
     int c1 = line.indexOf(',');
@@ -169,7 +173,7 @@ void loop() {
   int l = targetL, r = targetR;
   if (!connected || millis() - lastCmdMs > TIMEOUT_MS) { l = 0; r = 0; }
   // 前進中の障害物停止 (後退・旋回はOK)
-  if (SAFETY_STOP_MM > 0 && distMm >= 0 && distMm < SAFETY_STOP_MM && l > 0 && r > 0) { l = 0; r = 0; }
+  if (safetyOn && SAFETY_STOP_MM > 0 && distMm >= 0 && distMm < SAFETY_STOP_MM && l > 0 && r > 0) { l = 0; r = 0; }
   setMotors(l, r);
   coupler::update();
   if (coupler::dirty) { coupler::dirty = false; notifyText(coupler::status()); }
@@ -181,6 +185,6 @@ void loop() {
   if (millis() - lastNotify > 1000) {
     lastNotify = millis();
     notifyText("ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r));
-      }
+  }
   delay(5);
 }

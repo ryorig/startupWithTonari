@@ -40,6 +40,8 @@
   const tkey = t => t.join('-');
   function setSpec(s) {
     st.spec = s; trains = parseSpec(s); save();
+    // 3号機の距離センサーは、列の先頭でないと前の機体を障害物と見て止まるので OFF にする
+    const t3 = trainOf(2); if (robots[2]?.ok) sendRaw(robots[2], t3 && t3[0] !== 2 ? 'T0' : 'T1');
     trains.forEach(t => { if (!phiEst.has(tkey(t))) phiEst.set(tkey(t), new Array(t.length - 1).fill(0)); });
     if ($('cpSpec')) $('cpSpec').value = s;
     renderLocks();
@@ -69,7 +71,7 @@
   // index.html の Robot.onMsg から呼ばれる
   window.couplerInput = {
     status(id, t) { locked[id - 1] = t === 'K1'; renderLocks(); },
-    connected(id) { setTimeout(() => sendRaw(robots[id - 1], 'K?'), 500); },
+    connected(id) { setTimeout(() => { sendRaw(robots[id - 1], 'K?'); if (id === 3) setSpec(st.spec); }, 500); },
   };
 
   // ---------- 折れ角 (カメラ → 無ければ推定) ----------

@@ -262,6 +262,6 @@ void loop() {
   if (millis() - lastNotify > 1000) {
     lastNotify = millis();
     notifyText(mlxOk ? "ID" + String(ROBOT_ID) + " L" + String(l) + " R" + String(r) : String("ID2 THERM NG"));
-      }
+  }
   delay(10);
 }
