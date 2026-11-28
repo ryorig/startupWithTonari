@@ -15,10 +15,10 @@
   const KEY = 'swarmbot-coupler-v1';
   const st = {
     spec: '1-2-3', mode: 'hinge', geom: { ...CC.DEFAULT_GEOM }, gains: robots.map(() => 100),
-    lockDeg: 90, unlockDeg: 10,
+    lockDeg: 90, unlockDeg: 45,      // coupler_v9: 閉じる 90° / 開く 45°
     hookSide: 'rear',                  // サーボ付きフック(ゲート)が付いている側: 'rear' 後ろ / 'front' 前
   };
-  try { Object.assign(st, JSON.parse(localStorage.getItem(KEY)) || {}); st.geom = { ...CC.DEFAULT_GEOM, ...st.geom }; } catch {}
+  try { Object.assign(st, JSON.parse(localStorage.getItem(KEY)) || {}); st.geom = { ...CC.DEFAULT_GEOM, ...st.geom }; if (st.unlockDeg === 10) st.unlockDeg = 45; } catch {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
 
   let trains = [];                     // [[i0,i1,..], ...] (0始まりの号機 index)

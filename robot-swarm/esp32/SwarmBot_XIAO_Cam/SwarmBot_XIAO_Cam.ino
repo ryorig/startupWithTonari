@@ -18,6 +18,10 @@
  *     (IP はシリアルモニタとアプリに表示されます)
  *
  * BLE名 "SwarmBot-1"  /  アプリへ "IP<アドレス>" を送信 (カメラURLの自動入力用)
+ *
+ * 連結器 (coupler_v9 フック側・MG90S):
+ *   オレンジ(信号) → D7   赤(+) → 5V (電池側の 5V。3V3 は不可)   茶(−) → GND (XIAO と共通)
+ *   閉じる 90° / 開く 45°。シリアルモニタ (115200, 改行あり) で K1=閉じる K0=開く KA<角度>=角度指定
  */
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -319,7 +323,7 @@ void setup() {
   camOk = setupCamera();
   setupWiFi();
   startServers();   // カメラNGでも確認ページは出す
-  coupler::begin(D7);   // 連結器サーボ: D7 (GPIO44)
+  coupler::begin(D7);   // 連結器サーボ (MG90S) 信号: D7 (GPIO44)  ※オレンジの線
   setupBLE();
   Serial.println("==============================");
   Serial.println(" 確認ページ: http://" + camIP + "/");
@@ -328,9 +332,24 @@ void setup() {
   Serial.println("==============================");
 }
 
+// シリアルモニタからも同じコマンドを打てる (例: K1 / K0 / KA90)。門を取り付けるときに使う
+void serialPoll() {
+  static String buf;
+  while (Serial.available()) {
+    char ch = Serial.read();
+    if (ch == '\n' || ch == '\r') {
+      buf.trim();
+      // 連結器のコマンド (K…) だけ受け付ける。モーターは BLE からしか動かさない
+      if (buf.length() && buf[0] == 'K') { handleLine(buf); Serial.println("> " + buf + " → 角度 " + String(coupler::pendingDeg >= 0 ? coupler::pendingDeg : coupler::curDeg)); }
+      buf = "";
+    } else if (buf.length() < 32) buf += ch;
+  }
+}
+
 void loop() {
   static uint32_t lastNotify = 0;
   static uint8_t phase = 0;
+  serialPoll();
   int l = targetL, r = targetR;
   if (!connected || millis() - lastCmdMs > TIMEOUT_MS) { l = 0; r = 0; }
   setMotors(l, r);

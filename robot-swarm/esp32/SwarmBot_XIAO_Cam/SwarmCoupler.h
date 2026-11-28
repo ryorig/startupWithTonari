@@ -14,6 +14,7 @@
  *   ESP32 の 3V3 からサーボを給電しないこと (電圧降下・発熱の原因)。GND は共通にする。
  *   サーボの電源線の根元に 470µF 程度のコンデンサを入れると BLE が切れにくくなります。
  * ★ 発熱・電流対策のため、動かした後 COUPLER_HOLD_MS で PWM を止めます (ゲートは機構で保持)。
+ * ★ 引っ張られたまま開こうとしても開かない (摩擦)。外すときは止まって引っ張りがない状態で K0。
  */
 #pragma once
 #include <Arduino.h>
@@ -28,7 +29,16 @@ const int   SERVO_HZ  = 50;
 const int   SERVO_RES = 14;          // 0..16383
 const uint32_t HOLD_MS = 700;        // 動かしてから PWM を切るまで
 int pin = -1;
-int lockDeg = 90, unlockDeg = 10;    // ★ 実機で KA で確かめて書き換える
+// coupler_v9 (MG90S 直結の門): 閉じる = 門が横棒の前に立つ位置、開く = そこから 45° 倒す (40° で通り道から出始める)
+// 門は「サーボを閉じる角度 (90°) にした状態」で出力軸に押し込む。90° = 中央なので、どちら向きにも 45° 回せる
+// 開く向きが逆だったら COUPLER_UNLOCK_DEG を 135 にする (90 + 45)
+#ifndef COUPLER_LOCK_DEG
+#define COUPLER_LOCK_DEG   90
+#endif
+#ifndef COUPLER_UNLOCK_DEG
+#define COUPLER_UNLOCK_DEG 45
+#endif
+int lockDeg = COUPLER_LOCK_DEG, unlockDeg = COUPLER_UNLOCK_DEG;
 int curDeg = -1;
 bool locked = false, attached = false;
 bool dirty = false;                  // 状態が変わった → loop で通知
