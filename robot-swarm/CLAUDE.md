@@ -18,7 +18,9 @@
   モーター PWM は LEDC ch4/5 固定 (カメラが ch0 を使う)。Arduino 設定: XIAO_ESP32S3 / PSRAM=OPI / Partition=Huge APP / USB CDC On Boot=Enabled
 - Arduino-ESP32 core 3.3.x を使用 (ledcAttach / ledcAttachChannel)
 
-- 連結器 (`hardware/coupler_v9/`): サーボ信号 DevKit=GPIO27 / XIAO=D7 (LEDC ch6)。サーボは 5V 給電 (3V3 から取らない)。
+- 連結器 (`hardware/coupler_v9/`, v9.1): サーボ MG90S は **フック側 (01_hook_unit) だけ**。1号機 = フック側。閉じる 90° / 開く 45° (開く向きが逆なら UNLOCK=135)。
+  サーボ信号 DevKit=GPIO27 / XIAO=D7 (LEDC ch6)。線色 オレンジ=信号 赤=+5V 茶=GND。サーボは 5V 給電 (3V3 から取らない)。1号機はシリアルモニタから K1/K0/KA も可。
+  Arduino IDE 用に `~/Documents/Arduino/SwarmBot_*` に .ino と SwarmCoupler.h を同梱したフォルダを置いてある
   BLE: `K1` ロック / `K0` 解除 / `KA<度>` 角度 / `KL<度>` `KU<度>` ロック・解除角 / `K?` 問合せ → 通知 `K1`/`K0`。共通コード `SwarmCoupler.h` は3スケッチに同じものを置く
 
 ### BLE プロトコル (Nordic UART 風 UUID 6e400001-…)
